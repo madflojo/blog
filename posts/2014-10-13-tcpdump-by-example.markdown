@@ -2,7 +2,7 @@
 author: madflojo
 date: 2014-10-13 07:50:00-07:00
 pubdate: Mon, 13 Oct 2014 07:50:00 -07:00
-popularity: None
+popularity: True
 slug: quick-and-practical-reference-for-tcpdump
 title: "A Quick and Practical Reference for tcpdump"
 description: This article is a quick and practical reference for tcpdump, it covers the basics and dives a little bit into advanced usage. This article should cover everything a systems or network administrator needs to get started and troubleshoot issues quickly
