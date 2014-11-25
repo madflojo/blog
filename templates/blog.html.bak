@@ -1,0 +1,111 @@
+{% include '/home/bcane/bclog/templates/base-header.html' %}
+<div class="container">
+<div class="row">
+      
+      {% if data['tochtml'] %}
+      <div class="col-md-4 visible-lg">
+      <!-- Sidebar -->
+        <h2>Table of Contents</h2>
+        <ul>
+        {{ data['tochtml'] }}
+        </ul>
+      <p></p>
+        <div align="center"><!-- Google Code -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Custom ad Size -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:300px;height:600px"
+     data-ad-client="ca-pub-0946238287085890"
+     data-ad-slot="6135692280"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+		</div> <!-- col-md-4 -->
+     {% endif %}
+      <!-- Page content -->
+      <div id="col-md-8">
+      <div align="center">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+				<!-- Large Leader -->
+				<ins class="adsbygoogle"
+				     style="display:inline-block;width:970px;height:90px"
+				     data-ad-client="ca-pub-0946238287085890"
+				     data-ad-slot="3989051884"></ins>
+				<script>
+				(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+      </div>
+        <!-- Keep all page content within the page-content inset div! -->
+        <div class="page-content inset">
+        <div class="page-header">
+          <h1>
+          <a href="{{ data['siteurl'] }}{{ data['url'] }}">{{ data['title'] }}</a>
+          </h1>
+          <span class="text-muted">
+          <i class="fa fa-calendar"></i> {{ data['date'] }} |
+          <i class="fa fa-folder"></i> 
+          {% for item in data['cats'] %}
+          <span class="label label-default">{{ item }}</span>
+          {% endfor %}
+          </span>
+        </div>
+        <!-- Post Content -->
+        {{ data['data'] }}
+        <!-- End Data -->
+{% if data['pagetype'] == "article" %}
+<!-- shareaholic -->
+<a id="share"></a>
+<div class='shareaholic-canvas' data-app='share_buttons' data-app-id='632299'></div>
+<hr>
+<div class='shareaholic-canvas' data-app='recommendations' data-app-id='4695298'></div>
+{% endif %}
+<p>
+</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <!--Sidebar content-->
+      <img src="{{ data['siteurl'] }}/img/benc380x250.png" alt="Picture of Benjamin Cane" class="img-rounded img-responsive" />
+    </div>
+    <div class="col-md-6">
+      <!--Body content-->
+                            <h3>Benjamin Cane <i class="fa fa-linux fa-2x"></i></h3>
+                        <p></p>
+                            <p>
+                            Benjamin is a Solutions Architect working on High & Continuous Availability systems in the financial services industry. He has been Administrating Linux and Unix systems for about 10+ years. You might find him writing and sharing stories about Linux, Unix, Python, DevOps, and other various Sysadmin-like things.
+                          </p>
+                        <!-- Split button -->
+                        <p>
+          <a class="btn btn-info" href="https://twitter.com/madflojo"><i class="fa fa-twitter-square fa-lg"></i> Twitter</a> 
+          <a class="btn btn-info" href="https://plus.google.com/115680175625172942216/posts"><i class="fa fa-google-plus-square fa-lg"></i> Google+</a> 
+          <a class="btn btn-info" href="http://www.linkedin.com/in/bencane"><i class="fa fa-linkedin-square fa-lg"></i> LinkedIn</a>
+                        </p>
+  </div>
+  </div>
+<hr>
+{% if data['pagetype'] == "article" %}
+    <a id="comments"></a>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'bclog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+{% else %}
+<div align="center">
+<a class="btn-lg btn-primary" href="{{ data['siteurl'] }}{{ data['url'] }}#share"><i class="fa fa-share fa-lg"></i> Share This Article</a>
+<a class="btn-lg btn-primary" href="{{ data['siteurl'] }}{{ data['url'] }}#comments"><i class="fa fa-comments fa-lg"></i> Comment On This Article</a>
+</div>
+{% endif %}
+</div>
+</div> <!-- Container -->
+{% include '/home/bcane/bclog/templates/base-footer.html' %}

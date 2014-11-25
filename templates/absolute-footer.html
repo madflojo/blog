@@ -1,0 +1,13 @@
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="{{ data['siteurl'] }}/static/js/bootstrap.min.js"></script>
+
+    <!-- Custom JavaScript for the Menu Toggle -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("active");
+    });
+    </script>
+  </body>
+</html>

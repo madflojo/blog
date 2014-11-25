@@ -1,0 +1,40 @@
+output_dir: /data/webusers/bencanec/public_html/
+static_dir: /home/bcane/bclog/static
+template_dir: /home/bcane/bclog/templates/
+post_dir: /home/bcane/bclog/posts/
+templates:
+  archive: archive.html
+  post: blog.html
+  feed: feed.xml
+  sitemap: sitemap.xml
+  notfound: 404.html
+  forbidden: 403.html
+site_name: Benjamin Cane
+site_description: Linux Systems Administration blog featuring tutorials, tips, hacks and how to articles
+site_shortdesc: A Linux Systems Administration Blog
+site_thumbnail: http://bencane.com/img/thumbnails/shell.png
+site_url: http://bencane.com
+site_feed: http://feed.bencane.com
+site_keywords: 
+  - linux
+  - unix
+  - sysadmin
+  - sysadmin blog
+  - devops
+  - linux blog
+  - sysadmin best practices
+  - systems administration
+  - ubuntu
+  - redhat
+  - linux os
+  - Linux Server
+  - bash shell
+  - linux for dummies
+  - learning linux
+  - linux operating system
+  - Linux tutorials
+  - Linux how to
+  - Sysadmin tutorials
+  - Sysadmin How To
+site_author: Benjamin Cane
+site_authorlink: https://plus.google.com/+BenjaminCane

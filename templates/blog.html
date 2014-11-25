@@ -1,0 +1,53 @@
+{% include '/home/bcane/bclog/templates/base-header.html' %}
+<div class="container">
+<div class="row">
+  {% if data['tochtml'] %}
+  <div class="col-md-3 visible-lg">
+  <h4>Table of Contents</h4>
+  <ul class="list-group">
+     {{ data['tochtml'] }}
+  </ul>
+<div align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 160 wide skyscraper -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:160px;height:600px"
+     data-ad-client="ca-pub-0946238287085890"
+     data-ad-slot="3040400288"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+  </div>
+  </div>
+  <div class="col-md-9">
+  {% else %}
+  <div class="col-md-12">
+  {% endif %}
+    <div class="page-header">
+    <h1>
+    <a href="{{ data['siteurl'] }}{{ data['url'] }}">{{ data['title'] }}</a>
+    </h1>
+    <span class="text-muted">
+    <i class="fa fa-linux"></i> Written by <a href="https://twitter.com/madflojo" target="_blank">Benjamin Cane</a> | 
+    <i class="fa fa-calendar"></i> {{ data['date'] }}
+    {% if data['cats'] %}
+     | <i class="fa fa-folder"></i> 
+    {% for item in data['cats'] %}
+    <span class="label label-default">{{ item }}</span>
+    {% endfor %}
+    {% endif %}
+    </span>
+    </div>
+    <!-- Post Content -->
+    {{ data['data'] }}
+    <!-- End Data -->
+    {% include '/home/bcane/bclog/templates/shareaholic.html' %}
+    {% include '/home/bcane/bclog/templates/endpost.html' %}
+  </div>
+</div>
+</div>
+
+{% include '/home/bcane/bclog/templates/disqus.html' %}
+{% include '/home/bcane/bclog/templates/authorinfo.html' %}
+{% include '/home/bcane/bclog/templates/absolute-footer.html' %}
+

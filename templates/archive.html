@@ -1,0 +1,64 @@
+{% include '/home/bcane/bclog/templates/base-header.html' %}
+<div class="container">
+<div class="row">
+  {% if data['tochtml'] %}
+  <div class="col-md-3 visible-lg">
+  <h4>Table of Contents</h4>
+  <ul class="list-group">
+     {{ data['tochtml'] }}
+  </ul>
+<div align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 160 wide skyscraper -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:160px;height:600px"
+     data-ad-client="ca-pub-0946238287085890"
+     data-ad-slot="3040400288"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+  </div>
+  </div>
+{% endif %}
+  <div class="col-md-10">
+        <div class="panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{ data['rowtitle'] }}</h3>
+        </div>
+        <table class="table table-striped table-hover">
+          <thead>
+          <tr>
+            <th class="span4"></th>
+            <th class="span9">Title:</th>
+            <th class="span2">Posted On:</th>
+          </tr>
+          </thead>
+          <tbody>
+
+          {% for item in data['rpids'] %}
+          <tr>
+            {% if data['rowitems'][item]['lastpost'] %}
+            <td><center><span class="label label-success">Latest</span></center></td>
+            {% elif data['rowitems'][item]['popularity'] %}
+            <td><center><span class="label label-info">Popular</span></center></td>
+            {% else %}
+            <td><center></center></td>
+            {% endif %}
+            <td><a href="{{ data['siteurl'] }}{{ data['rowitems'][item]['url'] }}">{{ data['rowitems'][item]['title'] }}</a></td>
+            <td>{{ data['rowitems'][item]['date'] }}</td>
+          </tr>
+          {% endfor %}
+
+          </tbody>
+        </table>
+
+        </div>
+  </div>
+</div>
+</div>
+</div>
+
+{% include '/home/bcane/bclog/templates/disqus.html' %}
+{% include '/home/bcane/bclog/templates/authorinfo.html' %}
+{% include '/home/bcane/bclog/templates/absolute-footer.html' %}
+

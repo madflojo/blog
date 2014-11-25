@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   <url>
+      <loc>http://bencane.com/</loc>
+      <changefreq>weekly</changefreq>
+   </url>
+   <url>
+      <loc>http://bencane.com/archive.html</loc>
+      <changefreq>weekly</changefreq>
+   </url>
+
+{% for item in data['rpids'] %}
+   <url>
+      <loc>{{ data['siteurl'] }}{{ data['rowitems'][item]['url'] }}</loc>
+{% if data['rowitems'][item]['lastpost'] %}
+      <changefreq>daily</changefreq>
+{% else %}
+      <changefreq>monthly</changefreq>
+{% endif %}
+
+   </url>
+{% endfor %}
+
+</urlset>

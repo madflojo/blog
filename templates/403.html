@@ -1,0 +1,51 @@
+{% include '/home/bcane/bclog/templates/base-header.html' %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="hero-unit center">
+          <h1>403 Forbidden <small><font face="Tahoma" color="red">Error 403</font></small></h1>
+          <br />
+          <p class="alert alert-danger">The page you requested could not provided, not sure how you got here but you can use your browsers <b>Back</b> button to navigate to the page you have prevously come from.<br />
+          <b>Or you could checkout one of these articles:</b></p>
+        </div>
+        <br />
+    </div>
+ </div>
+<div class="row">
+ <div class="col-md-8">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+           <h3 class="panel-title">{{ data['rowtitle'] }}</h3>
+        </div>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th class="span4"></th>
+      <th class="span9">Title:</th>
+      <th class="span2">Posted On:</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    {% for item in data['rpids'] %}
+    <tr>
+{% if data['rowitems'][item]['lastpost'] %}
+<td><center><span class="label label-success">Latest</span></center></td>
+{% elif data['rowitems'][item]['popularity'] %}
+<td><center><span class="label label-info">Popular</span></center></td>
+{% else %}
+<td><center></center></td>
+{% endif %}
+      <td><a href="{{ data['rowitems'][item]['url'] }}">{{ data['rowitems'][item]['title'] }}</a></td>
+      <td>{{ data['rowitems'][item]['date'] }}</td>
+    </tr>
+    {% endfor %} 
+
+  </tbody>
+</table>
+  </div>
+  </div>
+  </div>
+</div>
+{% include '/home/bcane/bclog/templates/base-footer.html' %}
+ 

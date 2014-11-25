@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Stuff -->
+    <title>{{ data['sitetitle'] }}</title>
+    {% if data['sitedescription'] %}
+    <meta name="description" content="{{ data['sitedescription'] }}">
+    {% endif %}
+    <meta name="keywords" content="{% for item in data['cats'] %}{{ item }}, {% endfor %}{% for item in data['tags'] %}{{ item }}, {% endfor %}">
+    <meta name="author" content="{{ data['author'] }}">
+    <meta property="og:type" content="{{ data['pagetype'] }}"/>
+    <meta property="og:title" content="{{ data['sitetitle'] }}"/>
+    {% if data['pagetype'] == "article" %}
+    <meta property="og:url" content="{{ data['siteurl'] }}{{ data['url'] }}"/>
+    {% endif %}
+    <meta property="og:description" content="{{ data['description'] }}"/>
+    <meta property="og:site_name" content="{{ data['sitename'] }}"/>
+    {% if data['thumbnail'] %}
+    <meta property="og:image" content="{{ data['thumbnail'] }}"/>
+    {% endif %}
+    {% if data['pagetype'] == "article" %}
+    <meta property="article:author" content="{{ data['authorlink'] }}" \>
+    <link rel="author" href="{{ data['authorlink'] }}" \>
+    {% endif %}
+
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ data['siteurl'] }}/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Add custom CSS here -->
+    <link href="{{ data['siteurl'] }}/css/simple-sidebar.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    {% if data['pagetype'] == "article" %}
+    <!-- Shareaholic -->
+    <script type="text/javascript">
+		//<![CDATA[
+		  (function() {
+		    var shr = document.createElement('script');
+		    shr.setAttribute('data-cfasync', 'false');
+		    shr.src = '//dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js';
+		    shr.type = 'text/javascript'; shr.async = 'true';
+		    shr.onload = shr.onreadystatechange = function() {
+		      var rs = this.readyState;
+		      if (rs && rs != 'complete' && rs != 'loaded') return;
+		      var apikey = '098ec2a3913f9ec74de565aa3ec3d741';
+		      try { Shareaholic.init(apikey); } catch (e) {}
+		    };
+		    var s = document.getElementsByTagName('script')[0];
+		    s.parentNode.insertBefore(shr, s);
+		  })();
+		//]]>
+		</script>
+     <!-- End Sharaholic -->
+     {% endif %}
+  </head>
+  <body>
+
+    <div class="navbar navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+        <a class="navbar-brand" href="{{ data['siteurl'] }}"><i class="fa fa-linux fa-lg"></i> [ {{ data['sitename'] }} ]</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            {% if data['prevp'] %}
+            <li><a href="{{ data['siteurl'] }}{{ data['prevp'] }}"><i class="fa fa-chevron-left "></i> Previous</a></li>
+            {% endif %}
+            <li><a href="{{ data['siteurl'] }}"><i class="fa fa-home "></i> Home</a></li>
+            <li><a href="{{ data['siteurl'] }}/archive.html"><i class="fa fa-archive "></i> Archive</a></li>
+            {% if data['nextp'] %}
+            <li><a href="{{ data['siteurl'] }}{{ data['nextp'] }}"><i class="fa fa-chevron-right "></i> Next</a></li>
+            {% endif %}
+          </ul>
+        <div class="navbar-right">
+          <ul class="nav navbar-nav">
+            <li><a href="https://twitter.com/madflojo"><i class="fa fa-twitter fa-1x"></i> Twitter</a></li>
+            <li><a href="{{ data['sitefeed'] }}"><i class="fa fa-rss fa-1x"></i> RSS</a></li>
+            <li><a href="http://bencane.us7.list-manage1.com/subscribe?u=52bad2a14ba3306a494c9739f&id=848cc53f28"><i class="fa fa-envelope-o fa-1x"></i> Email</a></li>
+          </ul>
+        </div>
+        </div>
+      </div>
+    </div>
+  
+    <div id="container">
+    <div id="row">
+
+      
+      {% if data['tochtml'] %}
+      <div id="col-md-4" class="visible-lg">
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+        <p class="sidebar-header">Table of Contents</p>
+        <ul class="sidebar-nav">
+        {{ data['tochtml'] }}
+        </ul>
+				</div>
+        <p></p>
+        <div align="center"><!-- Google Code -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Custom ad Size -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:300px;height:600px"
+     data-ad-client="ca-pub-0946238287085890"
+     data-ad-slot="6135692280"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		  </div>
+		  </div>
+     {% endif %}
+{% include '/home/bcane/bclog/templates/base-header.html' %}
+      <!-- Page content -->
+      <div id="col-md-8">
+      <div align="center">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+				<!-- Large Leader -->
+				<ins class="adsbygoogle"
+				     style="display:inline-block;width:970px;height:90px"
+				     data-ad-client="ca-pub-0946238287085890"
+				     data-ad-slot="3989051884"></ins>
+				<script>
+				(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+      </div>
+        <!-- Keep all page content within the page-content inset div! -->
+        <div class="page-content inset">
+        <div class="page-header">
+          <h1>
+          <a href="{{ data['siteurl'] }}{{ data['url'] }}">{{ data['title'] }}</a>
+          </h1>
+          <span class="text-muted">
+          <i class="fa fa-calendar"></i> {{ data['date'] }} |
+          <i class="fa fa-folder"></i> 
+          {% for item in data['cats'] %}
+          <span class="label label-default">{{ item }}</span>
+          {% endfor %}
+          </span>
+        </div>
+        <!-- Post Content -->
+        {{ data['data'] }}
+        <!-- End Data -->
+{% if data['pagetype'] == "article" %}
+<!-- shareaholic -->
+<a id="share"></a>
+<div class='shareaholic-canvas' data-app='share_buttons' data-app-id='632299'></div>
+<hr>
+<div class='shareaholic-canvas' data-app='recommendations' data-app-id='4695298'></div>
+{% endif %}
+<p>
+</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <!--Sidebar content-->
+      <img src="{{ data['siteurl'] }}/img/benc380x250.png" alt="Picture of Benjamin Cane" class="img-rounded img-responsive" />
+    </div>
+    <div class="col-md-6">
+      <!--Body content-->
+                            <h3>Benjamin Cane <i class="fa fa-linux fa-2x"></i></h3>
+                        <p></p>
+                            <p>
+                            Benjamin is a Solutions Architect working on High & Continuous Availability systems in the financial services industry. He has been Administrating Linux and Unix systems for about 10+ years. You might find him writing and sharing stories about Linux, Unix, Python, DevOps, and other various Sysadmin-like things.
+                          </p>
+                        <!-- Split button -->
+                        <p>
+          <a class="btn btn-info" href="https://twitter.com/madflojo"><i class="fa fa-twitter-square fa-lg"></i> Twitter</a> 
+          <a class="btn btn-info" href="https://plus.google.com/115680175625172942216/posts"><i class="fa fa-google-plus-square fa-lg"></i> Google+</a> 
+          <a class="btn btn-info" href="http://www.linkedin.com/in/bencane"><i class="fa fa-linkedin-square fa-lg"></i> LinkedIn</a>
+                        </p>
+  </div>
+  </div>
+</div>
+<hr>
+{% if data['pagetype'] == "article" %}
+    <a id="comments"></a>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'bclog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+{% else %}
+<div align="center">
+<a class="btn-lg btn-primary" href="{{ data['siteurl'] }}{{ data['url'] }}#share"><i class="fa fa-share fa-lg"></i> Share This Article</a>
+<a class="btn-lg btn-primary" href="{{ data['siteurl'] }}{{ data['url'] }}#comments"><i class="fa fa-comments fa-lg"></i> Comment On This Article</a>
+</div>
+{% endif %}
+{% include '/home/bcane/bclog/templates/base-footer.html' %}
+  <!-- footer -->
+  <hr>
+      <div align="center">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- Large Leader -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:970px;height:90px"
+             data-ad-client="ca-pub-0946238287085890"
+             data-ad-slot="3989051884"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+  <hr>
+  <div class="row">
+    <div class="span6">
+        <p class="text-muted pull-right">
+        <strong><i class="fa fa-btc"></i> BTC:</strong> 1ixpKYf1WZDgbAJ3rivk2X335X25QSNDCi
+        </br>
+        <strong>DOGE:</strong> D7Yq1oQRYxSyApaXjXvgm64eL3forthJLU
+        </p>
+        <a href="https://twitter.com/madflojo"><i class="fa fa-twitter"></i> Twitter</a> |
+        <a href="{{ data['sitefeed'] }}"><i class="fa fa-rss"></i> RSS</a> |
+        <a href="http://bencane.us7.list-manage1.com/subscribe?u=52bad2a14ba3306a494c9739f&id=848cc53f28"><i class="fa fa-envelope-o"></i> Email</a> 
+    </div>
+  </div>
+  
+        </div>
+      </div>
+    </div>
+    </div>
+    <!-- JavaScript -->
+    <script src="{{ data['siteurl'] }}/js/jquery-1.10.2.js"></script>
+    <script src="{{ data['siteurl'] }}/js/bootstrap.js"></script>
+
+    <!-- Custom JavaScript for the Menu Toggle -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("active");
+    });
+    </script>
+  </body>
+</html>
