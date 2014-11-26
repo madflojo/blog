@@ -129,7 +129,7 @@ rpids = []
 print "Opening files in the %s directory" % config['post_dir']
 print "-" * 10
 for files in os.listdir(config['post_dir']):
-  if files.endswith(".markdown"):
+  if files.endswith(".md"):
     metadata, mddata = parseFile(config['post_dir'] + "/" + files)
     post = Post(metadata, mddata)
 
