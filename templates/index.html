@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include '/home/bcane/bclog/templates/header.html' %}
+
+<body>
+
+{% include '/home/bcane/bclog/templates/navbar.html' %}
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('http://bencane.com/static/img/home-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>Benjamin Cane</h1>
+                        <hr class="small">
+                        <span class="subheading">{{ data['index_header'] }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+		{% include '/home/bcane/bclog/templates/authorinfo.html' %}
+	    <hr>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+		<h2>Latest Article</h2>
+                <div class="post-preview">
+                    <a href="{{ data['siteurl'] }}{{ data['url'] }}">
+                        <h2 class="post-title">
+			    {{ data['title'] }}
+                        </h2>
+                        <h3 class="post-subtitle">
+			    {{ data['description'] }}
+                        </h3>
+                    </a>
+                    <p class="post-meta">Written by <a href="https://twitter.com/madflojo">Benjamin Cane</a> at {{ data['date'] }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+		    {% include '/home/bcane/bclog/templates/shareaholic.html' %}
+                    <p class="copyright text-muted">Copyright &copy; Benjamin Cane 2014 - <a href="mailto:ben@bencane.com?subject=Sponsorship of BenCane.com">Sponsor this blog</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+{% include '/home/bcane/bclog/templates/js_includes.html' %}
+</body>
+
+</html>
