@@ -5,6 +5,7 @@ post_dir: /home/bcane/bclog/posts/
 templates:
   archive: archive.html
   post: blog.html
+  index: index.html
   feed: feed.xml
   sitemap: sitemap.xml
   notfound: 404.html
@@ -38,3 +39,4 @@ site_keywords:
   - Sysadmin How To
 site_author: Benjamin Cane
 site_authorlink: https://plus.google.com/+BenjaminCane
+index_header: Solutions Architect who writes about Linux Systems Administration

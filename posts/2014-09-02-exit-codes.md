@@ -2,7 +2,7 @@
 author: madflojo
 date: 2014-09-02 07:45:00-07:00
 pubdate: Tue, 02 Sep 2014 07:45:00 -07:00
-popularity: None
+popularity: True
 slug: understanding-exit-codes-and-how-to-use-them-in-bash-scripts
 title: "Understanding Exit Codes and how to use them in bash scripts"
 description: When writing a script that calls other commands, how do you know if they were successful or not? The answer is exit codes, exit codes are important and this article describes how to use them in your scripts and understand them in general.

@@ -2,7 +2,7 @@
 author: bencane
 comments: true
 date: 2013-10-21 08:15:26+00:00
-popularity: None
+popularity: True
 slug: 5-bash-for-loop-examples-to-make-command-line-tasks-more-efficient
 title: 5 Bash for loop examples to make command line tasks more efficient
 description: Examples of bash for loops that can make any shell users life easier

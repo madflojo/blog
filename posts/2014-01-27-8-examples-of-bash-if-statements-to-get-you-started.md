@@ -2,7 +2,7 @@
 author: madflojo
 date: 2014-01-27 08:00:00+00:00
 pubdate: Mon, 27 Jan 2014 08:00:00 +00:00
-popularity: None
+popularity: True
 slug: 8-examples-of-bash-if-statements-to-get-you-started
 title: "8 examples of Bash if statements to get you started"
 description: This article shows examples of how to use BASH if statements in scripts and command line. This is a good starter tutorial for those who haven't quite mastered BASH yet.

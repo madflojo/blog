@@ -1,53 +1,113 @@
-{% include '/home/bcane/bclog/templates/base-header.html' %}
-<div class="container">
-<div class="row">
-  {% if data['tochtml'] %}
-  <div class="col-md-3 visible-lg">
-  <h4>Table of Contents</h4>
-  <ul class="list-group">
-     {{ data['tochtml'] }}
-  </ul>
-<div align="center">
+<!DOCTYPE html>
+<html lang="en">
+
+{% include '/home/bcane/bclog/templates/header.html' %}
+<body>
+
+{% include '/home/bcane/bclog/templates/navbar.html' %}
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('http://bencane.com/static/img/post-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>{{ data['title'] }}
+                        <h2 class="subheading">{{ data['description'] }}</h2>
+                        <span class="meta">Written by <a href="https://twitter.com/madflojo">Benjamin Cane</a> on {{ data['date'] }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+    <div class="row visible-lg">
+      <div align="center">
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 160 wide skyscraper -->
+<!-- Bigger Banner - Sys-log -->
 <ins class="adsbygoogle"
-     style="display:inline-block;width:160px;height:600px"
+     style="display:inline-block;width:728px;height:90px"
      data-ad-client="ca-pub-0946238287085890"
-     data-ad-slot="3040400288"></ins>
+     data-ad-slot="4580867883"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+      </div>
+   </div> 
+  <div class="row visible-xs">
+  <div align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Better Mobile -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:320px;height:100px"
+     data-ad-client="ca-pub-0946238287085890"
+     data-ad-slot="8091791889"></ins>
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
   </div>
   </div>
-  <div class="col-md-9">
-  {% else %}
-  <div class="col-md-12">
-  {% endif %}
-    <div class="page-header">
-    <h1>
-    <a href="{{ data['siteurl'] }}{{ data['url'] }}">{{ data['title'] }}</a>
-    </h1>
-    <span class="text-muted">
-    <i class="fa fa-linux"></i> Written by <a href="https://twitter.com/madflojo" target="_blank">Benjamin Cane</a> | 
-    <i class="fa fa-calendar"></i> {{ data['date'] }}
-    {% if data['cats'] %}
-     | <i class="fa fa-folder"></i> 
-    {% for item in data['cats'] %}
-    <span class="label label-default">{{ item }}</span>
-    {% endfor %}
-    {% endif %}
-    </span>
-    </div>
-    <!-- Post Content -->
-    {{ data['data'] }}
-    <!-- End Data -->
-    {% include '/home/bcane/bclog/templates/shareaholic.html' %}
-    {% include '/home/bcane/bclog/templates/endpost.html' %}
+            <div class="row">
+
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+			{{ data['data'] }}
+
+    		{% include '/home/bcane/bclog/templates/shareaholic.html' %}
+    <div class="row visible-lg">
+      <div align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Bigger Banner - Sys-log -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-0946238287085890"
+     data-ad-slot="4580867883"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+      </div>
+   </div> 
+  <div class="row visible-xs">
+  <div align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Better Mobile -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:320px;height:100px"
+     data-ad-client="ca-pub-0946238287085890"
+     data-ad-slot="8091791889"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
   </div>
-</div>
-</div>
+  </div>
+	   	{% include '/home/bcane/bclog/templates/disqus.html' %}
+                </div>
+		
+            </div>
+	
+        </div>
+    </article>
 
-{% include '/home/bcane/bclog/templates/disqus.html' %}
-{% include '/home/bcane/bclog/templates/authorinfo.html' %}
-{% include '/home/bcane/bclog/templates/absolute-footer.html' %}
+    <hr>
 
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+	   {% include '/home/bcane/bclog/templates/authorinfo.html' %}
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <p class="copyright text-muted">Copyright &copy; Benjamin Cane 2014 - <a href="mailto:ben@bencane.com?subject=Sponsorship of BenCane.com">Sponsor this blog</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+	   {% include '/home/bcane/bclog/templates/js_includes.html' %}
+</body>
+
+</html>

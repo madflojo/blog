@@ -240,8 +240,9 @@ for key in pids:
     htmldata['tags'] = config['site_keywords']
     htmldata['cats'] = []
     htmldata['pagetype'] = "blog"
+    htmldata['index_header'] = config['index_header']
 
-    template = config['template_dir'] + "/" + config['templates']['post']
+    template = config['template_dir'] + "/" + config['templates']['index']
     if genIndexPage(template, htmldata, config['output_dir']):
       print "Post id %d created as Index" % posts[key].pid
     else:
@@ -296,24 +297,6 @@ if genPage("index.xml", template, htmldata, config['output_dir'] + "/feed"):
   print "Created a RSS Feed"
 else:
   print "Could not create an RSS Feed"
-
-htmldata['rowtitle'] = "Recent Posts"
-htmldata['sitedescription'] = config['site_name'] + " | 404 Not Found"
-
-template = config['template_dir'] + "/" + config['templates']['notfound']
-if genPage("404.html", template, htmldata, config['output_dir'] ):
-  print "Created a 404 Page"
-else:
-  print "Could not create a 404 Page "
-
-htmldata['rowtitle'] = "Recent Posts"
-htmldata['sitedescription'] = config['site_name'] + " | 403 Forbidden"
-
-template = config['template_dir'] + "/" + config['templates']['forbidden']
-if genPage("403.html", template, htmldata, config['output_dir'] ):
-  print "Created a 403 Page"
-else:
-  print "Could not create a 403 Page "
 
 ## Copy CSS
 distutils.dir_util.copy_tree(config['static_dir'], config['output_dir'] + "/static")
