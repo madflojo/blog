@@ -5,7 +5,7 @@ pubdate: Tue, 30 Dec 2014 07:50:00 -07:00
 popularity: False
 slug: building-self-healing-applications-with-salt-api
 title: "Building Self-Healing Applications with Saltstack"
-description: This article will explore creating an application that detects errors and corrects them by integrating Saltstack's API into it's own logic
+description: This article will explore creating an application that detects errors and corrects them by integrating Saltstack's API
 post_id: 125
 categories:
 - Python
@@ -19,7 +19,7 @@ tags:
 - automation
 ---
 
-Self healing infrastructure is always something that has piqued my interested. The first iteration of self healing infrastructure that I came across was the Solaris Service Management Facility aka "SMF". SMF would restart services if they crashed due to hardware errors or general errors outside of the service itself.
+Self healing infrastructure is something that has always piqued my interested. The first iteration of self healing infrastructure that I came across was the Solaris Service Management Facility aka "SMF". SMF would restart services if they crashed due to hardware errors or general errors outside of the service itself.
 
 For today's article we are going to explore another way of creating a self healing environment; going beyond restarting failed services. In today's article we are going to take a snippet of code that connects to a database service and give that application not only the ability to reconnect during database failure but also give it the ability to automatically resolve the database issues.
 
@@ -94,7 +94,9 @@ We will also need to deploy our reactor config to the `/etc/salt/master.d/` dire
 
 #### Examining a reactor configuration
 
-When our application is unable to connect to RethinkDB we want to perform some sort of corrective task. The easiest and safest thing to do in Runbook's environment is to simply run a salt **highstate**. A highstate execution will tell Saltstack to go through all of the defined configurations and make them true on the desired minion server. In our environment that includes ensuring the RethinkDB service is running. If our application was able to call a highstate execution on the database hosts any host where RethinkDB was stopped would have RethinkDB started. Giving our application the ability to resolve any issue that can be fixed with a simple **start** of the RethinkDB service.
+When our application is unable to connect to RethinkDB we want to perform some sort of corrective task. The easiest and safest thing to do in Runbook's environment is to simply run a salt **highstate**. A highstate execution will tell Saltstack to go through all of the defined configurations and make them true on the desired minion server. In our environment that includes ensuring the RethinkDB service is running and configured. 
+
+If our application is able to call a highstate execution on the database hosts there is a good chance that the issue may be corrected. Giving our application the ability to resolve any issue that was caused by RethinkDB not matching our desired state.
 
 
 ##### highstate.sls
@@ -120,11 +122,11 @@ When a `POST` request is made to the `http://saltapiurl/webhooks/states/highstat
 
 Each reactor template has an example secret key defined, it is recommended that you modify this to a unique value for your environment.
 
-After validation salt will look for additional keys in the `postdata` dictionary, for our purpose we will need to understand the `tgt` and `matcher` keys. The `tgt` key is used to specify the "target" for the highstate execution. This target can be a hostname, a grain value, pillar value, subnet or any other target Saltstack accepts. The `matcher` key contains a definition of the `tgt` keys expression, for instance if the `tgt` value was a hostname the `matcher` value should be `glob` for a hostname glob. If the `tgt` value was a pillar value the `matcher` value should be `pillar`. You can find all of the valid matcher values in [salt-api's documentation](http://docs.saltstack.com/en/latest/ref/clients/#salt.client.LocalClient.cmd).
+After validation salt will look for additional keys in the `postdata` dictionary, for our purpose we will need to understand the `tgt` and `matcher` keys. The `tgt` key is used to specify the "target" for the highstate execution. This target can be a hostname, a grain value, pillar value, subnet or any other target Saltstack accepts. The `matcher` key contains a definition of the `tgt` keys expression, for instance if the `tgt` value was a hostname, the `matcher` value should be `glob` for a hostname glob. If the `tgt` value was a pillar value, the `matcher` value should be `pillar`. You can find all of the valid matcher values in [salt-api's documentation](http://docs.saltstack.com/en/latest/ref/clients/#salt.client.LocalClient.cmd).
 
 ### Calling salt-api
 
-Now that we have salt-api configured to accept webhook requests that kick off highstate executions we now need to code our application to call those webhooks. Since this is something we may want to do somewhat often in our code we can create a function to perform this webhook request.
+Now that we have salt-api configured to accept webhook requests and start highstate executions, we now need to code our application to call those webhooks. Since this is something we may want to do somewhat often in our code we can create a function to perform this webhook request.
 
 #### Highstate Function
 
@@ -179,7 +181,7 @@ Now that the code to call salt-api is defined we can add the `callSaltHighstate(
 
 As you can see the code above hasn't changed much from the previous example. The biggest change is that after printing the RethinkDB error we experienced we then execute the `callSaltHighstate()` function.
 
-### Powering up
+### Leveling up
 
 For a simple example the above code works quite well, however there is a bit of a flaw. With the above code a highstate will be called every time the application attempts to connect to RethinkDB and fails. Since a highstate will take a bit of time to execute this could cause a backlog of highstate executions which could in theory cause even more issues. 
 
@@ -213,7 +215,7 @@ Since we can call Saltstack to perform essentially any task Saltstack can perfor
             print("Error calling for help: %s") % e.message
             return False
 
-The above code is very similar to the highstate function with the exception that the URL endpoint has changed to `/services/restart` and their is a new `POST` data key called `args` which contains `rethinkdb` the service in which we want to restart.
+The above code is very similar to the highstate function with the exception that the URL endpoint has changed to `/services/restart` (which utilizes the `reactor/services/restart.sls` template) and there is a new `POST` data key called `args` which contains `rethinkdb` the service in which we want to restart.
 
 Since we are adding the complexity of restarting the RethinkDB service we want to make sure that this call is not made too often. At the moment the best way to do this is to build that logic into the application itself.
 
@@ -264,4 +266,4 @@ With today's example we are able to correct situations that many applications ca
 
 This same type of logic could be built into Query exceptions rather than Connection exceptions only. With query exceptions you could also use salt-api to execute database maintenance scripts or call salt-cloud to provision additional servers. Once you give your application the ability to perform infrastructure wide actions you open the door to a wide range of automation capabilities.
 
-_To see the full script from this example you can view it on [GitHub Gists](https://gist.github.com/madflojo/95fe54b4e42ff01e1ba1)_
+_To see the full script from this example you can view it on [this GitHub Gist](https://gist.github.com/madflojo/95fe54b4e42ff01e1ba1)_
