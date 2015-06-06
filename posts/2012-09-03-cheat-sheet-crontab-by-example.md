@@ -177,12 +177,12 @@ or
 ### Every day at midnight
      
      # m h dom mon dow command
-     0 * * * * /home/user/command.sh
+     0 0 * * * /home/user/command.sh
      
 or
 
      # m h dom mon dow command
-     0 * * * 0-7 /home/user/command.sh
+     0 0 * * 0-7 /home/user/command.sh
 
 ### Twice Daily
      
@@ -202,17 +202,17 @@ or
 ### Every weekday at 2 am
      
      # m h dom mon dow command
-      02 * * * 1-5 /home/user/command.sh
+      0 02 * * 1-5 /home/user/command.sh
 
 ### Weekends at 2 am
      
      # m h dom mon dow command
-      02 * * * 6,7 /home/user/command.sh
+      0 02 * * 6,7 /home/user/command.sh
 
 or
      
      # m h dom mon dow command
-      02 * * * 6-7 /home/user/command.sh
+      0 02 * * 6-7 /home/user/command.sh
 
 ### Once a month on the 15th at 2 am
      
