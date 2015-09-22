@@ -1,7 +1,7 @@
-output_dir: /data/webusers/bencanec/public_html/
-static_dir: /home/bcane/bclog/static
-template_dir: /home/bcane/bclog/templates/
-post_dir: /home/bcane/bclog/posts/
+output_dir: /var/tmp/bclog/
+static_dir: static
+template_dir: templates
+post_dir: posts
 templates:
   archive: archive.html
   post: blog.html
@@ -22,6 +22,9 @@ site_keywords:
   - sysadmin
   - sysadmin blog
   - devops
+  - DevOps How to
+  - DevOps Blog
+  - Linux Blog
   - linux blog
   - sysadmin best practices
   - systems administration
@@ -39,4 +42,4 @@ site_keywords:
   - Sysadmin How To
 site_author: Benjamin Cane
 site_authorlink: https://plus.google.com/+BenjaminCane
-index_header: Solutions Architect who writes about Linux Systems Administration
+index_header: Systems Architect who writes about Linux Systems Administration

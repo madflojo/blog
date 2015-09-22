@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
-{% include '/home/bcane/bclog/templates/header.html' %}
+{% include 'templates/header.html' %}
 <body>
 
-{% include '/home/bcane/bclog/templates/navbar.html' %}
+{% include 'templates/navbar.html' %}
 
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
@@ -57,7 +57,7 @@
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 			{{ data['data'] }}
 
-    		{% include '/home/bcane/bclog/templates/shareaholic.html' %}
+    		{% include 'templates/shareaholic.html' %}
     <div class="row visible-lg">
       <div align="center">
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -84,7 +84,7 @@
 </script>
   </div>
   </div>
-	   	{% include '/home/bcane/bclog/templates/disqus.html' %}
+	   	{% include 'templates/disqus.html' %}
                 </div>
 		
             </div>
@@ -98,16 +98,16 @@
     <footer>
         <div class="container">
             <div class="row">
-	   {% include '/home/bcane/bclog/templates/authorinfo.html' %}
+	   {% include 'templates/authorinfo.html' %}
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <p class="copyright text-muted">Copyright &copy; Benjamin Cane 2014 - <a href="mailto:ben@bencane.com?subject=Sponsorship of BenCane.com">Sponsor this blog</a></p>
+                    <p class="copyright text-muted">Copyright &copy; Benjamin Cane 2014 - <a href="mailto:ben@bencane.com">Contact the Author</a></p>
                 </div>
             </div>
         </div>
     </footer>
 
 
-	   {% include '/home/bcane/bclog/templates/js_includes.html' %}
+	   {% include 'templates/js_includes.html' %}
 </body>
 
 </html>

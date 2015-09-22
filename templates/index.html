@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 
-{% include '/home/bcane/bclog/templates/header.html' %}
+{% include 'templates/header.html' %}
 
 <body>
 
-{% include '/home/bcane/bclog/templates/navbar.html' %}
+{% include 'templates/navbar.html' %}
 
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
@@ -26,12 +26,12 @@
     <!-- Main Content -->
     <div class="container">
         <div class="row">
-		{% include '/home/bcane/bclog/templates/authorinfo.html' %}
+		{% include 'templates/authorinfo.html' %}
 	    <hr>
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 		<h2>Latest Article</h2>
                 <div class="post-preview">
-                    <a href="{{ data['siteurl'] }}{{ data['url'] }}">
+                    <a href="{{ data['site_url'] }}{{ data['url'] }}">
                         <h2 class="post-title">
 			    {{ data['title'] }}
                         </h2>
@@ -52,14 +52,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-		    {% include '/home/bcane/bclog/templates/shareaholic.html' %}
-                    <p class="copyright text-muted">Copyright &copy; Benjamin Cane 2014 - <a href="mailto:ben@bencane.com?subject=Sponsorship of BenCane.com">Sponsor this blog</a></p>
+		    {% include 'templates/shareaholic.html' %}
+                    <p class="copyright text-muted">Copyright &copy; Benjamin Cane 2014 - <a href="mailto:ben@bencane.com">Contact the Author</a></p>
                 </div>
             </div>
         </div>
     </footer>
 
-{% include '/home/bcane/bclog/templates/js_includes.html' %}
+{% include 'templates/js_includes.html' %}
 </body>
 
 </html>
