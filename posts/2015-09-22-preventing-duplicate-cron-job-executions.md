@@ -1,7 +1,7 @@
 ---
 author: madflojo
-date: 2015-09-22 07:50:00-07:00
-pubdate: Tue, 22 Sep 2015 07:50:00 -07:00
+date: 2015-09-22 06:20:00-07:00
+pubdate: Tue, 22 Sep 2015 06:20:00 -07:00
 popularity: False
 slug: preventing-duplicate-cron-job-executions
 title: "Preventing duplicate cron job executions"
