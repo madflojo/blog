@@ -1,0 +1,28 @@
+author: bencane
+comments: true
+date: 2012-07-16 15:00:53+00:00
+popularity: None
+slug: tc-adding-simulated-network-latency-to-your-linux-server
+title: 'tc: Adding simulated network latency to your Linux server'
+post_id: 73
+categories:
+- How To &amp; Tutorials
+- Linux
+- Linux Commands
+tags:
+- iproute
+- kernel
+- linkedin
+- linux
+- linux os
+- netem
+- network
+- network latency
+- ping
+- qdisc
+- servers
+- tc
+- tc command
+- WAN
+- wide area network
+file: 2012-07-16-tc-adding-simulated-network-latency-to-your-linux-server.md

@@ -1,0 +1,26 @@
+author: bencane
+comments: true
+date: 2013-05-20 16:10:30+00:00
+popularity: None
+slug: securely-backing-up-your-files-with-rdiff-backup-and-sudo
+title: Securely backing up your files with rdiff-backup and sudo
+description: A guide on setting up rdiff-backup and using sudo to run rdiff-backup without running it as the root user
+post_id: 90
+categories:
+- Administration
+- How To &amp; Tutorials
+- Linux Commands
+- Rdiff-Backup
+tags:
+- backup package
+- backup server
+- backup tool
+- linux
+- linux os
+- rdiff-backup
+- red hat
+- red hat os
+- sudo
+- ubuntu linux
+- ubuntu os
+file: 2013-05-20-securely-backing-up-your-files-with-rdiff-backup-and-sudo.md

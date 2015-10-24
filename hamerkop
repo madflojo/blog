@@ -1,0 +1,84 @@
+#!/usr/bin/python
+''' Hamerkop - A simple static site generator written in python for bencane.com '''
+
+import mistune
+import jinja2
+import argparse
+import yaml
+import os
+from datetime import datetime
+
+
+
+def load_post_config(config):
+    ''' Find article yml files and load them into metadata dictionary '''
+    metadata = {}
+    dir_contents = os.listdir(config['articles']['config'])
+    for item in dir_contents:
+        fullpath = config['articles']['config'] + "/" + item
+        if os.path.isfile(fullpath):
+            afh = open(fullpath, "r")
+            meta = yaml.safe_load(afh)
+            afh.close()
+            metadata[meta['post_id']] = meta
+    return metadata
+
+
+def get_post_data(filename):
+    ''' Grab the post written in markdown '''
+    markdown = mistune.Markdown()
+    pfh = open(filename, "r")
+    data = pfh.read()
+    pfh.close()
+    return markdown(data)
+
+
+def render_page(data, template, template_path):
+    ''' Take post or fulldata and generate HTML page '''
+    template_loader = jinja2.FileSystemLoader(searchpath=template_path)
+    template_env = jinja2.Environment(loader=template_loader)
+    template_obj = template_env.get_template(template)
+    template_vars = {'data' : data}
+    return template_obj.render(template_vars)
+
+
+def create_page(path, filename, content):
+    ''' Take a filename as input and create a file '''
+    if not os.path.isdir(path):
+        os.makedirs(path)
+    try:
+        fh = open(filename, "w")
+        fh.write(content)
+        fh.close()
+        return True
+    except:
+        return False
+    
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-c", "--config",
+                        help="Specify a configuration file",
+                        required=True)
+    args = parser.parse_args()
+    cfh = open(args.config, "r")
+    config = yaml.safe_load(cfh)
+    cfh.close()
+
+    # Define fulldata with all metadata
+    fulldata = load_post_config(config)
+    for post in fulldata.keys():
+        filename = config['articles']['posts'] + "/" + fulldata[post]['file']
+        fulldata[post]['data'] = get_post_data(filename)
+        rendered_page = render_page(fulldata[post], config['templates']['post'], config['template_dir'])
+        slug_path = config['output_dir'] + datetime.strftime(fulldata[post]['date'],
+                                                      '/%Y/%m/%d')
+        slug = fulldata[post]['slug']
+        data = fulldata[post]
+        if create_page(slug_path, slug, data):
+            print "Successfully created article {}".format(post)
+        else:
+            print "Error creating article {}".format(post)
+
+    

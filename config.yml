@@ -1,7 +1,10 @@
 output_dir: /var/tmp/bclog/
 static_dir: static
-template_dir: templates
+template_dir: ./templates
 post_dir: posts
+articles:
+  config: articles/config
+  posts: articles/posts
 templates:
   archive: archive.html
   post: blog.html

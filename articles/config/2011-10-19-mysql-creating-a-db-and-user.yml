@@ -1,0 +1,21 @@
+author: bencane
+comments: true
+date: 2011-10-19 07:11:25+00:00
+popularity: None
+slug: mysql-creating-a-db-and-user
+title: 'mysql: Creating a db and user'
+thumbnail: http://bencane.com/img/thumbnails/mysql.jpg
+description: How to setup a basic mysql database and database user with privileges to only the newly created database
+post_id: 56
+categories:
+- All Articles
+- Applications
+- Databases
+- How To &amp; Tutorials
+- MySQL
+tags:
+- linux
+- mysql
+- tech
+- unix
+file: 2011-10-19-mysql-creating-a-db-and-user.md

@@ -1,0 +1,32 @@
+author: bencane
+comments: true
+date: 2012-11-23 14:30:04+00:00
+popularity: None
+slug: nfs-setting-up-a-basic-nfs-file-system-share
+title: 'NFS: Setting up a basic NFS file system share'
+post_id: 81
+categories:
+- All Articles
+- Applications
+- File Systems
+- How To &amp; Tutorials
+- NFS
+tags:
+- all
+- apt-get
+- chkconfig
+- debian
+- init
+- linux
+- linux distributions
+- linux os
+- local file system
+- network file system
+- nfs
+- nfs server
+- protocol
+- red hat os
+- security
+- server packages
+- ubuntu
+file: 2012-11-23-nfs-setting-up-a-basic-nfs-file-system-share.md

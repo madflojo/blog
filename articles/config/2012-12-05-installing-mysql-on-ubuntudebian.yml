@@ -1,0 +1,31 @@
+author: bencane
+comments: true
+date: 2012-12-05 22:35:34+00:00
+popularity: None
+slug: installing-mysql-on-ubuntudebian
+title: Installing MySQL on Ubuntu/Debian
+thumbnail: http://bencane.com/img/thumbnails/mysql.jpg
+description: How to install MySQL on Ubuntu or Debian based Linux Systems using apt-get
+post_id: 82
+categories:
+- All Articles
+- Applications
+- Databases
+- How To &amp; Tutorials
+- Linux
+- MySQL
+- Ubuntu
+tags:
+- apt
+- apt-get
+- debian
+- linux
+- linux os
+- mysql
+- mysql connection
+- rdbms
+- relational database management
+- relational database management system
+- ubuntu
+- ubuntu os
+file: 2012-12-05-installing-mysql-on-ubuntudebian.md

@@ -1,0 +1,21 @@
+author: bencane
+comments: true
+date: 2013-09-30 14:53:19+00:00
+popularity: None
+slug: changing-the-default-nice-value-for-a-user-or-group
+title: Changing the default nice value for a user or group
+description: How to make a niceness value default for any user or group using /etc/security/limits.conf
+post_id: 104
+categories:
+- All Articles
+- How To &amp; Tutorials
+- Linux
+- Linux Commands
+tags:
+- linux os
+- linux server
+- linux system
+- linux tutorial
+- nice
+- niceness
+file: 2013-09-30-changing-the-default-nice-value-for-a-user-or-group.md
