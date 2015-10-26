@@ -5,17 +5,34 @@ post_dir: posts
 articles:
   config: articles/config
   posts: articles/posts
+additional_pages:
+  index: 
+    url: index.html
+  sitemap: 
+    url: sitemap.xml
+  feed:
+    url: index.xml
+    add_path: feed/
+  archive:
+    url: archive.html
+    title: Archives
+  notfound:
+    url: 404.html
+    title: Page Not Found
+  forbidden:
+    url: 403.html
+    title: Access Forbidden
 templates:
   archive: archive.html
-  post: blog.html
+  article: blog.html
   index: index.html
   feed: feed.xml
   sitemap: sitemap.xml
   notfound: 404.html
   forbidden: 403.html
 site_name: Benjamin Cane
-site_description: Linux Systems Administration blog featuring tutorials, tips, hacks and how to articles
-site_shortdesc: A Linux Systems Administration Blog
+site_description: A blog about Linux Systems Administration, Automation, Python and other DevOps-y topics
+site_shortdesc: A Systems Architect writing about Linux Systems Administration
 site_thumbnail: http://bencane.com/img/thumbnails/shell.png
 site_url: http://bencane.com
 site_feed: http://feed.bencane.com
@@ -45,4 +62,3 @@ site_keywords:
   - Sysadmin How To
 site_author: Benjamin Cane
 site_authorlink: https://plus.google.com/+BenjaminCane
-index_header: Systems Architect who writes about Linux Systems Administration

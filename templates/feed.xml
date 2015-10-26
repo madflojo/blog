@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/">
 <channel>
-<title>{{ data['sitename'] }}</title>
-<atom:link href="{{ data['siteurl'] }}/feed/" rel="self" type="application/rss+xml"/>
-<link>{{ data['siteurl'] }}</link>
-<description>{{ data['description'] }}</description>
+<title>{{ meta['site_name'] }}</title>
+<atom:link href="{{ meta['site_feed'] }}" rel="self" type="application/rss+xml"/>
+<link>{{ meta['site_url'] }}</link>
+<description>{{ meta['site_description'] }}</description>
 <language>en-US</language>
-<generator>bcLogGenerator v0.1</generator>
-{% for item in data['rpids'] %}
+<generator>Hamerkop Static Site Generator v0.1</generator>
+{% set count = 0 %}
+{% for item in meta['post_ids']|reverse %}
+{% if count <= 25 %}
 <item>
-<title>{{ data['rowitems'][item]['title'] }}</title>
-<link>{{ data['siteurl'] }}{{ data['rowitems'][item]['url'] }}</link>
-<comments>{{ data['siteurl'] }}{{ data['rowitems'][item]['url'] }}/#comments</comments>
-<dc:creator>{{ data['rowitems'][item]['author'] }}</dc:creator>
-{% if data['rowitems'][item]['pubdate'] %}
-<pubDate>{{ data['rowitems'][item]['pubdate'] }}</pubDate>
+<title>{{ data[item]['title'] }}</title>
+<link>{{ meta['site_url'] }}{{ data[item]['full_url'] }}</link>
+<comments>{{ meta['site_url'] }}{{ data[item]['full_url'] }}/#comments</comments>
+<dc:creator>{{ meta['author'] }}</dc:creator>
+{% if data[item]['pubdate'] %}
+<pubDate>{{ data[item]['pubdate'] }}</pubDate>
 {% endif %}
-{% for cat in data['rowitems'][item]['cats'] %}
+{% for cat in data[item]['cats'] %}
 <category><![CDATA[{{ cat }}]]></category>
 {% endfor %}
-<description><![CDATA[{{ data['rowitems'][item]['description'] }} <br>Originally Posted on BenCane.com: <a href="{{ data['siteurl'] }}{{ data['rowitems'][item]['url'] }}" target="_blank">Full Article</a>]]></description>
-<content:encoded><![CDATA[{{ data['rowitems'][item]['data'] }} <br>Originally Posted on BenCane.com: <a href="{{ data['siteurl'] }}{{ data['rowitems'][item]['url'] }}" target="_blank">Go To Article</a>]]></content:encoded>
+<description><![CDATA[{{ data[item]['description'] }} <br>Posted by <a href="{{ meta['site_url'] }}{{ data[item]['full_url'] }}" target="_blank">Benjamin Cane</a>]]></description>
+<content:encoded><![CDATA[{{ data[item]['data'] }} <br>Posted by <a href="{{ meta['site_url'] }}{{ data[item]['full_url'] }}" target="_blank">Benjamin Cane</a>]]></content:encoded>
 </item>
+{% set count = count + 1 %}
+{% endif %}
 {% endfor %}
 	</channel>
 </rss>

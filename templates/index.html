@@ -9,14 +9,13 @@
 
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
-    <header class="intro-header" style="background-image: url('http://bencane.com/static/img/home-bg.jpg')">
+    <header class="intro-header" style="background-image: url('/static/img/home-bg.jpg')">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="site-heading">
                         <h1>Benjamin Cane</h1>
-                        <hr class="small">
-                        <span class="subheading">{{ data['index_header'] }}</span>
+                        <span class="subheading">{{ meta['site_shortdesc'] }}</span>
                     </div>
                 </div>
             </div>
@@ -28,19 +27,39 @@
         <div class="row">
 		{% include 'authorinfo.html' %}
 	    <hr>
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-		<h2>Latest Article</h2>
+            <div class="col-lg-8 col-md-8">
+		            <h2>Latest Articles</h2>
+                {% set seq_num = 0 %}
+                {% for key in meta['post_ids']|reverse %}
+                {% if seq_num <= 8 %}
                 <div class="post-preview">
-                    <a href="{{ data['siteurl'] }}{{ data['url'] }}">
-                        <h2 class="post-title">
-			    {{ data['title'] }}
-                        </h2>
-                        <h3 class="post-subtitle">
-			    {{ data['description'] }}
+                    <a href="{{ data[key]['full_url'] }}">
+                        <h3 class="post-title">
+			    {{ data[key]['title'] }}
                         </h3>
+                        <h4 class="post-subtitle">
+			    {{ data[key]['description'] }}
+                        </h4>
                     </a>
-                    <p class="post-meta">Written by <a href="https://twitter.com/madflojo">Benjamin Cane</a> at {{ data['date'] }}</p>
+                    <p class="post-meta">Written by <a href="https://twitter.com/madflojo">Benjamin Cane</a> at {{ data[key]['date'] }}</p>
                 </div>
+                {% endif %}
+                {% set seq_num = seq_num + 1 %}
+                {% endfor %}
+            </div>
+            <div class="col-lg-4 col-md-4">
+              <h2>Books I've Written</h2>
+              <div class="well">
+                 <a href="http://amzn.to/1Mdbtkt" target="_blank"><h3>Red Hat Enterprise Linux Troubleshooting Guide</h3></a>
+                  <center><a href="http://amzn.to/1Mdbtkt" target="_blank"><img src="/static/img/RHELTroubleshootingCover.jpg" class="img-responsive" border=0/></a></center>
+<p>
+In this book, you begin with simple troubleshooting best practices and get an overview of the Linux commands used for troubleshooting. The book will cover the troubleshooting methods for web applications and services such as Apache and MySQL. Then, you will learn to identify system performance bottlenecks and troubleshoot network issues; all while learning about vital troubleshooting steps such as understanding the problem statement, establishing a hypothesis, and understanding trial, error, and documentation. Next, the book will show you how to capture and analyze network traffic, use advanced system troubleshooting tools such as strace, tcpdump & dmesg, and discover common issues with system defaults.
+</p><p>
+Finally, the book will take you through a detailed root cause analysis of an unexpected reboot where you will learn
+to recover after an unexpected system failure.</p>
+
+                 <a href="http://amzn.to/1Mdbtkt" class="btn btn-block btn-primary" role="button" target="_blank">Purchase this book</a>
+              </div>
             </div>
         </div>
     </div>

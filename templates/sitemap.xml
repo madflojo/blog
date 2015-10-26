@@ -9,15 +9,10 @@
       <changefreq>weekly</changefreq>
    </url>
 
-{% for item in data['rpids'] %}
+{% for item in meta['post_ids']|reverse %}
    <url>
-      <loc>{{ data['siteurl'] }}{{ data['rowitems'][item]['url'] }}</loc>
-{% if data['rowitems'][item]['lastpost'] %}
+      <loc>{{ meta['site_url'] }}{{ data[item]['full_url'] }}</loc>
       <changefreq>daily</changefreq>
-{% else %}
-      <changefreq>monthly</changefreq>
-{% endif %}
-
    </url>
 {% endfor %}
 
