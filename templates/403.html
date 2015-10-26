@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include "header.html" %}
+<body>
+
+{% include "navbar.html" %}
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('/static/img/403-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="page-heading">
+                        <h1>403 Access Forbidden</h1>
+                        <span class="subheading">Do not pass go, do not collect $200</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+  <div class="alert alert-danger" role="alert"><b>403 Access Forbidden!</b> Checkout some of the other articles instead</div>
+ 	<div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">The Archives</h3>
+        </div>
+        <table class="table table-striped table-hover">
+          <tbody>
+
+          
+          {% for item in meta['post_ids']|reverse %}
+          <tr>
+            <td>
+            {% if data[item]['popularity'] == True %}
+            <span class="label label-info pull-right">Popular</span>
+            {% endif %}
+            <h3><a href="{{ data[item]['full_url'] }}">{{ data[item]['title'] }}</a></h3>
+                <small class="text-muted">Published on: {{ data[item]['date'] }}</small>
+                <p class="text-default">{{ data[item]['description'] }}</p>
+            </td>
+          </tr>
+          {% endfor %}
+
+          </tbody>
+        </table>
+	</div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+		    {% include 'shareaholic.html' %}
+                    <p class="copyright text-muted">Copyright &copy; Benjamin Cane 2014 - <a href="mailto:ben@bencane.com">Contact the Author</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+{% include "js_includes.html" %}
+
+</body>
+
+</html>
