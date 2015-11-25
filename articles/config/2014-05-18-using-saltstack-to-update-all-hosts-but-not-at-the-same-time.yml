@@ -15,3 +15,4 @@ tags:
 - saltstack scheduler
 - crontab
 file: 2014-05-18-using-saltstack-to-update-all-hosts-but-not-at-the-same-time.md
+published: True

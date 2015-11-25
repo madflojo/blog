@@ -26,3 +26,4 @@ tags:
 - pidfile
 - flock
 file: 2015-09-22-preventing-duplicate-cron-job-executions.md
+published: True

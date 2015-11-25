@@ -25,3 +25,4 @@ tags:
 - yum repositories
 - yum repository
 file: 2013-04-15-creating-a-local-yum-repository.md
+published: True
