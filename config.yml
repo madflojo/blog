@@ -1,4 +1,4 @@
-output_dir: /var/tmp/bclog/
+output_dir: /var/www/html
 static_dir: static
 template_dir: ./templates
 post_dir: posts
