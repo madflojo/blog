@@ -232,7 +232,7 @@ If we build the **blog** image again, we can see something very interesting.
      ---> Running in 804e07ee3389
     Get:1 http://security.debian.org jessie/updates InRelease [63.1 kB]
     Ign http://nginx.org jessie InRelease
-    <truncated>
+    <truncated to reduce noise>
     Get:10 http://httpredir.debian.org jessie/main amd64 Packages [9035 kB]
     Fetched 9581 kB in 43s (219 kB/s)
     Reading package lists...
@@ -245,11 +245,8 @@ If we build the **blog** image again, we can see something very interesting.
     Reading state information...
     The following extra packages will be installed:
       binutils build-essential bzip2 cpp cpp-4.9 dpkg-dev fakeroot file g++
-    <truncated>
+    <truncated to reduce noise>
     Setting up python-pip (1.5.6-5) ...
-    Setting up python-pyasn1 (0.1.7-1) ...
-    Setting up python-wheel (0.24.0-1) ...
-    Setting up rename (0.20-3) ...
     update-alternatives: using /usr/bin/file-rename to provide /usr/bin/rename (rename) in auto mode
     Processing triggers for libc-bin (2.19-18+deb8u1) ...
     Processing triggers for python-support (1.0.15) ...
@@ -257,4 +254,31 @@ If we build the **blog** image again, we can see something very interesting.
     Removing intermediate container f42c617a8750
     Successfully built 4c5ab00d983c
 
-We
+In the above we can see that steps that were executed in previous builds of this image have the following message `---> Using cache`. What this is telling us is that Docker was able to use it's build cache to speed up the build of this image.
+
+##### Docker Build Cache
+
+When Docker is building an image, it doesn't just build a single image it actually builds multiple images along the way. In fact we can see that in the above output after each "Step"; `---> 8e0f1899d1eb`. We can see from the output above that after "Step 1" Docker generated an image named `8e0f1899d1eb`. During subsequent builds of this same image, Docker is able to reuse those images as a cache.
+
+If we go back to our Dockerfile we now have both **nginx** and **python** installed, however the site generator requires a few python packages. To install these we will use the `pip` command.
+
+    ## Dockerfile that generates an instance of http://bencane.com
+    
+    FROM nginx:latest
+    MAINTAINER Benjamin Cane <ben@bencane.com>
+    
+    ## Create a directory for required files
+    RUN mkdir -p /build/
+    ## Install python and pip
+    RUN apt-get update
+    RUN apt-get install -y python-dev python-pip
+    
+    ## Add requirements file and run pip
+    ADD requirements.txt /build/requirements.txt
+    RUN pip install -r /build/requirements.txt
+
+Within the **Git** repository for this blog there is a file called `requirements.txt` which lists all of the python libraries required for the static site generator. A simple way of installing these required libraries with `pip` is to simply run it by specify `install -r`. The `-r` flag is used to specify a "requirements" file for `pip` to read and install the specified libraries. You may notice however, before executing the `pip` command we used a new Dockerfile instruction `ADD`. The `ADD` instruction provides the ability add a file that exists within the same directory as the Dockerfile to the Docker image.
+
+In the Dockerfile above we have added the `requirements.txt` file to the `/build/` directory. If we did not add this file with the `ADD` instruction our `pip` command would fail as that file would simply not exist.
+
+
