@@ -186,7 +186,7 @@ In the above example I used the `-t` flag with the `docker build` command to "ta
 
 Now that we have an image that starts and deploys an **nginx** webserver let's start making this custom image deploy the blog.
 
-#### RUN and ADD
+#### RUN and COPY
 
 Since the static site generator used to create this blog is written in **python** there are a few tasks we need to execute before we can execute the generator. The first thing we should do is to create a directory that will contain all of the necessary code, images and article files required to build the blog. To have Docker execute a command during an image build we can use the `RUN` instruction.
 
@@ -274,11 +274,110 @@ If we go back to our Dockerfile we now have both **nginx** and **python** instal
     RUN apt-get install -y python-dev python-pip
     
     ## Add requirements file and run pip
-    ADD requirements.txt /build/requirements.txt
+    COPY requirements.txt /build/requirements.txt
     RUN pip install -r /build/requirements.txt
 
-Within the **Git** repository for this blog there is a file called `requirements.txt` which lists all of the python libraries required for the static site generator. A simple way of installing these required libraries with `pip` is to simply run it by specify `install -r`. The `-r` flag is used to specify a "requirements" file for `pip` to read and install the specified libraries. You may notice however, before executing the `pip` command we used a new Dockerfile instruction `ADD`. The `ADD` instruction provides the ability add a file that exists within the same directory as the Dockerfile to the Docker image.
+Within the **Git** repository for this blog there is a file called `requirements.txt` which lists all of the python libraries required for the static site generator. A simple way of installing these required libraries with `pip` is to simply run it by specify `install -r`. The `-r` flag is used to specify a "requirements" file for `pip` to read and install the specified libraries. You may notice however, before executing the `pip` command we used a new Dockerfile instruction `COPY`. The `COPY` instruction provides the ability copy a file from the directory that contains the Dockerfile to the Docker image.
 
-In the Dockerfile above we have added the `requirements.txt` file to the `/build/` directory. If we did not add this file with the `ADD` instruction our `pip` command would fail as that file would simply not exist.
+In the Dockerfile above we have copied the `requirements.txt` file to the `/build/` directory. If we did not copy this file with the `COPY` instruction our `pip` command would fail as that file would simply not exist.
+
+With the **python** libraries installed this leaves us to the point of copying the rest of the required blog files and running the static site generator.
+
+    ## Dockerfile that generates an instance of http://bencane.com
+    
+    FROM nginx:latest
+    MAINTAINER Benjamin Cane <ben@bencane.com>
+    
+    ## Create a directory for required files
+    RUN mkdir -p /build/
+    ## Install python and pip
+    RUN apt-get update
+    RUN apt-get install -y python-dev python-pip
+    
+    ## Add requirements file and run pip
+    COPY requirements.txt /build/
+    RUN pip install -r /build/requirements.txt
+    
+    ## Add blog code nd required files
+    COPY config.yml /build/
+    COPY templates /build/templates
+    COPY static /build/static
+    COPY hamerkop /build/
+    COPY articles /build/articles
+    
+    ## Run Generator
+    RUN /build/hamerkop -c /build/config.yml
+
+As we can see this is accomplished by more `COPY` and `RUN` instructions. If we run `docker build` again we can see that our image builds successfully.
+
+    # docker build -t blog /root/blog/
+    Sending build context to Docker daemon 19.52 MB
+    Sending build context to Docker daemon 
+    Step 0 : FROM nginx:latest
+     ---> 9fab4090484a
+    Step 1 : MAINTAINER Benjamin Cane <ben@bencane.com>
+     ---> Using cache
+     ---> 8e0f1899d1eb
+    Step 2 : RUN mkdir -p /build/
+     ---> Using cache
+     ---> 3601f3bfbf53
+    Step 3 : RUN apt-get update
+     ---> Using cache
+     ---> 9e11c3d60b63
+    Step 4 : RUN apt-get install -y python-dev python-pip
+     ---> Using cache
+     ---> 4c5ab00d983c
+    Step 5 : COPY requirements.txt /build/
+     ---> Using cache
+     ---> 88a653512a9d
+    Step 6 : RUN pip install -r /build/requirements.txt
+     ---> Using cache
+     ---> bf7b3771b9c3
+    Step 7 : COPY config.yml /build/
+     ---> Using cache
+     ---> a42f77802513
+    Step 8 : COPY templates /build/templates
+     ---> Using cache
+     ---> bfdfa512938e
+    Step 9 : COPY static /build/static
+     ---> Using cache
+     ---> a8541256bec7
+    Step 10 : COPY hamerkop /build/
+     ---> Using cache
+     ---> 4fe37cb9b378
+    Step 11 : COPY articles /build/articles
+     ---> Using cache
+     ---> fd7c0907bcba
+    Step 12 : RUN /build/hamerkop -c /build/config.yml
+     ---> Running in b53587b5db8d
+    Successfully created file /usr/share/nginx/html//2011/06/25/checking-the-number-of-lwp-threads-in-linux
+    Successfully created file /usr/share/nginx/html//2011/06/checking-the-number-of-lwp-threads-in-linux
+    <truncated to reduce noise>
+    Successfully created file /usr/share/nginx/html//2015/10/getting-started-with-docker-by-dockerizing-this-blog
+    Successfully created file /usr/share/nginx/html//2015/getting-started-with-docker-by-dockerizing-this-blog
+    Successfully created file /usr/share/nginx/html//feed//index.xml
+    Successfully created file /usr/share/nginx/html//index.html
+    Successfully created file /usr/share/nginx/html//404.html
+    Successfully created file /usr/share/nginx/html//403.html
+    Successfully created file /usr/share/nginx/html//archive.html
+    Successfully created file /usr/share/nginx/html//sitemap.xml
+     ---> 88ee9629727d
+    Removing intermediate container b53587b5db8d
+    Successfully built 88ee9629727d
+
+### Running a custom container
+
+With a successfully built custom image we can now start that container using the `docker run` command.
+
+    # docker run -d -p 80:80 -p 443:443 --name=blog blog
+    5f6c7a2217dcdc0da8af05225c4d1294e3e6bb28a41ea898a1c63fb821989ba1
+
+Once again we used the `-d` flag with the `docker run` command to tell Docker to have the container run in the background. Which, by default Docker containers run in the foreground. Meaning if we did not specify the `-d` flag our shell environment would have been taken over with the output of the containers running process. We also specified another flag `--name`. In the earlier example we did not specify a name and because of that Docker randomly generated one. With this flag we can give this container a custom name; in our case **blog**.
+
+The final new flag is `-p`, this flag allows us to map a port on the host machine to a port on the container. The **nginx** container uses ports 80 and 443 to serve the HTTP service. By default ports used within a Docker container are not exposed outside that container to the host system. In order to access ports used within the container we must first map ports from the host to ports within the container. We can do this with the `-p` flag and specifying the host port and container port in the following format `<host_port>:<container_port>`.
+
+    # docker ps
+    CONTAINER ID        IMAGE               COMMAND                CREATED             STATUS              PORTS                                      NAMES
+    5f6c7a2217dc        blog:latest         nginx -g 'daemon off   18 minutes ago      Up 17 seconds       0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp   blog      
 
 

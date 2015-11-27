@@ -1,10 +1,10 @@
-output_dir: /var/www/html
-static_dir: static
-template_dir: ./templates
+output_dir: /usr/share/nginx/html
+static_dir: /build/static
+template_dir: /build/templates
 post_dir: posts
 articles:
-  config: articles/config
-  posts: articles/posts
+  config: /build/articles/config
+  posts: /build/articles/posts
 additional_pages:
   index: 
     url: index.html
