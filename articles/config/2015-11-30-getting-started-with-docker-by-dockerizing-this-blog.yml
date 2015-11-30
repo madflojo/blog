@@ -1,0 +1,23 @@
+author: madflojo
+date: 2015-12-01 06:20:00-07:00
+pubdate: Tue, 1 Dec 2015 06:20:00 -07:00
+popularity: False
+slug: getting-started-with-docker-by-dockerizing-this-blog
+title: Getting started with Docker by Dockerizing this Blog
+description: This article covers the basic concepts of Docker and how to Dockerize an application by creating a custom Dockerfile
+post_id: 127
+categories:
+- Docker
+- Containers
+tags:
+- docker
+- dockerfile
+- dockerizing
+- containers
+- linux containers
+- linux docker
+- docker blog
+- application packaging
+- nginx docker
+file: 2015-12-01-getting-started-with-docker-by-dockerizing-this-blog.md
+published: True
