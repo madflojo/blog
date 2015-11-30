@@ -1,0 +1,18 @@
+author: madflojo
+date: 2014-05-19 05:20:00+00:00
+pubdate: Mon, 19 May 2014 05:20:00 +00:00
+popularity: True
+slug: using-saltstack-to-update-all-hosts-but-not-at-the-same-time
+title: "Using Saltstack to update all hosts, but not at the same time"
+description: This article describes several methods of updating salt minions and how to roll out those updates at different times to avoid taking down all hosts at the same time.
+post_id: 119
+categories:
+- SaltStack
+tags:
+- linux
+- saltstack
+- saltstack batches
+- saltstack scheduler
+- crontab
+file: 2014-05-18-using-saltstack-to-update-all-hosts-but-not-at-the-same-time.md
+published: True

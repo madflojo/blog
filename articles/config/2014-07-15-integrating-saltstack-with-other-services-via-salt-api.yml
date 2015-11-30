@@ -1,0 +1,17 @@
+author: madflojo
+date: 2014-07-16 17:00:00-07:00
+pubdate: Wed, 16 Jul 2014 17:00:00 -07:00
+popularity: None
+slug: integrating-saltstack-with-other-services-via-salt-api
+title: "Using salt-api to integrate SaltStack with other services"
+description: This article will walk you through using salt-api as an entry point for other services to call SaltStack to initiate actions within your infrastructure.
+post_id: 121
+categories:
+- SaltStack
+tags:
+- linux
+- saltstack
+- salt-api
+- saltstack api
+file: 2014-07-15-integrating-saltstack-with-other-services-via-salt-api.md
+published: True

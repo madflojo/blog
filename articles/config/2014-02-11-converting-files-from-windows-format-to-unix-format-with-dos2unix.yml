@@ -1,0 +1,20 @@
+author: madflojo
+date: 2014-02-11 08:00:00+00:00
+pubdate: Tue, 11 Feb 2014 08:00:00 +00:00
+popularity: None
+slug: converting-files-from-windows-format-to-unix-format-with-dos2unix
+title: "Converting files from Windows format to Unix format with dos2unix"
+description: This article explains what end of line characters are and how to use dos2unix to convert files that contain Windows EOL characters to a Unix format.
+post_id: 114
+categories:
+- Linux
+- Unix
+tags:
+- linux
+- dos2unix
+- dos end of line characters
+- EOL characters
+- unix2dos
+- working with files in linux
+file: 2014-02-11-converting-files-from-windows-format-to-unix-format-with-dos2unix.md
+published: True

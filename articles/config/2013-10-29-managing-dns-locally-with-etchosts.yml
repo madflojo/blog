@@ -1,0 +1,30 @@
+author: bencane
+comments: true
+date: 2013-10-29 13:27:14+00:00
+popularity: None
+slug: managing-dns-locally-with-etchosts
+title: Managing DNS locally with /etc/hosts
+description: An article that explains what the heck the /etc/hosts file is and how you can use it to manage DNS locally
+post_id: 108
+categories:
+- All Articles
+- Best Practices
+- How To &amp; Tutorials
+- Linux
+- Networking
+- SysAdmin Basics
+- Troubleshooting
+- Unix
+tags:
+- /etc/hosts
+- bind
+- dns
+- enterprise
+- hosts
+- linux
+- linux networking
+- name lookup
+- nslookup
+- unix
+file: 2013-10-29-managing-dns-locally-with-etchosts.md
+published: True

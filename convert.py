@@ -57,7 +57,7 @@ def createFile(path, filename, output):
 
 def genPostPage(f, data, output_dir):
   ''' Create HTML Page for Individual Post '''
-  templateLoader = jinja2.FileSystemLoader( searchpath="/" )
+  templateLoader = jinja2.FileSystemLoader( searchpath="." )
   templateEnv = jinja2.Environment( loader=templateLoader )
   template = templateEnv.get_template(f)
   tempVars = { 'data' : data }
@@ -78,7 +78,7 @@ def genPostPage(f, data, output_dir):
 
 def genIndexPage(f, data, output_dir):
   ''' Create HTML Page for Inddex Page '''
-  templateLoader = jinja2.FileSystemLoader( searchpath="/" )
+  templateLoader = jinja2.FileSystemLoader( searchpath="." )
   templateEnv = jinja2.Environment( loader=templateLoader )
   template = templateEnv.get_template(f)
   tempVars = { 'data' : data }
@@ -93,7 +93,7 @@ def genIndexPage(f, data, output_dir):
 
 def genPage(f, tf, data, output_dir):
   ''' Create HTML Page for Archive Page '''
-  templateLoader = jinja2.FileSystemLoader( searchpath="/" )
+  templateLoader = jinja2.FileSystemLoader( searchpath="." )
   templateEnv = jinja2.Environment( loader=templateLoader )
   template = templateEnv.get_template(tf)
   tempVars = { 'data' : data }

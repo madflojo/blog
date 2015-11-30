@@ -1,0 +1,24 @@
+author: bencane
+comments: true
+date: 2013-10-14 07:20:46+00:00
+popularity: None
+slug: install-racktables-and-start-tracking-your-ip-address-inventory
+title: Install RackTables and start tracking your IP address inventory
+description: RackTables is an interesting IT inventory tracking system that can be used to track IP addresses as well as the hardware they are attached to.
+thumbnail: http://bencane.com/img/thumbnails/RackTables.png
+post_id: 106
+categories:
+- All Articles
+- Applications
+- How To &amp; Tutorials
+- Sysadmin Tools
+tags:
+- apache
+- ip inventory
+- lamp
+- linux
+- php
+- racktables
+- ubuntu
+file: 2013-10-14-install-racktables-and-start-tracking-your-ip-address-inventory.md
+published: True

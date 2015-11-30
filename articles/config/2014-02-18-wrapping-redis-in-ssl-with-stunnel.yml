@@ -1,0 +1,28 @@
+author: madflojo
+date: 2014-02-18 08:50:00+00:00
+pubdate: Tue, 18 Feb 2014 08:50:00 +00:00
+popularity: None
+slug: sending-redis-traffic-through-an-ssl-tunnel-with-stunnel
+title: "Sending redis traffic through an SSL tunnel with stunnel"
+description: This article covers how to secure and encrypt redis traffic by using stunnel. Redis does not by default support SSL encryption, by using stunnel you can forward all redis traffic through a specified SSL tunnel.
+post_id: 115
+categories:
+- Linux
+- Redis
+- stunnel
+- Security
+tags:
+- linux
+- redhat
+- centos
+- stunnel
+- ssl wrapping
+- ssl tunnel
+- security
+- encrypt redis traffic
+- openssl
+- self signed certificate
+- redis ssl
+- redis
+file: 2014-02-18-wrapping-redis-in-ssl-with-stunnel.md
+published: True

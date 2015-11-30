@@ -1,0 +1,20 @@
+author: madflojo
+date: 2014-12-30 07:50:00-07:00
+pubdate: Tue, 30 Dec 2014 07:50:00 -07:00
+popularity: False
+slug: building-self-healing-applications-with-salt-api
+title: "Building Self-Healing Applications with Saltstack"
+description: This article will explore creating an application that detects errors and corrects them by integrating Saltstack's API
+post_id: 125
+categories:
+- Python
+- Saltstack
+tags:
+- saltstack
+- self healing applications
+- salt-api
+- python
+- devops
+- automation
+file: 2014-12-23-building-self-healing-apps-with-saltapi.md
+published: True

@@ -1,0 +1,24 @@
+author: bencane
+comments: true
+date: 2013-03-19 19:56:24+00:00
+popularity: None
+slug: how-to-force-gpfs-or-other-tools-to-connect-via-an-alternate-ssh-port
+title: How to force GPFS (or other tools) to connect via an alternate ssh port
+description: A simple solution to force SSH clients to default to a port other than 22
+post_id: 85
+categories:
+- Applications
+- File Systems
+- GPFS
+- How To &amp; Tutorials
+- Linux
+- Unix
+tags:
+- global parallel file system
+- gpfs
+- linux
+- ssh
+- ssh port
+- sshd server
+file: 2013-03-19-how-to-force-gpfs-or-other-tools-to-connect-via-an-alternate-ssh-port.md
+published: True

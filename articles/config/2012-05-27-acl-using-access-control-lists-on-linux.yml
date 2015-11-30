@@ -1,0 +1,28 @@
+author: bencane
+comments: true
+date: 2012-05-27 21:00:33+00:00
+popularity: True
+slug: acl-using-access-control-lists-on-linux
+title: 'ACL: Using Access Control Lists on Linux'
+description: A tutorial showing how to enable Linux Access Crontrol Lists and some basic ACL permissions
+post_id: 70
+categories:
+- Administration
+- How To &amp; Tutorials
+- Linux
+- Security
+tags:
+- acl
+- debian
+- filesystems
+- kernel
+- linkedin
+- linux
+- linux os
+- permissions
+- redhat
+- tech
+- ubuntu
+- unix
+file: 2012-05-27-acl-using-access-control-lists-on-linux.md
+published: True

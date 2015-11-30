@@ -1,0 +1,22 @@
+author: bencane
+comments: true
+date: 2011-12-19 18:30:24+00:00
+popularity: True
+slug: creating-a-new-filesystem-with-fdisk-lvm-and-mkfs
+title: Creating a new filesystem with fdisk, lvm, and mkfs
+description: Simple walkthrough on how to create a new Linux filesystem using LVM, fdisk and mkfs
+post_id: 60
+categories:
+- Administration
+- How To &amp; Tutorials
+- Linux
+- Linux Commands
+tags:
+- fdisk
+- linkedin
+- linux
+- lvm
+- mkfs
+- tech
+file: 2011-12-19-creating-a-new-filesystem-with-fdisk-lvm-and-mkfs.md
+published: True

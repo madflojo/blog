@@ -1,0 +1,22 @@
+author: bencane
+comments: true
+date: 2011-09-15 20:01:06+00:00
+popularity: None
+slug: mysql-backup-your-user-privileges
+title: 'mysql: Backup your user privileges'
+thumbnail: http://bencane.com/img/thumbnails/mysql.jpg
+description: How to backup your mysql privileges to a CSV file
+post_id: 50
+categories:
+- Administration
+- All Articles
+- Applications
+- Databases
+- How To &amp; Tutorials
+- MySQL
+tags:
+- linux
+- mysql
+- tech
+file: 2011-09-15-mysql-backup-your-user-privileges.md
+published: True

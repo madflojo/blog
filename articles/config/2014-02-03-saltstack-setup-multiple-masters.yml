@@ -1,0 +1,23 @@
+author: madflojo
+date: 2014-02-04 08:00:00+00:00
+pubdate: Tue, 04 Feb 2014 08:00:00 +00:00
+popularity: None
+slug: saltstack-getting-redundancy-and-scalability-with-multiple-master-servers
+title: "SaltStack: Getting redundancy and scalability with multiple master servers"
+description: A how to article on setting up multiple saltstack master servers for redundancy and scalability. With SaltStack you can easily setup 2 or more master servers in a round robin configuration to provide high availability and scalability to your infrastructure automation tools.
+post_id: 113
+categories:
+- Linux
+- SaltStack
+- High Availability
+tags:
+- linux
+- redhat
+- ubuntu
+- saltstack
+- saltstack ha
+- high availability
+- multiple masters
+- infrastructure automation
+file: 2014-02-03-saltstack-setup-multiple-masters.md
+published: True

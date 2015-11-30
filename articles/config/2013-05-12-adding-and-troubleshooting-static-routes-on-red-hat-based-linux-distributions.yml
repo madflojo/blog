@@ -1,0 +1,35 @@
+author: bencane
+comments: true
+date: 2013-05-12 00:44:01+00:00
+popularity: True
+slug: adding-and-troubleshooting-static-routes-on-red-hat-based-linux-distributions
+title: Adding and Troubleshooting Static Routes on Red Hat based Linux Distributions
+description: Walkthrough on what Static Routes are and how to add them on Red Hat based Linux Distributions
+post_id: 88
+categories:
+- How To &amp; Tutorials
+- Linux
+- Linux Commands
+- Linux Distributions
+- Networking
+- Red Hat
+- Troubleshooting
+tags:
+- default route
+- ip command
+- ip route
+- linux
+- linux distributions
+- linux os
+- network
+- network communication
+- network configuration
+- red hat
+- red hat os
+- route
+- routing table
+- static routes
+- troubleshooting
+- WAN
+file: 2013-05-12-adding-and-troubleshooting-static-routes-on-red-hat-based-linux-distributions.md
+published: True
