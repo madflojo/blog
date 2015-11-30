@@ -18,3 +18,4 @@ tags:
 - installing packages
 - apt-get configuration files
 file: 2014-08-18-removing-packages-and-configurations-with-apt-get.md
+published: True

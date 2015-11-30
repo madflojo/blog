@@ -23,3 +23,4 @@ tags:
 - memcache
 - redis replication
 file: 2013-11-12-installing-redis-and-setting-up-master-slave-replication.md
+published: True

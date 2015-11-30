@@ -110,11 +110,15 @@ if __name__ == "__main__":
 
         # Start creatin article pages
         data = rendered_page
-        for slug_path in slugs:
-            if create_page(slug_path, "index.html", data):
-                print "Successfully created file {}".format(slug_path)
-            else:
-                print "Error creating article {}".format(slug_path)
+        if fulldata[post]['published']:
+            for slug_path in slugs:
+                if create_page(slug_path, "index.html", data):
+                    print "Successfully created file {}".format(slug_path)
+                else:
+                    print "Error creating article {}".format(slug_path)
+        else:
+            fulldata.pop(post, None)
+            print "Skipping article {} as it has not been published yet".format(post)
 
     # Create additional pages defined in config
     for page in config['additional_pages'].keys():

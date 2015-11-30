@@ -24,3 +24,4 @@ tags:
 - sigquit
 - sighup
 file: 2014-04-01-stopping-a-process-with-kill-and-linux-signal.md
+published: True
