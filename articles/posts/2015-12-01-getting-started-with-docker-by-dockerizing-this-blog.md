@@ -12,7 +12,7 @@ Standard virtual machines generally include a full Operating System, OS Packages
 
 Containers are similar to virtual machines in that they allow a single server to run multiple operating environments, these environments however, are not full operating systems. Containers generally only include the necessary OS Packages and Applications. They do not generally contain a full operating system or hardware virtualization. This also means that containers have a smaller overhead than traditional virtual machines.
 
-Containers and Virtual Machines are often seen as conflicting technology, however, this is often a misunderstanding. Virtual Machines are a way to take a physical server and provide a fully functional operating environment that shares those physical resources with other virtual machines. A Container is generally used to isolate a running process within a single host to ensure that the isolated processes cannot interact with other processes within that same system. In fact **Containers** are closer to **BSD Jails** and `chroot`'ed processes than full virtual machines.
+Containers and Virtual Machines are often seen as conflicting technology, however, this is often a misunderstanding. Virtual Machines are a way to take a physical server and provide a fully functional operating environment that shares those physical resources with other virtual machines. A Container is generally used to isolate a running process within a single host to ensure that the isolated processes cannot interact with other processes within that same system. In fact containers are closer to **BSD Jails** and `chroot`'ed processes than full virtual machines.
 
 ### What Docker provides on top of containers
 
@@ -68,7 +68,7 @@ One of my favorite features of Docker is the ability to deploy a pre-built conta
     cd720b803060: Download complete 
     7cc81e9a118a: Download complete 
 
-The `run` function of the `docker` command tells Docker to find a specified Docker image and start a container running that image. By default, Docker containers run in the foreground, meaning when you execute `docker run` your shell will be bound to the process running within the container. In order to launch this Docker container in the background I included the `-d` **(detach)** flag.
+The `run` function of the `docker` command tells Docker to find a specified Docker image and start a container running that image. By default, Docker containers run in the foreground, meaning when you execute `docker run` your shell will be bound to the container's console and the process running within the container. In order to launch this Docker container in the background I included the `-d` **(detach)** flag.
 
 By executing `docker ps` again we can see the **nginx** container running.
 
@@ -85,9 +85,9 @@ Images are one of Docker's key features and is similar to a virtual machine imag
     # docker run -d nginx
     Unable to find image 'nginx' locally
 
-The first message we see is that `docker` could not find an image named **nginx** locally. The reason we see this message is that when we executed `docker run` we told Docker to startup a container, a container based on an image named **nginx**. Since Docker is starting a container based on a specified image it needs to first find that image; before checking any remote repository Docker first checks locally to see if there is a local image with the specified name.
+The first message we see is that `docker` could not find an image named **nginx** locally. The reason we see this message is that when we executed `docker run` we told Docker to startup a container, a container based on an image named **nginx**. Since Docker is starting a container based on a specified image it needs to first find that image. Before checking any remote repository Docker first checks locally to see if there is a local image with the specified name.
 
-We will get into creating Docker images later in this article but for now since this system is brand new there is no Docker image with the name **nginx** on this system, which means Docker will need to download it from a Docker repository.
+Since this system is brand new there is no Docker image with the name **nginx**, which means Docker will need to download it from a Docker repository.
 
     Pulling repository nginx
     5c82215b03d1: Download complete 
@@ -111,7 +111,7 @@ Like GitHub, Docker Hub is free for public repositories but requires a subscript
 
 Before moving on to building a custom Docker container let's first clean up our Docker environment. We will do this by stopping the container from earlier and removing it.
 
-To start a container we executed `docker run`, in order to stop this same container we simply need to execute the `docker kill` command while specifying the container name.
+To start a container we executed `docker` with the `run` option, in order to stop this same container we simply need to execute the `docker` with the `kill` option specifying the container name.
 
     # docker kill desperate_lalande
     desperate_lalande
@@ -173,7 +173,9 @@ The first instruction of a Dockerfile is the `FROM` instruction. This is used to
     FROM nginx:latest
     MAINTAINER Benjamin Cane <ben@bencane.com>
 
-In addition to the `FROM` instruction, I also included a `MAINTAINER` instruction which is used to show the Author of the Dockerfile. It is also important to note that I also added a comment at the top of the Dockerfile. Docker supports using `#` as a comment marker, I will be using this syntax quite a bit to explain the sections of this Dockerfile.
+In addition to the `FROM` instruction, I also included a `MAINTAINER` instruction which is used to show the Author of the Dockerfile. 
+
+As Docker supports using `#` as a comment marker, I will be using this syntax quite a bit to explain the sections of this Dockerfile.
 
 ### Running a test build
 
@@ -217,7 +219,7 @@ It is also important to note that the Docker build process does not accept user 
 
 ### Installing Python modules
 
-With **Python** installed we now need to install some **Python** modules. To do this generally we would use the `pip` command and reference a file within the blog's **Git** repository named `requirements.txt`. In an earlier step we used the `git` command to "clone" the blog's **GitHub** repository to the `/root/blog` directory; this directory also happens to be the directory that we have created the `Dockerfile`. This is important as it means the contents of the **Git** repository are accessible to Docker during the build process.
+With **Python** installed we now need to install some **Python** modules. To do this outside of Docker, we would generally use the `pip` command and reference a file within the blog's **Git** repository named `requirements.txt`. In an earlier step we used the `git` command to "clone" the blog's **GitHub** repository to the `/root/blog` directory; this directory also happens to be the directory that we have created the `Dockerfile`. This is important as it means the contents of the **Git** repository are accessible to Docker during the build process.
 
 When executing a build, Docker will set the context of the build to the specified "build directory". This means that any files within that directory and below can be used during the build process, files outside of that directory (outside of the build context), are inaccessible. 
 
@@ -285,13 +287,12 @@ From the above build output we can see the build was successful, but we can also
 
 When Docker is building an image, it doesn't just build a single image; it actually builds multiple images throughout the build processes. In fact we can see from the above output that after each "Step" Docker is creating a new image.
 
-     Removing intermediate container bde05cf1e8fe
      Step 5 : COPY requirements.txt /build/
       ---> cef11c3fb97c
 
 The last line from the above snippet is actually Docker informing us of the creating of a new image, it does this by printing the **Image ID**; `cef11c3fb97c`. The useful thing about this approach is that Docker is able to use these images as cache during subsequent builds of the **blog** image. This is useful because it allows Docker to speed up the build process for new builds of the same container. If we look at the example above we can actually see that rather than installing the `python-dev` and `python-pip` packages again, Docker was able to use a cached image. However, since Docker was unable to find a build that executed the `mkdir` command, each subsequent step was executed.
 
-The Docker build cache is a bit of a gift and a curse; the reason for this is that the decision to use cache or to rerun the instruction is made within a very narrow scope. For example, if there was a change to the `requirements.txt` file Docker would detect this change during the build and start fresh from that point forward. It does this because it can view the contents of the `requirements.txt` file. The execution of the `apt-get` commands however, are another story. If the **Apt** repository that provides the **Python** packages were to container a newer version of the `python-pip` package; Docker would not be able to detect the change and would simply use the build cache. This means that an older package may be installed. While this may not be a major issue for the `python-pip` package it could be a problem if the installation was caching a package with a known vulnerability.
+The Docker build cache is a bit of a gift and a curse; the reason for this is that the decision to use cache or to rerun the instruction is made within a very narrow scope. For example, if there was a change to the `requirements.txt` file Docker would detect this change during the build and start fresh from that point forward. It does this because it can view the contents of the `requirements.txt` file. The execution of the `apt-get` commands however, are another story. If the **Apt** repository that provides the **Python** packages were to contain a newer version of the `python-pip` package; Docker would not be able to detect the change and would simply use the build cache. This means that an older package may be installed. While this may not be a major issue for the `python-pip` package it could be a problem if the installation was caching a package with a known vulnerability.
 
 For this reason it is useful to periodically rebuild the image without using Docker's cache. To do this you can simply specify `--no-cache=True` when executing a Docker build.
 
@@ -325,7 +326,7 @@ With the **Python** packages and modules installed this leaves us at the point o
     ## Run Generator
     RUN /build/hamerkop -c /build/config.yml
 
-Now that we have the rest of the build instructions let's run through another build and verify that the image builds successfully.
+Now that we have the rest of the build instructions, let's run through another build and verify that the image builds successfully.
 
     # docker build -t blog /root/blog/
     Sending build context to Docker daemon 19.52 MB
@@ -395,8 +396,8 @@ From the above command it appears that our container was started successfully, w
 
 ## Wrapping up
 
-At this point we now have a running custom Docker container. While we touched on a few Dockerfile instructions within this article we have yet to discuss all the instructions. For a full list of Dockerfile instructions you can checkout [Docker's reference page](https://docs.docker.com/v1.8/reference/builder/), which explains many of the instructions very well. 
+At this point we now have a running custom Docker container. While we touched on a few Dockerfile instructions within this article we have yet to discuss all the instructions. For a full list of Dockerfile instructions you can checkout [Docker's reference page](https://docs.docker.com/v1.8/reference/builder/), which explains the instructions very well. 
 
-Another good resource is their [Dockerfile Best Practices](https://docs.docker.com/engine/articles/dockerfile_best-practices/) page which contains quite a few best practices for building custom Dockerfiles. Some of these tips are very useful such as strategically ordering the commands within the Dockerfile. In the above examples our Dockerfile has the `COPY` instruction for the `articles` directory just before executing the `hamerkop` application. The reason for this is that the `articles` directory will change quite often. It's best to put instructions that will bypass the build cache at the lowest point possible within the Dockerfile.
+Another good resource is their [Dockerfile Best Practices](https://docs.docker.com/engine/articles/dockerfile_best-practices/) page which contains quite a few best practices for building custom Dockerfiles. Some of these tips are very useful such as strategically ordering the commands within the Dockerfile. In the above examples our Dockerfile has the `COPY` instruction for the `articles` directory as the last `COPY` instruction. The reason for this is that the `articles` directory will change quite often. It's best to put instructions that will change oftenat the lowest point possible within the Dockerfile to optimize steps that can be cached.
 
-In this article we covered how to start a pre-built container and how to build then deploy a custom container. While there is quite a bit to learn about Docker this article should give you a good idea on how to get started. Of course, as always if you think there is anything that should be added drop it in the comments below.
+In this article we covered how to start a pre-built container and how to build, then deploy a custom container. While there is quite a bit to learn about Docker this article should give you a good idea on how to get started. Of course, as always if you think there is anything that should be added drop it in the comments below.
