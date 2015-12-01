@@ -1,6 +1,6 @@
 author: madflojo
-date: 2015-12-01 06:20:00-07:00
-pubdate: Tue, 1 Dec 2015 06:20:00 -07:00
+date: 2015-12-01 03:00:00-07:00
+pubdate: Tue, 1 Dec 2015 03:00:00 -07:00
 popularity: False
 slug: getting-started-with-docker-by-dockerizing-this-blog
 title: Getting started with Docker by Dockerizing this Blog
@@ -19,5 +19,6 @@ tags:
 - docker blog
 - application packaging
 - nginx docker
+- linux
 file: 2015-12-01-getting-started-with-docker-by-dockerizing-this-blog.md
 published: True
