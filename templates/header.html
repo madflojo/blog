@@ -20,7 +20,7 @@
       <meta property="og:description" content="{{ data['description'] }}"/>
       <meta property="og:type" content="article"/>
       <meta name="keywords" content="{% for item in data['cats'] %}{{ item }}, {% endfor %}{% for item in data['tags'] %}{{ item }}, {% endfor %}">
-      <meta property="og:type:article:author" content="{{ meta['authorlink'] }}" \>
+      <meta property="og:type:article:author" content="{{ meta['site_authorlink'] }}" \>
     {% else %}
       <title>{{ meta['additional_pages'][meta['page_type']]['title'] }} | {{ meta['site_name'] }}</title>
       <meta property="og:title" content="{{ meta['additional_pages'][meta['page_type']]['title'] }} | {{ meta['site_name'] }}"/>
@@ -30,7 +30,7 @@
       <meta name="keywords" content="{%- for item in meta['site_keywords'] -%}{{ item }}, {%- endfor -%}">
     {% endif %}
 
-    <meta property="og:url" content="{{ meta['site_url'] }}{{ data['url'] }}"/>
+    <meta property="og:url" content="{{ meta['site_url'] }}{{ data['full_url'] }}"/>
     <meta name="author" content="{{ meta['site_author'] }}">
     <link rel="author" href="{{ meta['site_authorlink'] }}" \>
     <meta property="og:image" content="{{ meta['site_thumbnail'] }}"/>
