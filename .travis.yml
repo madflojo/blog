@@ -1,5 +1,9 @@
 sudo: required
 
+hosts:
+  - feed.bencane.com
+  - bencane.com
+  
 services:
   - docker
   
@@ -7,7 +11,9 @@ before_install:
   - docker build -t blog .
 
 install:
-  - docker run -d -p 127.0.0.1:80:80 --name blog blog
+  - docker run -d -p 80:80 --name blog blog
   
 script:
   - docker ps | grep -q "blog"
+  - curl -vk http://bencane.com
+  - curl -vk http://feed.bencane.com
