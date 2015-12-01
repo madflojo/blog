@@ -15,5 +15,3 @@ install:
   
 script:
   - docker ps | grep -q "blog"
-  - curl -vk http://bencane.com
-  - curl -vk http://feed.bencane.com
