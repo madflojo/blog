@@ -90,12 +90,6 @@ if __name__ == "__main__":
         meta = config
         meta['page_type'] = "article"
 
-        # While grabbing data generate static articles
-        rendered_page = render_page(fulldata[post],
-                                    config,
-                                    config['templates']['article'],
-                                    config['template_dir'])
-
         # Place a copy in each level for backwards capatability
         slug = fulldata[post]['slug']
         slugs = []
@@ -107,6 +101,12 @@ if __name__ == "__main__":
                                                               '/%Y/') + slug)
         # Define a full_url key for each post
         fulldata[post]['full_url'] = datetime.strftime(fulldata[post]['date'], '/%Y/%m/%d/') + slug
+
+        # While grabbing data generate static articles
+        rendered_page = render_page(fulldata[post],
+                                    config,
+                                    config['templates']['article'],
+                                    config['template_dir'])
 
         # Start creatin article pages
         data = rendered_page
