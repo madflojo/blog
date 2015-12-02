@@ -9,7 +9,7 @@ services:
   
 before_install:
   - docker build -t blog .
-  - pip install requests
+#  - pip install requests
 
 install:
   - docker run -d -p 80:80 --name blog blog
