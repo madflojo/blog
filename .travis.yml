@@ -15,5 +15,5 @@ install:
   
 script:
   - docker ps | grep -q "blog"
-  - curl -H "host: bencane.com" -vk http://127.0.0.1 | grep "Benjamin Cane"
-  - curl -H "host: feed.bencane.com" -vk http://127.0.0.1 | grep "<rss"
+  - curl -H 'host: bencane.com' -vk http://127.0.0.1 | grep "Benjamin Cane"
+  - curl -H 'host: feed.bencane.com' -vk http://127.0.0.1 | grep "<rss"
