@@ -9,7 +9,7 @@
 <generator>Hamerkop Static Site Generator v0.1</generator>
 {% set count = 0 %}
 {% for item in meta['post_ids']|reverse %}
-{% if count <= 25 %}
+{% if count <= 5 %}
 <item>
 <title>{{ data[item]['title'] }}</title>
 <link>{{ meta['site_url'] }}{{ data[item]['full_url'] }}</link>

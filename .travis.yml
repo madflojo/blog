@@ -9,12 +9,11 @@ services:
   
 before_install:
   - docker build -t blog .
-#  - pip install requests
 
 install:
-  - docker run -d -p 80:80 --name blog blog
+  - docker run -d -p 127.0.0.1:80:80 --name blog blog
   
 script:
   - docker ps | grep -q "blog"
-#  - python tests/check_index.py bencane.com
-#  - python tests/check_index.py feed.bencane.com
+  - curl -H "host: bencane.com" -vk http://127.0.0.1 | grep "Benjamin Cane"
+  - curl -H "host: feed.bencane.com" -vk http://127.0.0.1 | grep "<rss"
