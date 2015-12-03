@@ -15,4 +15,7 @@ install:
   
 script:
   - docker ps | grep -q "blog"
-  - curl -vk http://127.0.0.1 | grep "Benjamin Cane"
+  - bash tests/check_index.sh
+  - bash tests/check_index_status.sh
+  - bash tests/check_feed.sh
+  - bash tests/check_feed_status.sh
