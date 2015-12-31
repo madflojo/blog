@@ -19,3 +19,6 @@ script:
   - bash tests/check_index_status.sh
 #  - bash tests/check_feed.sh
   - bash tests/check_feed_status.sh
+
+after_success:
+  - coveralls
