@@ -9,13 +9,20 @@ services:
   
 before_install:
   - docker build -t blog .
+  - pip install unittest
+  - pip install mock
+  - pip install coverage
+  - pip install coveralls
 
 install:
   - docker run -d -p 127.0.0.1:80:80 --name blog blog
   
 script:
+  # Basic validations
   - docker ps | grep -q "blog"
-  - bash tests/check_index.sh
-  - bash tests/check_index_status.sh
-#  - bash tests/check_feed.sh
-  - bash tests/check_feed_status.sh
+  # Automated tests
+  - python tests.py
+  - coverage run tests.py
+
+after_success:
+  - coveralls
