@@ -1,4 +1,5 @@
 import unittest
+import sys
 
 def run_unittests():
     ''' Execute Unit Tests '''
@@ -29,13 +30,18 @@ def run_functional_tests():
 
 if __name__ == '__main__':
     print("Test Runner: Unit tests")
-    run_unittests()
+    unit = run_unittests()
     print("#" * 70)
 
     print("Test Runner: Integration tests")
-    run_integration_tests()
+    integration = run_integration_tests()
     print("#" * 70)
 
     print("Test Runner: Functional tests")
-    run_functional_tests()
+    functional = run_functional_tests()
     print("#" * 70)
+
+    if unit and integration and functional:
+        sys.exit(0)
+    else:
+        sys.exit(1)
