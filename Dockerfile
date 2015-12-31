@@ -26,9 +26,9 @@ RUN pip install -r /build/requirements.txt
 ## Add blog code nd required files
 COPY static /build/static
 COPY templates /build/templates
-COPY hamerkop /build/
+COPY hamerkop.py /build/
 COPY config.yml /build/
 COPY articles /build/articles
 
 ## Run Generator
-RUN /build/hamerkop -c /build/config.yml
+RUN /build/hamerkop.py -c /build/config.yml
