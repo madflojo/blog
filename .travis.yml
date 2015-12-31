@@ -9,10 +9,10 @@ services:
   
 before_install:
   - docker build -t blog .
-  - pip install -y unittest
-  - pip install -y mock
-  - pip install -y coverage
-  - pip install -y coveralls
+  - pip install unittest
+  - pip install mock
+  - pip install coverage
+  - pip install coveralls
 
 install:
   - docker run -d -p 127.0.0.1:80:80 --name blog blog
