@@ -13,7 +13,7 @@ before_install:
   - sudo pip install coverage
   - sudo pip install coveralls
   - sudo pip install requests
-  - sudo pip install feedparse
+  - sudo pip install feedparser
 
 install:
   - docker run -d -p 127.0.0.1:80:80 --name blog blog
