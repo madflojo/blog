@@ -22,7 +22,3 @@ script:
   - docker ps | grep -q "blog"
   # Automated tests
   - python tests.py
-  - coverage run tests.py
-
-after_success:
-  - coveralls
