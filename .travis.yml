@@ -15,6 +15,8 @@ before_install:
   - pip install mock
   - pip install requests
   - pip install feedparser
+  - pip install coverage
+  - pip install coveralls
 
 install:
   - docker run -d -p 127.0.0.1:80:80 --name blog blog
@@ -24,3 +26,7 @@ script:
   - docker ps | grep -q "blog"
   # Automated tests
   - python tests.py
+  - coverage run tests.py
+
+after_success:
+  coveralls
