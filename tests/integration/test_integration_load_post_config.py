@@ -25,13 +25,13 @@ class LoadPostConfigTest(unittest.TestCase):
         }
 
         # Create some sample test directories and files
-        testdirs = [
+        self.testdirs = [
             '/tmp/testcase1',
             '/tmp/testcase2',
             '/tmp/testcase3',
         ]
 
-        for directory in testdirs:
+        for directory in self.testdirs:
             if os.path.isdir(directory) is False:
                 try:
                     os.makedirs(directory)
@@ -46,16 +46,12 @@ class LoadPostConfigTest(unittest.TestCase):
         ''' Destroy pseudo environment for next run '''
         self.config = None
         self.desired_return = None
-        try:
+        if os.path.isfile("/tmp/testcase2/file.yml"):
             os.remove("/tmp/testcase2/file.yml")
-        except OSError:
-            pass
-        try:
-            os.rmdir("/tmp/testcase1")
-            os.rmdir("/tmp/testcase2")
-            os.rmdir("/tmp/testcase3")
-        except OSError:
-            pass
+
+        for directory in self.testdirs:
+            if os.path.isdir(directory):
+                os.rmdir(directory)
 
 class RunWithEmptyDir(LoadPostConfigTest):
     ''' Verify function tests discovered files from os.listdir '''

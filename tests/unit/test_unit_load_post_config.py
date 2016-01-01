@@ -8,6 +8,7 @@ class LoadPostConfigTest(unittest.TestCase):
     ''' Run a unit test against load_post_config() '''
 
     def setUp(self):
+        ''' Setup basic config '''
         self.config = {
             'articles' : {
                 'config' : '/tmp/'
@@ -20,6 +21,7 @@ class LoadPostConfigTest(unittest.TestCase):
         }
 
     def tearDown(self):
+        ''' Destroy basic config '''
         self.config = None
         self.desired_return = None
 
