@@ -1,0 +1,7 @@
+ratings:
+  paths:
+    - "**.py"
+exclude_paths:
+  - static/**
+  - articles/**
+  - nginx/**
