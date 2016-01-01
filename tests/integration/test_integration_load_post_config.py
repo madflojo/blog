@@ -1,9 +1,8 @@
+''' Integration test for load_post_config of hamerkop '''
 from hamerkop import load_post_config
 
-import mock
 import unittest
 import os
-import sys
 
 class LoadPostConfigTest(unittest.TestCase):
     ''' Run a unit test against load_post_config() '''
@@ -31,12 +30,14 @@ class LoadPostConfigTest(unittest.TestCase):
             '/tmp/testcase2',
             '/tmp/testcase3',
         ]
+
         for directory in testdirs:
             if os.path.isdir(directory) is False:
                 try:
                     os.makedirs(directory)
                 except OSError:
-                    pass
+                    return False
+
         fh = open("/tmp/testcase2/file.yml", "w")
         fh.write("post_id: 1\n")
         fh.close()
@@ -47,30 +48,33 @@ class LoadPostConfigTest(unittest.TestCase):
         self.desired_return = None
         try:
             os.remove("/tmp/testcase2/file.yml")
-        except:
+        except OSError:
             pass
         try:
             os.rmdir("/tmp/testcase1")
             os.rmdir("/tmp/testcase2")
             os.rmdir("/tmp/testcase3")
-        except:
+        except OSError:
             pass
 
 class RunWithEmptyDir(LoadPostConfigTest):
     ''' Verify function tests discovered files from os.listdir '''
     def runTest(self):
+        ''' Execute '''
         self.config['articles']['config'] = "/tmp/testcase1"
         self.assertEqual(load_post_config(self.config), {})
 
 class RunWithYMLFile(LoadPostConfigTest):
     ''' Verify function returns good data '''
     def runTest(self):
+        ''' Execute '''
         self.config['articles']['config'] = "/tmp/testcase2"
         self.assertEqual(load_post_config(self.config), self.desired_return)
 
 class RunWithDirResult(LoadPostConfigTest):
     ''' Verify function tests discovered files from os.listdir '''
     def runTest(self):
+        ''' Execute '''
         self.config['articles']['config'] = "/tmp/testcase3"
         self.assertEqual(load_post_config(self.config), {})
 

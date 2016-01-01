@@ -1,3 +1,5 @@
+''' Blog test runner '''
+
 import unittest
 import sys
 
@@ -29,19 +31,19 @@ def run_functional_tests():
         return True
 
 if __name__ == '__main__':
-    print("Test Runner: Unit tests")
-    unit = run_unittests()
-    print("#" * 70)
+    print "Test Runner: Unit tests"
+    unit_results = run_unittests()
+    print "#" * 70
 
-    print("Test Runner: Integration tests")
-    integration = run_integration_tests()
-    print("#" * 70)
+    print "Test Runner: Integration tests"
+    integration_results = run_integration_tests()
+    print "#" * 70
 
-    print("Test Runner: Functional tests")
-    functional = run_functional_tests()
-    print("#" * 70)
+    print "Test Runner: Functional tests"
+    functional_results = run_functional_tests()
+    print "#" * 70
 
-    if unit and integration and functional:
+    if unit_results and integration_results and functional_results:
         sys.exit(0)
     else:
         sys.exit(1)
