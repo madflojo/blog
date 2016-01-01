@@ -9,10 +9,10 @@ services:
   
 before_install:
   - docker build -t blog .
+  - sudo pip install -r requirements.txt
   - sudo pip install mock
   - sudo pip install requests
   - sudo pip install feedparser
-  - sudo pip install -r requirements.txt
 
 install:
   - docker run -d -p 127.0.0.1:80:80 --name blog blog
