@@ -10,8 +10,6 @@ services:
 before_install:
   - docker build -t blog .
   - sudo pip install mock
-  - sudo pip install coverage
-  - sudo pip install coveralls
   - sudo pip install requests
   - sudo pip install feedparser
   - sudo pip install -r requirements.txt
