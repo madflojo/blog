@@ -14,6 +14,7 @@ before_install:
   - sudo pip install coveralls
   - sudo pip install requests
   - sudo pip install feedparser
+  - sudo pip install -r requirements.txt
 
 install:
   - docker run -d -p 127.0.0.1:80:80 --name blog blog
