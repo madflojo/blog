@@ -73,7 +73,7 @@ if __name__ == "__main__":
     try:
         cfh = open(args.config, "r")
     except:
-        sys.stderr.write("Could not open file: {}\n".format(args.config))
+        sys.stderr.write("Could not open file: {0}\n".format(args.config))
         sys.exit(1)
     config = yaml.safe_load(cfh)
     cfh.close()
@@ -100,7 +100,7 @@ if __name__ == "__main__":
         slugs.append(config['output_dir'] + datetime.strftime(fulldata[post]['date'],
                                                               '/%Y/') + slug)
         # Define a full_url key for each post
-        fulldata[post]['full_url'] = datetime.strftime(fulldata[post]['date'], '/%Y/%m/%d/') + slug
+        fulldata[post]['full_url'] = datetime.strftime(fulldata[post]['date'], '/%Y/%m/%d/') + slug + "/"
 
         # While grabbing data generate static articles
         rendered_page = render_page(fulldata[post],
@@ -113,12 +113,12 @@ if __name__ == "__main__":
         if fulldata[post]['published']:
             for slug_path in slugs:
                 if create_page(slug_path, "index.html", data):
-                    print "Successfully created file {}".format(slug_path)
+                    print "Successfully created file {0}".format(slug_path)
                 else:
-                    print "Error creating article {}".format(slug_path)
+                    print "Error creating article {0}".format(slug_path)
         else:
             fulldata.pop(post, None)
-            print "Skipping article {} as it has not been published yet".format(post)
+            print "Skipping article {0} as it has not been published yet".format(post)
 
     # Create additional pages defined in config
     for page in config['additional_pages'].keys():
@@ -137,11 +137,11 @@ if __name__ == "__main__":
                                     meta,
                                     config['templates'][page],
                                     config['template_dir'])
-        created_file = "{}/{}".format(output_dir, config['additional_pages'][page]['url'])
+        created_file = "{0}/{1}".format(output_dir, config['additional_pages'][page]['url'])
         if create_page(output_dir, config['additional_pages'][page]['url'], rendered_page):
-            print "Successfully created file {}".format(created_file)
+            print "Successfully created file {0}".format(created_file)
         else:
-            print "Error creating article {}".format(created_file)
+            print "Error creating article {0}".format(created_file)
 
     # Copy static files at the end
     dir_util.copy_tree(config['static_dir'], config['output_dir'] + "/static")
