@@ -36,7 +36,7 @@ class ContentTest(unittest.TestCase):
             counts['fail'] = counts['fail'] + 1
         urls = re.findall(
             'href="/(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
-            results.texti
+            results.text
         )
         for url in urls:
             url = url.lstrip('href="')

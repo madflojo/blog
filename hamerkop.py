@@ -94,13 +94,13 @@ if __name__ == "__main__":
         slug = fulldata[post]['slug']
         slugs = []
         slugs.append(config['output_dir'] + datetime.strftime(fulldata[post]['date'],
-                                                              '/%Y/%m/%d/') + slug + "/")
+                                                              '/%Y/%m/%d/') + slug)
         slugs.append(config['output_dir'] + datetime.strftime(fulldata[post]['date'],
-                                                              '/%Y/%m/') + slug + "/")
+                                                              '/%Y/%m/') + slug)
         slugs.append(config['output_dir'] + datetime.strftime(fulldata[post]['date'],
-                                                              '/%Y/') + slug + "/")
+                                                              '/%Y/') + slug)
         # Define a full_url key for each post
-        fulldata[post]['full_url'] = datetime.strftime(fulldata[post]['date'], '/%Y/%m/%d/') + slug
+        fulldata[post]['full_url'] = datetime.strftime(fulldata[post]['date'], '/%Y/%m/%d/') + slug + "/"
 
         # While grabbing data generate static articles
         rendered_page = render_page(fulldata[post],

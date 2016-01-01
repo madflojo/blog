@@ -31,17 +31,20 @@ def run_functional_tests():
         return True
 
 if __name__ == '__main__':
+    print "#" * 70
     print "Test Runner: Unit tests"
+    print "#" * 70
     unit_results = run_unittests()
-    print "#" * 70
 
+    print "#" * 70
     print "Test Runner: Integration tests"
+    print "#" * 70
     integration_results = run_integration_tests()
-    print "#" * 70
 
-    print "Test Runner: Functional tests"
-    functional_results = run_functional_tests()
     print "#" * 70
+    print "Test Runner: Functional tests"
+    print "#" * 70
+    functional_results = run_functional_tests()
 
     if unit_results and integration_results and functional_results:
         sys.exit(0)
