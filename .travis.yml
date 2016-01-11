@@ -2,15 +2,18 @@ language: python
 python:
   - 2.7
 
+services:
+  - docker
+
 hosts:
   - feed.bencane.com
   - bencane.com
-  
-services:
-  - docker
-  
-before_install:
+
+install:
   - docker build -t blog .
+  - docker run -d -p 127.0.0.1:80:80 --name blog blog
+
+before_script:
   - pip install -r requirements.txt
   - pip install mock
   - pip install requests
@@ -18,13 +21,9 @@ before_install:
   - pip install coverage
   - pip install coveralls
 
-install:
-  - docker run -d -p 127.0.0.1:80:80 --name blog blog
-  
+
 script:
-  # Basic validations
-  - docker ps | grep -q "blog"
-  # Automated tests
+  - docker ps | grep -q blog
   - python tests.py
   - coverage run tests.py
 

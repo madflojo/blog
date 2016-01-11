@@ -1,0 +1,29 @@
+author: madflojo
+date: 2016-01-11 07:00:00-07:00
+pubdate: Mon, 11 Jan 2016 07:00:00 -07:00
+popularity: True
+slug: using-travis-ci-to-test-docker-builds
+title: Using Travis CI to test Docker builds
+description: Walk-through on getting started with Travis CI and how to use Travis CI to test Docker builds
+post_id: 128
+categories:
+- Docker
+- Containers
+- Continuous Integration
+tags:
+- docker
+- dockerfile
+- dockerizing
+- containers
+- linux containers
+- linux docker
+- docker blog
+- application packaging
+- nginx docker
+- linux
+- travis ci
+- travis
+- integration
+- automated testing
+file: 2016-01-11-using-travis-ci-to-test-docker-builds.md
+published: True
