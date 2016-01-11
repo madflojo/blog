@@ -24,13 +24,13 @@ In this article I am going to walk through configuring Travis CI to automaticall
 
 ## Automating a Docker build with Travis CI
 
-This post is going to assume that we have already signed up for Travis CI and connected it to our public repository. This process is fairly straight forward, as it is part of Travis CI's on-boarding flow. If you find yourself needing a good walk through Travis CI does have a [getting started](https://docs.travis-ci.com/user/getting-started/#To-get-started-with-Travis-CI%3A) guide.
+This post is going to assume that we have already signed up for Travis CI and connected it to our public repository. This process is fairly straight forward, as it is part of Travis CI's on-boarding flow. If you find yourself needing a good walk through, Travis CI does have a [getting started](https://docs.travis-ci.com/user/getting-started/#To-get-started-with-Travis-CI%3A) guide.
 
 Since we will be testing our builds and do not wish to impact the main `master` branch the first thing we are going to do is create a new `git` branch to work with.
 
     $ git checkout -b building-docker-with-travis
  
-As we make changes to this branch we can push the contents to GitHub under the same branch name and validate the status of builds being performed by Travis CI.
+As we make changes to this branch we can push the contents to GitHub under the same branch name and validate the status of Travis CI builds without those changes going into the `master` branch.
 
 ### Configuring Travis CI
 
@@ -127,9 +127,9 @@ Travis CI, will show a build log for every build, at the end of the log for this
 
 One important thing to know about Travis CI is that most build steps require commands to execute successfully in order for the build to be marked as successful. 
 
-The `script` and `install` steps are two examples of this, if any of our commands failed and did not return a `0` [exit code](http://bencane.com/2014/09/02/understanding-exit-codes-and-how-to-use-them-in-bash-scripts/) than the whole build would be marked as failed. If this happens during the `install` step for example, the build will be stopped at the exact step that failed.
+The `script` and `install` steps are two examples of this, if any of our commands failed and did not return a `0` [exit code](http://bencane.com/2014/09/02/understanding-exit-codes-and-how-to-use-them-in-bash-scripts/) than the whole build would be marked as failed.
 
-The `script` step however, will not cause an immediate stop. This is designed to allow tests to complete to allow users to know what tests failed and what tests passed.
+If this happens during the `install` step, the build will be stopped at the exact step that failed. With the `script` step however, the build will not be stopped. The idea behind this is that if an install step fails, the build will absolutely not work. However, if a single test case fails only a portion is broken. By showing all testing results users will be able to identify what is broken vs. what is working as expected.
 
 ## Adding additional tests
 
@@ -161,7 +161,7 @@ To run these tests via Travis CI we will simply need to add them to the `script`
       - pip install requests
       - pip install feedparser
 
-The `before_script` build step is performed before the `script` step but after the `install` step. Making `before_script` the perfect location for steps that are required for `script` commands but not part of the overall installation. Since the `before_script` step is not performing tests it like the `install` step, it requires all installation commands to succeed before moving to the `script` build step.
+The `before_script` build step is performed before the `script` step but after the `install` step. Making `before_script` the perfect location for steps that are required for `script` commands but not part of the overall installation. Since the `before_script` step is not executing test cases like the `install` step, it too requires all commands to succeed before moving to the `script` build step. If a command within the `before_script` build step fails, the build will be stopped.
 
 ### Running additional tests
 
@@ -204,6 +204,39 @@ Once the build completes we will see the above message in the build log, showing
 
 ## Summary
 
-In last months article we explored [using Docker to package and distribute](http://bencane.com/2015/12/01/getting-started-with-docker-by-dockerizing-this-blog/) the application running this blog. In this article, we have discussed leveraging Travis CI to automatically build that Docker image as well as performing functional tests against it. Giving us the ability to detect any quality issues every time new changes are committed to our code repository.
+With our builds successfully processing let's take a final look at our `.travis.yml` file.
+
+```
+language: python
+python:
+  - 2.7
+
+services:
+  - docker
+
+install:
+  - docker build -t blog .
+  - docker run -d -p 127.0.0.1:80:80 --name blog blog
+
+before_script:
+  - pip install -r requirements.txt
+  - pip install mock
+  - pip install requests
+  - pip install feedparser
+
+script:
+  - docker ps | grep -q blog
+  - python tests.py
+```
+
+In the above we can see our Travis CI configuration consists of 3 build steps; `install`, `before_script` and `script`. The `install` step is used to build and start our Docker container. The `before_script` step is simply used to install required libraries for test scripts and the `script` step is used to execute our test scripts.
+
+Overall, this setup is pretty simple and something we could test manually outside of Travis CI. The benefit of having Travis CI though is that all of these steps are performed for every change, no matter how minor they are.
+
+Also since we are using GitHub, this means Travis CI will append build status notifications on every pull request as well, like [this one for example](https://github.com/madflojo/blog/pull/18). With these types of notifications I can merge pull requests into the `master` branch with the confidence that they will not break production.
+
+### Building a Continuous Integration and Deployment pipeline
+
+In last months article we explored [using Docker to package and distribute](http://bencane.com/2015/12/01/getting-started-with-docker-by-dockerizing-this-blog/) the application running this blog. In this article, we have discussed leveraging Travis CI to automatically build that Docker image as well as performing functional tests against it.
 
 In next months article, we are going to take this setup one step further by automatically deploying these changes to multiple servers using SaltStack. By the end of the next article we will have a full Continuous Integration and Deployment work-flow defined which will allow changes to be tested and deployed to production without human interaction.
