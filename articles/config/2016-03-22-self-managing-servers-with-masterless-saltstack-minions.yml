@@ -1,0 +1,28 @@
+author: madflojo
+date: 2016-03-22 07:30:00-07:00
+pubdate: Tue, 22 Mar 2016 07:30:00 -07:00
+popularity: False
+slug: self-managing-servers-with-masterless-saltstack-minions
+title: Create self-managing servers with Masterless Saltstack Minions
+description: Using Saltstack's Masterless Minion architecture to create self-managing infrastructure
+post_id: 129
+categories:
+- Continuous Delivery
+- SaltStack
+- Docker
+tags:
+- docker
+- dockerfile
+- dockerizing
+- docker blog
+- linux
+- continuous delivery
+- salt
+- saltstack
+- masterless saltstack
+- minionless saltstack
+- salt-ssh
+- salt over ssh
+- deployment automation
+file: 2016-03-22-self-managing-servers-with-masterless-saltstack-minions.md
+published: True
