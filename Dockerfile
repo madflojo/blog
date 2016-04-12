@@ -13,6 +13,7 @@ COPY nginx/bencane.com.conf /etc/nginx/sites-enabled/
 RUN apt-get update && apt-get install -y \ 
     python-dev \ 
     python-pip \ 
+    sysstat \
     && apt-get clean \ 
     && rm -rf /var/lib/apt/lists/*
 
