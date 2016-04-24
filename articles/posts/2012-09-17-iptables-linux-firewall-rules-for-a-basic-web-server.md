@@ -14,7 +14,7 @@ Before we begin lets get an understanding of iptables and firewall filtering in 
 In iptables much like other (but not all) firewall filtering packages the rules are presented in a list. When a packet is being processed, iptables will read through its rule-set list and the first rule that matches this packet completely gets applied.
 
 For example if our rule-set looks like below, all HTTP connections will be denied:
-	
+
   1. Allow all SSH Connections
   2. Deny all connections
   3. Allow all HTTP Connections
@@ -55,13 +55,13 @@ For our examples today we are focusing on only the filter table, which is also t
 
 #### Chains
 
-Chains on the other hand are used to organize rules based on the source of the packets. Filter has 3 default chains INPUT, OUTPUT, and FORWARD these chains are used to separate the packets based on the source of the packet.
+Chains on the other hand are used to organize rules based on the source of the packets. A chain is essentially a collection of rules within a specific table. The Filter table for example has 3 default chains INPUT, OUTPUT, and FORWARD these chains are used to process packets based on the type of packet.
 
  * INPUT - This chain is used for packets that are incoming on the system from an outside source.
  * OUTPUT - This chain is used for packets that are outgoing from the system to an outside source.
  * FORWARD - This chain is used for packets that are being forwarded through NAT rules, this allows you to filter traffic that is also NAT'ed
 
-In addition to the chains above custom chains can be created as well, placing custom chains in can allow for packets from specific sources to match faster without being run through unnecessary rules.
+In addition to the chains above custom chains can be created as well. You can add a rule within another chain (such as INPUT) that targets a custom chain. By placing such a rule in the beginning of a chain, you can save unnecessary rule processing.
 
 We will save creating custom chains for another day as you do not really need them for a basic web server.
 
@@ -72,12 +72,12 @@ We will save creating custom chains for another day as you do not really need th
 Before starting to write iptables rules; lets validate that the package is installed and the iptables module is loaded.
 
 #### Verifying the package is installed (Ubuntu/Debian)
-     
+
      # dpkg --list | grep iptables
      ii iptables 1.4.12-1ubuntu4 administration tools for packet filtering and NAT
 
 #### Verifying the Kernel Module is loaded
-     
+
      # lsmod | grep ip_tables
      ip_tables 18106 1 iptable_filter
 
@@ -94,14 +94,14 @@ Always triple check your rules before applying them. As a best practice if you a
 #### Show current rules
 
 Before we start creating rules I want to cover how to show rules that are currently being enforced. We will use this command often to verify whether our rules are in place or not. The below command shows no rules are in place.
-     
+
      # iptables -L
      Chain INPUT (policy ACCEPT)
       target prot opt source destination
-     
+
      Chain FORWARD (policy ACCEPT)
       target prot opt source destination
-     
+
      Chain OUTPUT (policy ACCEPT)
       target prot opt source destination
 
@@ -110,7 +110,7 @@ Before we start creating rules I want to cover how to show rules that are curren
 No matter if I am adding a explicit deny or explicit allow base policy I always add a rule that allows me access to port 22 (SSH) as the first rule. This allows me to ensure that SSH is always available to me even if I mess up the other rules.
 
 Since my SSH connections are coming from the IP `192.168.122.1` I will explicitly allow all `port 22` connections from the IP `192.168.122.1`.
-     
+
      # iptables -I INPUT -p tcp --dport 22 -s 192.168.122.1 -j ACCEPT
      # iptables -L
      Chain INPUT (policy ACCEPT)
@@ -142,7 +142,7 @@ The `-j` flag tells iptables to **jump** to the action for this packet, these ar
 If you have a dynamic IP the IP address that you are trying to access the server from may change. If that is the case it may be preferable to leave out the source which would allow all port 22 traffic.
 
 **Example to allow SSH traffic from all sources:**
-     
+
      # iptables -I INPUT -p tcp --dport 22 -j ACCEPT
 
 #### Changing the base policy to default deny (Explicit Allow)
@@ -172,7 +172,7 @@ For this reason I suggest using DROP as a default reply.
 #### Appending our web server rules
 
 Now that we have the default policy and SSH rules in place we need to add rules for the other services we want to make accessible. The first rule we will add will accept and allow all traffic destined to port 80 and port 443 for web traffic.
-     
+
      # iptables -A INPUT -p tcp --dport 80 -j ACCEPT
      # iptables -A INPUT -p tcp --dport 443 -j ACCEPT
      # iptables -L -n
@@ -187,7 +187,7 @@ As you can see in the above example we added the rule by using `-A INPUT`. While
 #### Allowing Loopback Traffic
 
 In addition to allowing web server traffic we should also allow all traffic on the loopback interface, this is necessary if you are running a local MySQL server and connecting via localhost; but also a good idea in general for the loopback interface.
-     
+
      # iptables -I INPUT -i lo -j ACCEPT
      # iptables -L -n
      Chain INPUT (policy DROP)
@@ -210,7 +210,7 @@ Passive mode FTP however is not as simple, once a client has connected to the co
 For this scenario iptables uses another module called ip_conntrack; ip_conntrack tracks established connections and allows iptables to create rules that allows related connections to be accepted.
 
 This allows for the FTP connection to establish on port 21 with the first rule in the list and then establish a connection with a higher port via the third rule.
-     
+
      # iptables -A INPUT -p tcp --dport 21 -j ACCEPT
      # iptables -A INPUT -p tcp --dport 20 -j ACCEPT
      # iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
@@ -230,7 +230,7 @@ You may also want to restrict FTP traffic to a certain network, to do this simpl
 ##### Loading the ip_conntrack_ftp module
 
 In order for conntrack to work properly you must ensure that the ip_conntrack_ftp module is loaded.
-     
+
      # modprobe ip_conntrack_ftp
      # lsmod | grep conntrack
      nf_conntrack_ftp 13452 0
@@ -243,7 +243,7 @@ In order for conntrack to work properly you must ensure that the ip_conntrack_ft
 #### Allowing DNS Traffic
 
 DNS based traffic is not as tricky as FTP however DNS traffic primarily uses UDP rather than TCP. However some DNS traffic can be over TCP traffic. In order to allow DNS traffic you must specify 2 iptables commands one opening the port for TCP and the other opening the port for UDP.
-     
+
      # iptables -A INPUT -p tcp --dport 53 -j ACCEPT
      # iptables -A INPUT -p udp --dport 53 -j ACCEPT
      # iptables -L -n
@@ -255,7 +255,7 @@ DNS based traffic is not as tricky as FTP however DNS traffic primarily uses UDP
 #### Blocking IP's
 
 Sometimes the internet is not as friendly as one would like, eventually you may need to block a specific IP address or range of IP's. For this example we are going to block the IP range of 192.168.123.0/24.
-     
+
      # iptables -I INPUT 3 -s 192.168.123.0/24 -j DROP
      # iptables -L -n
      Chain INPUT (policy DROP)
@@ -280,17 +280,17 @@ Each distribution of Linux has a different method for saving and restoring the i
 In the Red Hat distributions you can save the current live iptables rules by using the init script. This saves the rules into the file `/etc/sysconfig/iptables`. This file is later read by the init script during reboot of the server or a simple restart given to the init script.
 
 ##### Saving your active rules
-     
+
      # /etc/init.d/iptables save
 
 ##### Loading ip_conntrack on boot
 
 In order to load the ip_conntrack_ftp module on boot you will need to edit the `/etc/sysconfig/iptables-config` file. This file is used by Red Hat's init script to load any related modules on boot.
-     
+
      # vi /etc/sysconfig/iptables-config
 
 **Modify to add the following**
-     
+
      IPTABLES_MODULES=ip_conntrack_netbios_ns ip_conntrack ip_conntrack_ftp
 
 #### Ubuntu/Debian
@@ -300,19 +300,19 @@ Debain based distributions which includes Ubuntu, do not offer such init scripts
 ##### Installing iptables-persistent
 
 You can install this package with apt-get
-     
+
      # apt-get install iptables-persistent
 
 ##### Saving your active rules
 
 Once iptables-persistent is installed it will automatically save your current configuration into `/etc/iptables/rules.v4`. Any future modifications however will not be automatically saved, from then on you must save the rules similar to the Red Hat version.
-     
+
      # /etc/init.d/iptables-persistent save
       * Saving rules...
       * IPv4...
       * IPv6...
       ...done.
-     
+
      # cat /etc/iptables/rules.v4
      # Generated by iptables-save v1.4.12 on Mon Sep 17 05:56:17 2012
      *filter
@@ -335,19 +335,19 @@ Once iptables-persistent is installed it will automatically save your current co
 ##### Making sure iptables-persistent is started on boot
 
 Once your rules are saved, iptables-persistent will start them on boot. To verify that the script is added properly simply check that it exists in /etc/rc2.d/.
-     
+
      # runlevel
      N 2
-     
+
      # ls -la /etc/rc2.d/ | grep iptables
      lrwxrwxrwx 1 root root 29 Sep 16 21:44 S37iptables-persistent -> ../init.d/iptables-persistent
 
 ##### Loading ip_conntrack on boot
 
 For Debian the iptables-persistent package does not include a iptables-config file. You could add this module into the init script itself to ensure it is loaded before iptables starts.
-     
+
      # vi /etc/init.d/iptables-persistent
 
 **Go to line #25 and add:**
-     
+
      /sbin/modprobe -q ip_conntrack_ftp
