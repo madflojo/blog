@@ -1,0 +1,21 @@
+author: madflojo
+date: 2016-05-17 07:30:00-07:00
+pubdate: Tue, 17 May 2016 07:30:00 -07:00
+popularity: False
+slug: creating-a-swap-file-for-tiny-cloud-servers
+title: Creating a swap file for tiny cloud servers
+description: What is swap, and how to use a swap file to add memory to low memory cloud servers
+post_id: 130
+read_time: 5
+categories:
+  - Linux
+tags:
+  - linux
+  - swap
+  - linux memory
+  - performance
+  - cloud servers
+  - low memory
+  - docker memory
+file: 2016-05-17-creating-a-swap-device-for-tiny-cloud-servers.md
+published: True
