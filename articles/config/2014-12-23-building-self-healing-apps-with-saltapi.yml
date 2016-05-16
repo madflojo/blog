@@ -6,6 +6,7 @@ slug: building-self-healing-applications-with-salt-api
 title: "Building Self-Healing Applications with Saltstack"
 description: This article will explore creating an application that detects errors and corrects them by integrating Saltstack's API
 post_id: 125
+read_time: 7
 categories:
 - Python
 - Saltstack

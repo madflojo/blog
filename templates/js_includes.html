@@ -1,9 +1,17 @@
     <!-- jQuery -->
-    <script src="http://bencane.com/static/js/jquery.js"></script>
+    <script src="{{ data['siteurl'] }}/static/js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="http://bencane.com/static/js/bootstrap.min.js"></script>
+    <script src="{{ data['siteurl'] }}/static/js/bootstrap.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="http://bencane.com/static/js/clean-blog.min.js"></script>
+    <script src="{{ data['siteurl'] }}/static/js/clean-blog.min.js"></script>
 
+    <!-- Scroller lib -->
+    <script src="{{ data['siteurl'] }}/static/js/jscroll.min.js"></script>
+
+    <script>
+    $(function() {
+      $(".scroll").jScroll({speed : "fast"});
+    });
+    </script>

@@ -6,6 +6,7 @@ slug: using-travis-ci-to-test-docker-builds
 title: Using Travis CI to test Docker builds
 description: Walk-through on getting started with Travis CI and how to use Travis CI to test Docker builds
 post_id: 128
+read_time: 9
 categories:
 - Docker
 - Containers
