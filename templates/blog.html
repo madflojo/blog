@@ -11,11 +11,14 @@
     <header class="intro-header" style="background-image: url('/static/img/post-bg.jpg')">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
                     <div class="post-heading">
-                        <h1>{{ data['title'] }}
-                        <h2 class="subheading">{{ data['description'] }}</h2>
-                        <span class="meta">Written by <a href="https://twitter.com/madflojo">Benjamin Cane</a> on {{ data['date'] }}</span>
+                        <h1>{{ data['title'] }}</h1>
+                        <h2 class="subheading">{{ data['description'] }}
+                        </h2>
+                        <span class="meta">
+                          Written by <a href="https://twitter.com/madflojo">Benjamin Cane</a> on {{ data['date'] }} {%- if data['read_time'] -%} &nbsp;| {{data['read_time']}} min read{%- endif -%}
+                      </span>
                     </div>
                 </div>
             </div>
@@ -48,57 +51,60 @@
                 </div>
 
                 <div class="col-lg-8 col-md-8 col-sm-12">
-			{{ data['data'] }}
+			              {{ data['data'] }}
+                    <hr class="hr">
+                    {% include 'shareaholic.html' %}
+                    <div align="center">
+                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- Bottom Of Page -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-0946238287085890"
+                         data-ad-slot="6955093086"
+                         data-ad-format="auto"></ins>
+                    <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                  </div>
+                  {% include 'disqus.html' %}
                 </div>
                 <div class="col-lg-4 visible-lg col-md-4 visible-md">
-
-              <h4>Publications</h4>
-              <div class="well">
-                 <a href="http://amzn.com/1785283553" target="_blank"><h3>Red Hat Enterprise Linux Troubleshooting Guide</h3></a>
-                  <center><a href="http://amzn.com/1785283553" target="_blank"><img src="/static/img/RHELTroubleshootingCover.jpg" class="img-responsive" border=0/></a></center>
-                  <p></p>
-                 <a href="http://amzn.to/1Mdbtkt" class="btn btn-block btn-primary" role="button" target="_blank">Buy on Amazon</a>
-              </div>
-              <div class="row">
-              <h4>Sponsored by</h4>
-                  <center>
+	                  {% include 'authorinfo.html' %}
                   <div class="row">
-                  <a href="https://www.datadoghq.com/lpg/?utm_source=Advertisement&utm_medium=Advertisement&utm_campaign=Bencane"><img src="/static/img/datadog-300x250.png" border=0></a>
+                  <h4>Publications</h4>
+                  <div class="well">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <center><a href="http://amzn.com/1785283553" target="_blank"><img src="/static/img/RHELTroubleshootingCover.jpg" class="img-thumbnail img-responsive" border=0/></a></center>
+                      </div>
+                      <div class="col-md-8">
+                        <a href="http://amzn.com/1785283553" target="_blank"><h4>Red Hat Enterprise Linux Troubleshooting Guide</h4></a>
+                      </div>
+                    </div>
+                      <p>Identify, capture and resolve common issues faced by Red Hat Enterprise Linux administrators using best practices and advanced troubleshooting techniques</p>
+                      <h5>What people are saying:</h5>
+                      <blockquote>Red Hat Enterprise Linux Troubleshooting Guide may just be all you need in your quest to wear the red hat. - Perry N.</blockquote>
+                     <a href="http://amzn.to/1Mdbtkt" class="btn btn-block btn-primary" role="button" target="_blank">Buy on Amazon</a>
                   </div>
-                  <hr class="hr">
-                  <div class="row">
-                  <a href="mailto:ben@bencane.com?subject=Sponsorship"><img src="/static/img/advertise-here.jpg" border=0></a>
                   </div>
-                  </center>
-              </div>
-              <div class="row">
-            </div>
-</div>
-</div>
-<div class="row">
-
-
-    		{% include 'shareaholic.html' %}
-    <div class="row">
-      <div align="center">
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- Bottom Of Page -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-0946238287085890"
-     data-ad-slot="6955093086"
-     data-ad-format="auto"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-      </div>
-   </div>
-	   	{% include 'disqus.html' %}
+                  <div class="row scroll">
+                  <h4>Sponsored by</h4>
+                    <div class="well">
+                      <center>
+                      <div class="row">
+                      <a href="https://www.datadoghq.com/lpg/?utm_source=Advertisement&utm_medium=Advertisement&utm_campaign=Bencane"><img src="/static/img/datadog-300x250.png" border=0></a>
+                      </div>
+                      <hr class="hr">
+                      <div class="row">
+                      <a href="mailto:ben@bencane.com?subject=Sponsorship">Become a Sponsor</a>
+                      </div>
+                      </center>
+                    </div>
+                  </div>
                 </div>
-
             </div>
-
         </div>
+
     </article>
 
     <hr>
@@ -107,7 +113,6 @@
     <footer>
         <div class="container">
             <div class="row">
-	   {% include 'authorinfo.html' %}
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <p class="copyright text-muted">Copyright &copy; Benjamin Cane 2014 - <a href="mailto:ben@bencane.com">Contact the Author</a></p>
                 </div>

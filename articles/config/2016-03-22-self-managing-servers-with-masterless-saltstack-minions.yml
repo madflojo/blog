@@ -1,11 +1,12 @@
 author: madflojo
 date: 2016-03-22 07:30:00-07:00
 pubdate: Tue, 22 Mar 2016 07:30:00 -07:00
-popularity: False
+popularity: True
 slug: self-managing-servers-with-masterless-saltstack-minions
 title: Create self-managing servers with Masterless Saltstack Minions
 description: Using Saltstack's Masterless Minion architecture to create self-managing infrastructure
 post_id: 129
+read_time: 13
 categories:
 - Continuous Delivery
 - SaltStack
