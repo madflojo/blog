@@ -1,14 +1,14 @@
 #!/usr/bin/python
 ''' Hamerkop - A simple static site generator written in python for bencane.com '''
 
-import mistune
-import jinja2
-import argparse
-import yaml
 import os
 import sys
 from datetime import datetime
 from distutils import dir_util
+import jinja2
+import mistune
+import argparse
+import yaml
 
 
 
@@ -27,12 +27,11 @@ def load_post_config(config):
 
 
 def get_post_data(filename):
-    ''' Grab the post written in markdown and parse into HTML'''
-    markdown = mistune.Markdown()
+    ''' Grab the post written in markdown '''
     pfh = open(filename, "r")
     data = pfh.read()
     pfh.close()
-    return markdown(data)
+    return data
 
 
 def render_page(data, meta, template, template_path):
@@ -85,6 +84,11 @@ if __name__ == "__main__":
     for post in fulldata.keys():
         filename = config['articles']['posts'] + "/" + fulldata[post]['file']
         fulldata[post]['data'] = get_post_data(filename)
+        # Calculate Read time
+        fulldata[post]['read_time'] = len(fulldata[post]['data'].split()) / 275
+        # Convert data into HTML
+        markdown = mistune.Markdown()
+        fulldata[post]['data'] = markdown(fulldata[post]['data'])
 
         # Generate article specific settings
         meta = config
