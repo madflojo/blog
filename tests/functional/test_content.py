@@ -40,14 +40,15 @@ class ContentTest(unittest.TestCase):
         )
         for url in urls:
             url = url.lstrip('href="')
-            if "//" not in url or ".css" not in url:
-                results, requested = self.request_recurse(url, requested=requested)
-                # Add counts for status codes
-                for key in results.keys():
-                    if key in counts:
-                        counts[key] = counts[key] + results[key]
-                    else:
-                        counts[key] = results[key]
+            if "/static/" not in url:
+                if "//" not in url:
+                    results, requested = self.request_recurse(url, requested=requested)
+                    # Add counts for status codes
+                    for key in results.keys():
+                        if key in counts:
+                            counts[key] = counts[key] + results[key]
+                        else:
+                            counts[key] = results[key]
         return counts, requested
 
 class CrawlSite(ContentTest):
