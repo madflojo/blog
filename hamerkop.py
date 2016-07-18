@@ -9,8 +9,18 @@ import jinja2
 import mistune
 import argparse
 import yaml
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters import HtmlFormatter
 
-
+class HighlightRenderer(mistune.Renderer):
+    def block_code(self, code, lang):
+        if not lang:
+            return '\n<div class="highlight"><pre><code>%s</code></pre></div>\n' % \
+                mistune.escape(code)
+        lexer = get_lexer_by_name(lang, stripall=True)
+        formatter = HtmlFormatter(noclasses=True, style="trac")
+        return highlight(code, lexer, formatter)
 
 def load_post_config(config):
     ''' Find article yml files and load them into metadata dictionary '''
@@ -87,7 +97,8 @@ if __name__ == "__main__":
         # Calculate Read time
         fulldata[post]['read_time'] = len(fulldata[post]['data'].split()) / 275
         # Convert data into HTML
-        markdown = mistune.Markdown()
+        renderer = HighlightRenderer()
+        markdown = mistune.Markdown(renderer=renderer)
         fulldata[post]['data'] = markdown(fulldata[post]['data'])
 
         # Generate article specific settings
