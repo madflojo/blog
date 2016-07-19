@@ -139,7 +139,7 @@ blr1-001:
 
 The `salt-ssh` command above has a similar syntax to the standard `salt` command called with a typical Master/Minion setup; the format is `salt-ssh <target> <task>`. In this case our target was `blr1-001` the same name we defined earlier and our task was `test.ping`.
 
-You may also notice that I passed the `--priv` flag followed by a path to my SSH private key. This flag is used to specify an SSH key to use when connecting to the minion server. By default `salt-ssh` will use SaltStack's internal SSH key, which means if you wish to use an alternative key you will need to specify the key with the `--priv` flag.
+You may also notice that I passed the `--priv` flag followed by a path to my SSH private key. This flag is used to specify an SSH key to use when connecting to the minion server. By default, `salt-ssh` will use SaltStack's internal SSH key, which means if you wish to use an alternative key you will need to specify the key with the `--priv` flag.
 
 In many cases it's perfectly fine to use SaltStack's internal SSH key, in my case the SSH public key has already been distributed which means I do not want to use Salt's internal SSH key.
 
@@ -354,4 +354,4 @@ blr1-001:
 
 ## Summary
 
-With the above, we can see that we were successfully able to install the `salt-minion` agent to a remote system via `salt-ssh`. While this may seem like quite a bit of work to setup for a single minion. The ability to install Salt with `salt-ssh` can be very useful when you are setting up multiple minions, as this same methodology works whether your installing Salt on 1 or 1,000 minions.
+With the above, we can see that we were successfully able to install the `salt-minion` agent to a remote system via `salt-ssh`. While this may seem like quite a bit of work to setup for a single minion. The ability to install Salt with `salt-ssh` can be very useful when you are setting up multiple minions, as this same methodology works whether you're installing Salt on 1 or 1,000 minions.
