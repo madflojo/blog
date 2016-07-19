@@ -31,7 +31,7 @@
         <table class="table table-striped table-hover">
           <tbody>
 
-          
+
           {% for item in meta['post_ids']|reverse %}
           <tr>
             <td>
@@ -39,7 +39,7 @@
             <span class="label label-info pull-right">Popular</span>
             {% endif %}
             <h3><a href="{{ data[item]['full_url'] }}">{{ data[item]['title'] }}</a></h3>
-                <small class="text-muted">Published on: {{ data[item]['date'] }}</small>
+                <small class="text-muted">Published on: {{ data[item]['date'] }} | {{data[item]['read_time']}} min read</small>
                 <p class="text-default">{{ data[item]['description'] }}</p>
             </td>
           </tr>

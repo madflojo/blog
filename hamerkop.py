@@ -1,16 +1,26 @@
 #!/usr/bin/python
 ''' Hamerkop - A simple static site generator written in python for bencane.com '''
 
-import mistune
-import jinja2
-import argparse
-import yaml
 import os
 import sys
 from datetime import datetime
 from distutils import dir_util
+import jinja2
+import mistune
+import argparse
+import yaml
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters import HtmlFormatter
 
-
+class HighlightRenderer(mistune.Renderer):
+    def block_code(self, code, lang):
+        if not lang:
+            return '\n<div class="highlight"><pre><code>%s</code></pre></div>\n' % \
+                mistune.escape(code)
+        lexer = get_lexer_by_name(lang, stripall=True)
+        formatter = HtmlFormatter(noclasses=True, style="trac")
+        return highlight(code, lexer, formatter)
 
 def load_post_config(config):
     ''' Find article yml files and load them into metadata dictionary '''
@@ -27,12 +37,11 @@ def load_post_config(config):
 
 
 def get_post_data(filename):
-    ''' Grab the post written in markdown and parse into HTML'''
-    markdown = mistune.Markdown()
+    ''' Grab the post written in markdown '''
     pfh = open(filename, "r")
     data = pfh.read()
     pfh.close()
-    return markdown(data)
+    return data
 
 
 def render_page(data, meta, template, template_path):
@@ -85,6 +94,12 @@ if __name__ == "__main__":
     for post in fulldata.keys():
         filename = config['articles']['posts'] + "/" + fulldata[post]['file']
         fulldata[post]['data'] = get_post_data(filename)
+        # Calculate Read time
+        fulldata[post]['read_time'] = len(fulldata[post]['data'].split()) / 275
+        # Convert data into HTML
+        renderer = HighlightRenderer()
+        markdown = mistune.Markdown(renderer=renderer)
+        fulldata[post]['data'] = markdown(fulldata[post]['data'])
 
         # Generate article specific settings
         meta = config

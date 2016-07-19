@@ -92,7 +92,7 @@ With our file now formatted as a swap device we can start the steps to mount it.
 
 With the above step complete, we can now mount the swap file. To do this we will use the `swapon` command.
 
-```
+```sh
 $ sudo swapon -a
 ```
 
