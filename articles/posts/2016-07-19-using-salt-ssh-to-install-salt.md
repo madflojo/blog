@@ -6,7 +6,7 @@ The only thing that isn't hands-free about this setup, is installing and configu
 
 ## How `salt-ssh` works
 
-A typical SaltStack deployment consists of a Master server running the `salt-master` process, and any Minion server running the `salt-minion` process. The `salt-minion` service will initiate communication with the `salt-master` service over a **ZeroMQ** connection and the Master distributes desired states to the Minion.
+A typical SaltStack deployment consists of a Master server running the `salt-master` process, and one or more Minion servers running the `salt-minion` process. The `salt-minion` service will initiate communication with the `salt-master` service over a **ZeroMQ** connection and the Master distributes desired states to the Minion.
 
 With this typical setup, you must first have a `salt-master` service installed and configured, and every server that you wish to manage with Salt must have the `salt-minion` service installed and configured. The `salt-ssh` package however, changes that.
 
@@ -115,11 +115,13 @@ blr1-001:
 
 The above information is fairly minimal, the basic definition is a Target name `blr1-001`, a Hostname or IP address specified by `host` and then the Username specified by `user`.
 
-The target name is used when running the `salt-ssh` to specify what minion we wish to target. The `host` key is used by `salt-ssh` to define where to connect to, and the `user` key is used to define who to connect as. In the example above I specified to use the `root` user. It is possible to use `salt-ssh` with a non-root user by adding `sudo: True` to the minion entry.
+The target name is used when running the `salt-ssh` command to specify what minion we wish to target. The `host` key is used by `salt-ssh` to define where to connect to, and the `user` key is used to define who to connect as.
+
+In the example above I specified to use the `root` user. It is possible to use `salt-ssh` with a non-root user by simply adding `sudo: True` to the minion entry.
 
 #### Testing connectivity to our minion
 
-With the minion now defined within the `/etc/salt/roster` file we should now be able to connect to our minion with `salt-ssh`. We can test this out by executing a `test.ping` Salt execution against this target with `salt-ssh`.
+With the minion now defined within the `/etc/salt/roster` file we should now be able to connect to our minion with `salt-ssh`. We can test this out by executing a `test.ping` task against this target with `salt-ssh`.
 
 ```shell-session
 $ sudo salt-ssh 'blr1-001' --priv=/home/vagrant/.ssh/id_rsa test.ping
@@ -137,7 +139,11 @@ blr1-001:
 
 The `salt-ssh` command above has a similar syntax to the standard `salt` command called with a typical Master/Minion setup; the format is `salt-ssh <target> <task>`. In this case our target was `blr1-001` the same name we defined earlier and our task was `test.ping`.
 
-You may also notice that I passed the `--priv` flag followed by a path to my SSH Private Key. This flag is used to specify an SSH key to use when connecting to the minion server. By default `salt-ssh` will use SaltStack's internal SSH key, which means if you wish to use an alternative key you will need to specify the key with the `--priv` flag. In many cases it's perfectly fine to use SaltStack's internal SSH key, in my case the SSH public key has already been distributed, which means I will need to specify my alternative key.
+You may also notice that I passed the `--priv` flag followed by a path to my SSH private key. This flag is used to specify an SSH key to use when connecting to the minion server. By default `salt-ssh` will use SaltStack's internal SSH key, which means if you wish to use an alternative key you will need to specify the key with the `--priv` flag.
+
+In many cases it's perfectly fine to use SaltStack's internal SSH key, in my case the SSH public key has already been distributed which means I do not want to use Salt's internal SSH key.
+
+#### Bypassing Host Key Validation
 
 If we look at the output of the `salt-ssh` command executed earlier, we can see that the command was not successful. The reason for this is because this master server has not accepted the host key from the new minion server. We can get around this issue by specifying the `-i` flag when running `salt-ssh`.
 
