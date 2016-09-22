@@ -2,9 +2,10 @@
 <html lang="en">
 
 {% include 'header.html' %}
+
 <body>
 
-{% include 'navbar.html' %}
+    {% include 'navbar.html' %}
 
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
@@ -14,11 +15,10 @@
                 <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
                     <div class="post-heading">
                         <h1>{{ data['title'] }}</h1>
-                        <h2 class="subheading">{{ data['description'] }}
-                        </h2>
+                        <h2 class="subheading">{{ data['description'] }}</h2>
                         <span class="meta">
                           Written by <a href="https://twitter.com/madflojo">Benjamin Cane</a> on {{ data['date'] }} {%- if data['read_time'] -%} &nbsp;| {{data['read_time']}} min read{%- endif -%}
-                      </span>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -29,65 +29,58 @@
     <!-- Post Content -->
     <article>
         <div class="container">
-    <div class="row">
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- Top of Page -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-0946238287085890"
-     data-ad-slot="5617960684"
-     data-ad-format="auto"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    <p></p>
-    </div>
             <div class="row">
-              <div class="row">
-                <div class="col-sm-12 col-xs-12 visible-xs visible-sm">
-                <h4>Sponsored by</h4>
-                  <a href="https://www.datadoghq.com/lpg/?utm_source=Advertisement&utm_medium=Advertisement&utm_campaign=Bencane"><img src="/static/img/datadog-300x250.png" border=0></a>
-                </div>
-                </div>
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- Top of Page -->
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0946238287085890" data-ad-slot="5617960684" data-ad-format="auto"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+                <p></p>
+            </div>
+            <div class="row">
+                <!-- <div class="row">
+                    <div class="col-sm-12 col-xs-12 visible-xs visible-sm">
+                        <h4>Sponsored by</h4>
+                        <a href="https://www.datadoghq.com/lpg/?utm_source=Advertisement&utm_medium=Advertisement&utm_campaign=Bencane"><img src="/static/img/datadog-300x250.png" border=0></a>
+                    </div>
+                </div> -->
 
                 <div class="col-lg-8 col-md-8 col-sm-12">
-			              {{ data['data'] }}
-                    <hr class="hr">
-                    {% include 'shareaholic.html' %}
+                    {{ data['data'] }}
+                    <hr class="hr"> {% include 'shareaholic.html' %}
                     <div align="center">
-                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                    <!-- Bottom Of Page -->
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-0946238287085890"
-                         data-ad-slot="6955093086"
-                         data-ad-format="auto"></ins>
-                    <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
-                  </div>
-                  {% include 'disqus.html' %}
+                        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                        <!-- Bottom Of Page -->
+                        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0946238287085890" data-ad-slot="6955093086" data-ad-format="auto"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                    {% include 'disqus.html' %}
                 </div>
                 <div class="col-lg-4 visible-lg col-md-4 visible-md">
-	                  {% include 'authorinfo.html' %}
-                  <div class="row">
-                  <h4>Publications</h4>
-                  <div class="well">
+                    {% include 'authorinfo.html' %}
                     <div class="row">
-                      <div class="col-md-4">
-                        <center><a href="http://amzn.com/1785283553" target="_blank"><img src="/static/img/RHELTroubleshootingCover.jpg" class="img-thumbnail img-responsive" border=0/></a></center>
-                      </div>
-                      <div class="col-md-8">
-                        <a href="http://amzn.com/1785283553" target="_blank"><h4>Red Hat Enterprise Linux Troubleshooting Guide</h4></a>
-                      </div>
+                        <h4>Publications</h4>
+                        <div class="well">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <center>
+                                        <a href="http://amzn.com/1785283553" target="_blank"><img src="/static/img/RHELTroubleshootingCover.jpg" class="img-thumbnail img-responsive" border=0/></a>
+                                    </center>
+                                </div>
+                                <div class="col-md-8">
+                                    <a href="http://amzn.com/1785283553" target="_blank"><h4>Red Hat Enterprise Linux Troubleshooting Guide</h4></a>
+                                </div>
+                            </div>
+                            <p>Identify, capture and resolve common issues faced by Red Hat Enterprise Linux administrators using best practices and advanced troubleshooting techniques</p>
+                            <h5>What people are saying:</h5>
+                            <blockquote>Red Hat Enterprise Linux Troubleshooting Guide may just be all you need in your quest to wear the red hat. - Perry N.</blockquote>
+                            <a href="http://amzn.to/1Mdbtkt" class="btn btn-block btn-primary" role="button" target="_blank">Buy on Amazon</a>
+                        </div>
                     </div>
-                      <p>Identify, capture and resolve common issues faced by Red Hat Enterprise Linux administrators using best practices and advanced troubleshooting techniques</p>
-                      <h5>What people are saying:</h5>
-                      <blockquote>Red Hat Enterprise Linux Troubleshooting Guide may just be all you need in your quest to wear the red hat. - Perry N.</blockquote>
-                     <a href="http://amzn.to/1Mdbtkt" class="btn btn-block btn-primary" role="button" target="_blank">Buy on Amazon</a>
-                  </div>
-                  </div>
-                  <div class="row scroll">
+                    <!-- <div class="row scroll">
                   <h4>Sponsored by</h4>
                     <div class="well">
                       <center>
@@ -100,7 +93,15 @@
                       </div>
                       </center>
                     </div>
-                  </div>
+                  </div> -->
+                    <div class="row">
+                        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                        <!-- SideBar -->
+                        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0946238287085890" data-ad-slot="3549001080" data-ad-format="auto"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
                 </div>
             </div>
         </div>
@@ -121,7 +122,7 @@
     </footer>
 
 
-	   {% include 'js_includes.html' %}
+    {% include 'js_includes.html' %}
 </body>
 
 </html>
