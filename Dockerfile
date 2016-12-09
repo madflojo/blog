@@ -10,12 +10,12 @@ COPY nginx/htmlglobal.conf /etc/nginx/globals/
 COPY nginx/bencane.com.conf /etc/nginx/sites-enabled/
 
 ## Install python and pip
-RUN apt-get update && apt-get install -y \ 
-    python-dev \ 
-    python-pip \ 
-    sysstat \
-    && apt-get clean \ 
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y \
+    python-dev \
+    python-pip \
+    sysstat && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 ## Create a directory for required files
 RUN mkdir -p /build/
