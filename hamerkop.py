@@ -19,7 +19,7 @@ class HighlightRenderer(mistune.Renderer):
             return '\n<div class="highlight"><pre><code>%s</code></pre></div>\n' % \
                 mistune.escape(code)
         lexer = get_lexer_by_name(lang, stripall=True)
-        formatter = HtmlFormatter(noclasses=True, style="monokai")
+        formatter = HtmlFormatter(noclasses=True, style="trac")
         return highlight(code, lexer, formatter)
 
 def load_post_config(config):
