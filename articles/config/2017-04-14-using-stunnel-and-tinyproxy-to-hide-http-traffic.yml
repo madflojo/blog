@@ -1,0 +1,23 @@
+author: madflojo
+date: 2017-04-14 7:30:00-07:00
+pubdate: Fri, 14 Apr 2017 7:30:00 -07:00
+popularity: False
+slug: using-stunnel-and-tinyproxy-to-hide-http-traffic
+title: Using stunnel and TinyProxy to obfuscate HTTP traffic
+description: Using stunnel to create an SSL tunnel to a TinyProxy HTTP proxy
+post_id: 132
+categories:
+  - Linux
+  - Information Security
+  - TinyProxy
+tags:
+  - linux
+  - tls
+  - TinyProxy
+  - stunnel
+  - infosec
+  - Security
+  - anonymous http traffic
+  - hiding http traffic
+file: 2017-04-14-using-stunnel-and-tinyproxy-to-hide-http-traffic.md
+published: True
