@@ -176,24 +176,51 @@ We can now move to configuring the stunnel client.
 
 ### TLS Tunnel Configuration (Client)
 
-The configuration of stunnel in "client-mode" is only a little different than the "server-mode" configuration we set earlier. As with before we will insert the following into the `/etc/stunnel/stunnel.conf` configuration file.
+The configuration of stunnel in "client-mode" is a little different than the "server-mode" configuration we set earlier. As with before we will insert the configuration into the `/etc/stunnel/stunnel.conf` file.
 
 ```ini
 client = yes
 
 [tinyproxy]
-accept = localhost:3128
+accept = 127.0.0.1:3128
 connect = 192.168.33.10:3128
 verify = 4
 CAFile = /etc/ssl/cert.pem
 ```
 
+As we did before, let's break down the configuration options shown above.
 
+The first option is `client`, this option is simple as it defines whether stunnel should be operating in a client or server mode. By setting this to `yes`, we are defining that we would like to use client mode.
 
+We covered `accept` and `connect` before and if we go back to our description above we can see that stunnel will accept connections on `127.0.0.1:3128` and then tunnel them to `192.168.33.10:3128`, which is the IP and port that our stunnel server is listening on.
+
+The `verify` option is used to define what level of certificate validation should the client perform. The option of `4` will cause stunnel to verify the remote certificate with a local certificate defined with the `CAFile` option. In the above example, I copied the `/etc/ssl/cert.pem` we generated on the server to the client.
+
+These last two options are important, without setting `verify` and `CAFile` stunnel will open an TLS connection without necessarily checking the validity of the certificate. By setting `verify` to `4` and `CAFile` to the same `cert.pem` we generated earlier, we are giving stunnel a way to validate the identity of our proxy server. This will prevent our client from being hit with a man-in-the-middle attack.
+
+Once again, let's restart stunnel to make our configurations take effect.
+
+```shell
+client: $ sudo systemctl restart stunnel4
 ```
-ubuntu@ubuntu-xenial:/etc/ssl$ export http_proxy="http://localhost:3128"
-ubuntu@ubuntu-xenial:/etc/ssl$ export https_proxy="https://localhost:3128"
-ubuntu@ubuntu-xenial:/etc/ssl$ curl -v http://google.com
+
+With our configurations complete, let's go ahead and test our proxy.
+
+## Testing our TLS tunneled HTTP Proxy
+
+In order to test the proxy settings I will use the `curl` command. While I am using a command line web client, it is possible to use this same type of configuration with GUI based browsers such as Chrome or Firefox.
+
+Before testing however, I will need to set the `http_proxy` and `https_proxy` environmental variables. These will tell `curl` to leverage our proxy server.
+
+```shell
+client: $ export http_proxy="http://localhost:3128"
+client: $ export https_proxy="https://localhost:3128"
+```
+
+With our proxy server settings in place, let's go ahead and execute our `curl` command.
+
+```shell
+client: $ curl -v http://google.com
 * Rebuilt URL to: http://google.com/
 *   Trying 127.0.0.1...
 * Connected to localhost (127.0.0.1) port 3128 (#0)
@@ -224,3 +251,115 @@ The document has moved
 </BODY></HTML>
 * Closing connection 0
 ```
+
+From the above output we can see that our connection was routed through TinyProxy.
+
+```console
+< Via: 1.1 tinyproxy (tinyproxy/1.8.3)
+```
+
+And we were able to connect to Google.
+
+```console
+<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
+<TITLE>301 Moved</TITLE></HEAD><BODY>
+<H1>301 Moved</H1>
+The document has moved
+<A HREF="http://www.google.com/">here</A>.
+</BODY></HTML>
+```
+
+The above test validated that an HTTP call is now being routed through our proxy, but what about HTTPS requests?
+
+```shell
+curl -v https://google.com
+* Rebuilt URL to: https://google.com/
+*   Trying 127.0.0.1...
+* Connected to localhost (127.0.0.1) port 3128 (#0)
+* Establish HTTP proxy tunnel to google.com:443
+> CONNECT google.com:443 HTTP/1.1
+> Host: google.com:443
+> User-Agent: curl/7.47.0
+> Proxy-Connection: Keep-Alive
+>
+< HTTP/1.0 200 Connection established
+< Proxy-agent: tinyproxy/1.8.3
+<
+* Proxy replied OK to CONNECT request
+* found 173 certificates in /etc/ssl/certs/ca-certificates.crt
+* found 692 certificates in /etc/ssl/certs
+* ALPN, offering http/1.1
+* SSL connection using TLS1.2 / ECDHE_ECDSA_AES_128_GCM_SHA256
+* 	 server certificate verification OK
+* 	 server certificate status verification SKIPPED
+* 	 common name: *.google.com (matched)
+* 	 server certificate expiration date OK
+* 	 server certificate activation date OK
+* 	 certificate public key: EC
+* 	 certificate version: #3
+* 	 subject: C=US,ST=California,L=Mountain View,O=Google Inc,CN=*.google.com
+* 	 start date: Wed, 05 Apr 2017 17:47:49 GMT
+* 	 expire date: Wed, 28 Jun 2017 16:57:00 GMT
+* 	 issuer: C=US,O=Google Inc,CN=Google Internet Authority G2
+* 	 compression: NULL
+* ALPN, server accepted to use http/1.1
+> GET / HTTP/1.1
+> Host: google.com
+> User-Agent: curl/7.47.0
+> Accept: */*
+>
+< HTTP/1.1 301 Moved Permanently
+< Location: https://www.google.com/
+< Content-Type: text/html; charset=UTF-8
+< Date: Fri, 14 Apr 2017 22:37:01 GMT
+< Expires: Sun, 14 May 2017 22:37:01 GMT
+< Cache-Control: public, max-age=2592000
+< Server: gws
+< Content-Length: 220
+< X-XSS-Protection: 1; mode=block
+< X-Frame-Options: SAMEORIGIN
+< Alt-Svc: quic=":443"; ma=2592000; v="37,36,35"
+<
+<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
+<TITLE>301 Moved</TITLE></HEAD><BODY>
+<H1>301 Moved</H1>
+The document has moved
+<A HREF="https://www.google.com/">here</A>.
+</BODY></HTML>
+* Connection #0 to host localhost left intact
+```
+
+From the above, it appears that HTTPS is working as well.
+
+## Securing our tunnel further with PreShared Keys
+
+At this point we have a working TLS based HTTP and HTTPS proxy deployed in another location available over the internet. But what would happen if this proxy was found by someone simply scanning subnets for nefarious purposes. In theory as it stands today they could use our proxy for their own purposes. We need some way to ensure that only our client can use this proxy; enter PreShared Keys.
+
+Much like an API key, stunnel supports an authentication method called PSK or PreShared Keys. This is essentially what it sounds like. A token that has been shared between the client and the server in advance and used for authentication. To enable PSK authentication we simply need to add the following two lines to the `/etc/stunnel/stunnel.conf` file.
+
+```ini
+ciphers = PSK
+PSKsecrets = /etc/stunnel/secrets
+```
+
+By setting `ciphers` to `PSK` we are telling stunnel to use PSK based authentication. The `PSKsecrets` option is used to provide stunnel a file that contains the secrets in a `clientname:token` format.
+
+In the above we specified the `/etc/stunnel/secrets` file. Below is what I am using for this test environment.
+
+```
+client1:SjolX5zBNedxvhj+cQUjfZX2RVgy7ZXGtk9SEgH6Vai3b8xiDL0ujg8mVI2aGNCz
+```
+
+Once the `/etc/stunnel/secrets` file is created we will also need to ensure that the permissions on the file are set appropriately.
+
+```shell
+$ sudo chmod 600 /etc/stunnel/secrets
+```
+
+By setting the permissions to `600` we are ensuring only the `root` user (the owner of the file) can read this file. After setting permissions we will need to once again restart the stunnel service.
+
+```shell
+$ sudo systemctl restart stunnel4
+```
+
+Once our settings are complete, we will need perform the above steps again on the client as well as the server.
