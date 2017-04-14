@@ -1,4 +1,4 @@
-Recently there has been a lot of news & talk about how to secure internet traffic to prevent snooping both from service providers and governments. In this article I am going to show one method of anonymizing internet traffic by walking through using **stunnel** to create an SSL tunnel with an instance of **TinyProxy** on the other side.
+Recently there has been a lot of coverage in both tech and non-tech news outlets about how to secure internet traffic to prevent snooping both from service providers and governments. In this article I am going to show one method of anonymizing internet traffic by walking through using **stunnel** to create an SSL tunnel with an instance of **TinyProxy** on the other side.
 
 ## How does this help anonymize my internet traffic
 
