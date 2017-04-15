@@ -338,7 +338,7 @@ With our settings are complete on both the client and server, we now have a reas
 
 ## Summary
 
-In this article we covered setting up both a TLS and HTTP Proxy. As I mentioned before this setup can be used to help hide HTTP and HTTPS traffic on a given network. However, it is important to remember that while the client system is a much more tricky target to hit, the proxy server itself could still be targeted for packet sniffing and man-in-the-middle attacks.
+In this article we covered setting up both a TLS and HTTP Proxy. As I mentioned before this setup can be used to help hide HTTP and HTTPS traffic on a given network. However, it is important to remember that while this setup makes the client system a much more tricky target, the proxy server itself could still be targeted for packet sniffing and man-in-the-middle attacks.
 
 The key is to wisely select the location of where the proxy server is hosted.
 
