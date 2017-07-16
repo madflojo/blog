@@ -15,12 +15,14 @@ from pygments.formatters import HtmlFormatter
 
 class HighlightRenderer(mistune.Renderer):
     def block_code(self, code, lang):
-        if not lang:
-            return '\n<div class="highlight"><pre><code>%s</code></pre></div>\n' % \
-                mistune.escape(code)
-        lexer = get_lexer_by_name(lang, stripall=True)
-        formatter = HtmlFormatter(noclasses=True, style="monokai")
-        return highlight(code, lexer, formatter)
+        html = ""
+        if lang:
+            html = '\n<div class="highlight"><pre><code class="%s">%s</code></pre></div>\n' % \
+                   (lang, mistune.escape(code))
+            return html
+        html = '\n<div class="highlight"><pre><code>%s</code></pre></div>\n' % mistune.escape(code)
+        return html
+
 
 def load_post_config(config):
     ''' Find article yml files and load them into metadata dictionary '''
@@ -115,7 +117,8 @@ if __name__ == "__main__":
         slugs.append(config['output_dir'] + datetime.strftime(fulldata[post]['date'],
                                                               '/%Y/') + slug)
         # Define a full_url key for each post
-        fulldata[post]['full_url'] = datetime.strftime(fulldata[post]['date'], '/%Y/%m/%d/') + slug + "/"
+        fulldata[post]['full_url'] = datetime.strftime(fulldata[post]['date'], '/%Y/%m/%d/') + \
+                                     slug + "/"
 
         # While grabbing data generate static articles
         rendered_page = render_page(fulldata[post],
