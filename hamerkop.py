@@ -68,7 +68,8 @@ def create_page(path, filename, content):
         fh.write(content)
         fh.close()
         return True
-    except:
+    except Exception as e:
+        print "{0}".format(e.message)
         return False
 
 
@@ -94,55 +95,59 @@ if __name__ == "__main__":
 
     # Grab article data and start generating pages
     for post in fulldata.keys():
-        filename = config['articles']['posts'] + "/" + fulldata[post]['file']
-        fulldata[post]['data'] = get_post_data(filename)
-        # Calculate Read time
-        fulldata[post]['read_time'] = len(fulldata[post]['data'].split()) / 275
-        # Convert data into HTML
-        renderer = HighlightRenderer()
-        markdown = mistune.Markdown(renderer=renderer)
-        fulldata[post]['data'] = markdown(fulldata[post]['data'])
+        if fulldata[post]['file']:
+            filename = config['articles']['posts'] + "/" + fulldata[post]['file']
+            fulldata[post]['data'] = get_post_data(filename)
+            # Calculate Read time
+            fulldata[post]['read_time'] = len(fulldata[post]['data'].split()) / 275
+            # Generate article specific settings
+            meta = config
+            meta['page_type'] = "article"
+            # Convert data into HTML
+            renderer = HighlightRenderer()
+            markdown = mistune.Markdown(renderer=renderer)
+            fulldata[post]['data'] = markdown(fulldata[post]['data'])
 
-        # Generate article specific settings
-        meta = config
-        meta['page_type'] = "article"
 
-        # Place a copy in each level for backwards capatability
-        slug = fulldata[post]['slug']
-        slugs = []
-        slugs.append(config['output_dir'] + datetime.strftime(fulldata[post]['date'],
-                                                              '/%Y/%m/%d/') + slug)
-        slugs.append(config['output_dir'] + datetime.strftime(fulldata[post]['date'],
-                                                              '/%Y/%m/') + slug)
-        slugs.append(config['output_dir'] + datetime.strftime(fulldata[post]['date'],
-                                                              '/%Y/') + slug)
-        # Define a full_url key for each post
-        fulldata[post]['full_url'] = datetime.strftime(fulldata[post]['date'], '/%Y/%m/%d/') + \
-                                     slug + "/"
+            # Place a copy in each level for backwards capatability
+            slug = fulldata[post]['slug']
+            slugs = []
+            slugs.append(config['output_dir'] + datetime.strftime(fulldata[post]['date'],
+                                                                  '/%Y/%m/%d/') + slug)
+            slugs.append(config['output_dir'] + datetime.strftime(fulldata[post]['date'],
+                                                                  '/%Y/%m/') + slug)
+            slugs.append(config['output_dir'] + datetime.strftime(fulldata[post]['date'],
+                                                                  '/%Y/') + slug)
 
-        # While grabbing data generate static articles
-        rendered_page = render_page(fulldata[post],
-                                    config,
-                                    config['templates']['article'],
-                                    config['template_dir'])
-
-        # Start creatin article pages
-        data = rendered_page
-        if fulldata[post]['published']:
-            for slug_path in slugs:
-                if create_page(slug_path, "index.html", data):
-                    print "Successfully created file {0}".format(slug_path)
-                else:
-                    print "Error creating article {0}".format(slug_path)
-        else:
-            fulldata.pop(post, None)
+            # Define a full_url key for each post
+            fulldata[post]['full_url'] = datetime.strftime(fulldata[post]['date'], '/%Y/%m/%d/') + \
+                                         slug + "/"
+    
+            # While grabbing data generate static articles
+            rendered_page = render_page(fulldata[post],
+                                        config,
+                                        config['templates']['article'],
+                                        config['template_dir'])
+    
+            # Start creatin article pages
+            data = rendered_page
+            if fulldata[post]['published']:
+                for slug_path in slugs:
+                    if create_page(slug_path, "index.html", data):
+                        print "Successfully created file {0}".format(slug_path)
+                    else:
+                        print "Error creating article {0}".format(slug_path)
+            else:
+                fulldata.pop(post, None)
             print "Skipping article {0} as it has not been published yet".format(post)
+
 
     # Create additional pages defined in config
     for page in config['additional_pages'].keys():
         meta = config
         meta['page_type'] = page
         meta['post_ids'] = fulldata.keys()
+        meta['front_ids'] = meta['post_ids'][-15:]
 
         # Ensure additional paths are added if required
         if "add_path" in config['additional_pages'][page]:

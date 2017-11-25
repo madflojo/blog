@@ -1,0 +1,17 @@
+author: madflojo
+date: 2017-09-21 11:15:00-07:00
+pubdate: Thurs, 21 Sep 2017 11:15:00 -07:00
+popularity: False
+title: 3 Different Ways to Provide Docker Build Context
+description: In this article, we are specifically going to focus on different ways to provide the Docker Build command a source or context to build from.
+post_id: 148
+categories:
+  - containers
+tags:
+  - docker
+file: False
+external: True
+publisher: Codeship
+remote_url: https://blog.codeship.com/3-different-ways-to-provide-docker-build-context/
+read_time: 6
+published: True

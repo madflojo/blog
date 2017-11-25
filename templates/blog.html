@@ -17,7 +17,7 @@
                         <h1>{{ data['title'] }}</h1>
                         <h2 class="subheading">{{ data['description'] }}</h2>
                         <span class="meta">
-                          Written by <a href="https://twitter.com/madflojo">Benjamin Cane</a> on {{ data['date'] }} {%- if data['read_time'] -%} &nbsp;| {{data['read_time']}} min read{%- endif -%}
+                          Written by <a href="https://twitter.com/madflojo">Benjamin Cane</a> on {{ data['date'].strftime("%Y-%m-%d") }} {%- if data['read_time'] -%} &nbsp;| {{data['read_time']}} min read{%- endif -%}
                         </span>
                     </div>
                 </div>
@@ -39,13 +39,6 @@
                 <p></p>
             </div>
             <div class="row">
-                <!-- <div class="row">
-                    <div class="col-sm-12 col-xs-12 visible-xs visible-sm">
-                        <h4>Sponsored by</h4>
-                        <a href="https://www.datadoghq.com/lpg/?utm_source=Advertisement&utm_medium=Advertisement&utm_campaign=Bencane"><img src="/static/img/datadog-300x250.png" border=0></a>
-                    </div>
-                </div> -->
-
                 <div class="col-lg-8 col-md-8 col-sm-10">
                     {{ data['data'] }}
                     <hr class="hr"> {% include 'shareaholic.html' %}
@@ -70,7 +63,7 @@
                                     </center>
                                 </div>
                                 <div class="col-md-6">
-                                    <a href="https://www.amazon.com/dp/1785283553/" class="btn btn-block btn-primary" role="button" target="_blank">Paperback</a> <a href="https://www.amazon.com/Red-Enterprise-Linux-Troubleshooting-Guide-ebook/dp/B016OQOOAK" class="btn btn-block btn-primary" role="button" target="_blank">Kindle</a> <a href="https://www.safaribooksonline.com/library/view/red-hat-enterprise/9781785283550/" class="btn btn-block btn-primary" role="button" target="_blank">Safari Books</a>
+                                    <a href="https://www.amazon.com/dp/1785283553/" class="btn btn-block btn-primary" role="button" target="_blank">Paperback</a> <a href="https://www.amazon.com/Red-Enterprise-Linux-Troubleshooting-Guide-ebook/dp/B016OQOOAK" class="btn btn-block btn-primary" role="button" target="_blank">Kindle</a>
                                 </div>
                             </div>
                             <p>Identify, capture and resolve common issues faced by Red Hat Enterprise Linux administrators using best practices and advanced troubleshooting techniques</p>
@@ -78,20 +71,6 @@
                             <blockquote>Excellent, excellent resource for practical guidance on how to troubleshoot a wide variety of problems on Red Hat Linux. I particularly enjoyed how the author made sure to provide solid background and practical examples. I have a lot of experience on Red Hat but still came away with some great practical tools to add to my toolkit. - Amazon Review</blockquote>
                         </div>
                     </div>
-                    <div class="row">
-                  <h4>Sponsored by</h4>
-                    <div class="well">
-                      <center>
-                      <div class="row">
-                      <a href="https://www.datadoghq.com/lpg/?utm_source=Advertisement&utm_medium=Advertisement&utm_campaign=Bencane"><img src="/static/img/datadog-300x250-2.png" border=0></a>
-                      </div>
-                      <hr class="hr">
-                      <div class="row">
-                      <a href="mailto:ben@bencane.com?subject=Sponsorship">Become a Sponsor</a>
-                      </div>
-                      </center>
-                    </div>
-                  </div>
                     <div class="row">
                         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                         <!-- SideBar -->
@@ -113,7 +92,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <p class="copyright text-muted">Copyright &copy; Benjamin Cane 2014 - <a href="mailto:ben@bencane.com">Contact the Author</a></p>
+                    <p class="copyright text-muted">Copyright &copy; Benjamin Cane 2017 | <i class="fa fa-twitter"></i> <a href="https://twitter.com/madflojo">Twitter</a> | <i class="fa fa-rss"></i> <a href="{{ meta['site_feed'] }}">RSS</a> | <i class="fa fa-envelope"></i> <a href="http://bencane.us7.list-manage1.com/subscribe?u=52bad2a14ba3306a494c9739f&id=848cc53f28">Mail Feed</a></p>
                 </div>
             </div>
         </div>

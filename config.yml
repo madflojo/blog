@@ -31,8 +31,8 @@ templates:
   notfound: 404.html
   forbidden: 403.html
 site_name: Benjamin Cane
-site_description: A blog about Linux Systems Administration, Automation, Python and other DevOps-y topics
-site_shortdesc: A Systems Architect writing about Linux Systems Administration
+site_description: Linux Ops, Automation, Python, Golang and other DevOps-y topics
+site_shortdesc: Writing about Infrastructure and Software Engineering 
 site_thumbnail: http://bencane.com/img/thumbnails/shell.png
 site_url: http://bencane.com
 site_feed: http://feed.bencane.com

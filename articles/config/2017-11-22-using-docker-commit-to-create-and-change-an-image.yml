@@ -1,0 +1,17 @@
+author: madflojo
+date: 2017-11-22 11:15:00-07:00
+pubdate: Wed, 22 Nov 2017 11:15:00 -07:00
+popularity: False
+title: Using Docker Commit to Create and Change an Image
+description: In today's article, I'm going to show you another way to create and change a Docker image. We will do this using the Docker Commit command.
+post_id: 149
+categories:
+  - containers
+tags:
+  - docker
+file: False
+external: True
+publisher: Codeship
+remote_url: https://blog.codeship.com/using-docker-commit-to-create-and-change-an-image/
+read_time: 5
+published: True
