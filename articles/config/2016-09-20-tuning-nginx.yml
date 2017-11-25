@@ -1,0 +1,18 @@
+author: madflojo
+date: 2016-09-20 11:15:00-07:00
+pubdate: Tue, 20 Aug 2016 11:15:00 -07:00
+popularity: False
+title: Tuning NGINX for Better Performance
+description: Here's how to tune an out-of-the-box instance of NGINX to get more out of an already high-performance web server with a few common NGINX tuning parameters.
+post_id: 136
+categories:
+  - performance tuning
+tags:
+  - nginx
+  - high performance
+file: False
+external: True
+publisher: Codeship
+remote_url: https://blog.codeship.com/tuning-nginx/
+read_time: 10
+published: True

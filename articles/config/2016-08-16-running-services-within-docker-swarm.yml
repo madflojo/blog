@@ -1,0 +1,18 @@
+author: madflojo
+date: 2016-08-16 11:15:00-07:00
+pubdate: Tue, 16 Aug 2016 11:15:00 -07:00
+popularity: False
+title: Running Services within a Docker Swarm
+description: Docker Engine v1.12 included a few changes to the capabilities of Docker Swarm. Let's explore how to deploy a service using Docker's Swarm Mode.
+post_id: 135
+categories:
+  - containers
+tags:
+  - docker
+  - swarm
+file: False
+external: True
+publisher: Codeship
+remote_url: https://blog.codeship.com/running-services-within-docker-swarm/
+read_time: 11
+published: True

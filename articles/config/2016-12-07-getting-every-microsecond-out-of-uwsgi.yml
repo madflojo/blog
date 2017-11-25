@@ -1,0 +1,18 @@
+author: madflojo
+date: 2016-12-07 11:15:00-07:00
+pubdate: Wed, 07 Dec 2016 11:15:00 -07:00
+popularity: False
+title: Getting Every Microsecond Out of uWSGI
+description: Going further down the stack in our performance-tuning series, let's explore tuning a Python application running via uWSGI.
+post_id: 139
+categories:
+  - performance tuning
+tags:
+  - uwsgi
+  - python
+file: False
+external: True
+publisher: Codeship
+remote_url: https://blog.codeship.com/getting-every-microsecond-out-of-uwsgi/
+read_time: 12
+published: True

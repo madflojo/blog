@@ -1,0 +1,17 @@
+author: madflojo
+date: 2017-06-21 11:15:00-07:00
+pubdate: Wed, 21 Jun 2017 11:15:00 -07:00
+popularity: False
+title: Understanding Dockers CMD and ENTRYPOINT Instructions
+description: On the surface, Docker's `CMD` and `ENTRYPOINT` instructions appear to perform the same function. But once you dig, they perform completely different tasks.
+post_id: 145
+categories:
+  - containers
+tags:
+  - docker
+file: False
+external: True
+publisher: Codeship
+remote_url: https://blog.codeship.com/understanding-dockers-cmd-and-entrypoint-instructions/
+read_time: 6
+published: True

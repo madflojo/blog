@@ -1,0 +1,18 @@
+author: madflojo
+date: 2016-07-06 11:15:00-07:00
+pubdate: Thurs, 06 Jul 2016 11:15:00 -07:00
+popularity: False
+title: Using Honcho to Create a Multi-Process Docker Container
+description: Let's use Honcho to create a custom multi-process Docker container. This container will host a Redis service that supports TLS connections.
+post_id: 133
+categories:
+  - containers
+tags:
+  - docker
+  - honcho
+file: False
+external: True
+publisher: Codeship
+remote_url: https://blog.codeship.com/using-honcho-create-multi-process-docker-container/
+read_time: 8
+published: True

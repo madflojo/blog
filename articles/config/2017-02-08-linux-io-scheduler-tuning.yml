@@ -1,0 +1,19 @@
+author: madflojo
+date: 2017-02-08 11:15:00-07:00
+pubdate: Wed, 08 Feb 2017 11:15:00 -07:00
+popularity: False
+title: Improving Linux System Performance with I/O Scheduler Tuning
+description: Let's adjust a Linux I/O scheduler to get the best performance out of a Linux system. We'll measure the impact of those changes with `pgbench`.
+post_id: 141
+categories:
+  - performance tuning
+  - linux
+tags:
+  - linux
+  - i/o scheduler
+file: False
+external: True
+publisher: Codeship
+remote_url: https://blog.codeship.com/linux-io-scheduler-tuning/
+read_time: 9
+published: True

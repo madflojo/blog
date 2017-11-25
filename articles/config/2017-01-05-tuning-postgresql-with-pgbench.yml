@@ -1,0 +1,19 @@
+author: madflojo
+date: 2017-01-05 11:15:00-07:00
+pubdate: Thurs, 05 Jan 2017 11:15:00 -07:00
+popularity: False
+title: Tuning PostgreSQL with pgbench
+description: To answer the challenges of tuning a database, let's explore `pgbench`, a benchmarking tool used to measure performance of a PostgreSQL instance.
+post_id: 140
+categories:
+  - databases
+  - performance tuning
+tags:
+  - postgres
+  - pgbench
+file: False
+external: True
+publisher: Codeship
+remote_url: https://blog.codeship.com/tuning-postgresql-with-pgbench/
+read_time: 10
+published: True
