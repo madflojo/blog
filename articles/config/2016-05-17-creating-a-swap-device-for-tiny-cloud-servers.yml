@@ -5,7 +5,7 @@ popularity: False
 slug: creating-a-swap-file-for-tiny-cloud-servers
 title: Creating a swap file for tiny cloud servers
 description: What is swap, and how to use a swap file to add memory to low memory cloud servers
-post_id: 130
+post_id: 131
 read_time: 5
 categories:
   - Linux

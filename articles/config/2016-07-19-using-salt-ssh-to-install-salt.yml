@@ -5,7 +5,7 @@ popularity: False
 slug: using-salt-ssh-to-install-salt
 title: Using salt-ssh to install Salt
 description: Using SaltStack's ability to run agentless over SSH to install the salt-minion agent
-post_id: 131
+post_id: 134
 read_time: 15
 categories:
   - Linux

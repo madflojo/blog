@@ -10,6 +10,8 @@
 {% set count = 0 %}
 {% for item in meta['post_ids']|reverse %}
 {% if count <= 5 %}
+{%- if "external" in data[item] -%}
+{%- else -%}
 <item>
 <title>{{ data[item]['title'] }}</title>
 <link>{{ meta['site_url'] }}{{ data[item]['full_url'] }}</link>
@@ -25,6 +27,7 @@
 <content:encoded><![CDATA[{{ data[item]['data'] }} <br>Posted by <a href="{{ meta['site_url'] }}{{ data[item]['full_url'] }}" target="_blank">Benjamin Cane</a>]]></content:encoded>
 </item>
 {% set count = count + 1 %}
+{% endif %}
 {% endif %}
 {% endfor %}
 	</channel>
