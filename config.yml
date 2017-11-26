@@ -15,7 +15,7 @@ additional_pages:
     add_path: feed/
   archive:
     url: archive.html
-    title: Archives
+    title: Articles
   notfound:
     url: 404.html
     title: Page Not Found
