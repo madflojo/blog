@@ -1,0 +1,2 @@
+RUN CMD docker ps -a
+RUN SCRIPT redeploy.sh
