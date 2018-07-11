@@ -15,7 +15,6 @@
 <item>
 <title>{{ data[item]['title'] }}</title>
 <link>{{ meta['site_url'] }}{{ data[item]['full_url'] }}</link>
-<comments>{{ meta['site_url'] }}{{ data[item]['full_url'] }}/#comments</comments>
 <dc:creator>{{ meta['author'] }}</dc:creator>
 {% if data[item]['pubdate'] %}
 <pubDate>{{ data[item]['pubdate'] }}</pubDate>
