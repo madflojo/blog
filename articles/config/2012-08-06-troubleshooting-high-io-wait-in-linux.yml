@@ -9,13 +9,13 @@ post_id: 75
 categories:
 - Linux
 - Troubleshooting
-- I/O Wait
+- IO Wait
 tags:
 - bonnie
 - cpu
 - disk
 - disk access
-- i/o
+- io
 - iostat
 - linkedin
 - linux

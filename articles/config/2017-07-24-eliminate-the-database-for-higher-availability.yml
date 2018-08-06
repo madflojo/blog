@@ -9,9 +9,10 @@ categories:
   - architecture
 tags:
   - systems architecture
+  - high availability
 file: False
 external: True
-publisher: AmericanExpress.io
+publisher: American Express
 remote_url: http://americanexpress.io/eliminate-the-database-for-higher-availability/
 read_time: 12
 published: True

@@ -10,26 +10,21 @@ COPY nginx/htmlglobal.conf /etc/nginx/globals/
 COPY nginx/bencane.com.conf /etc/nginx/sites-enabled/
 
 ## Install python and pip
-RUN apt-get update && apt-get install -y \
-    python-dev \
-    python-pip \
-    sysstat && \
+RUN apt-get update && \
+    apt-get install -y curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 ## Create a directory for required files
 RUN mkdir -p /build/
 
-## Add requirements file and run pip
-COPY requirements.txt /build/
-RUN pip install -r /build/requirements.txt
+## Install Hugo
+RUN cd / && curl -L https://github.com/gohugoio/hugo/releases/download/v0.46/hugo_0.46_Linux-64bit.tar.gz | tar -xvzf-
 
 ## Add blog code nd required files
-COPY static /build/static
-COPY templates /build/templates
-COPY hamerkop.py /build/
-COPY config.yml /build/
-COPY articles /build/articles
+ADD bencane /bencane
 
 ## Run Generator
-RUN /build/hamerkop.py -c /build/config.yml
+RUN cd /bencane && /hugo -d /usr/share/nginx/html
+RUN rm -f /usr/share/nginx/html/publication/index.xml /usr/share/nginx/html/project/index.xml /usr/share/nginx/html/talk/index.xml
+RUN mkdir -p /usr/share/nginx/html/feed && mv /usr/share/nginx/html/post/index.xml /usr/share/nginx/html/feed/

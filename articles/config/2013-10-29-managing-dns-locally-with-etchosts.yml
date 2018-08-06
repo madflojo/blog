@@ -9,14 +9,13 @@ post_id: 108
 categories:
 - All Articles
 - Best Practices
-- How To &amp; Tutorials
+- How To and Tutorials
 - Linux
 - Networking
 - SysAdmin Basics
 - Troubleshooting
 - Unix
 tags:
-- /etc/hosts
 - bind
 - dns
 - enterprise

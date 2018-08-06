@@ -14,8 +14,8 @@ categories:
 - SysAdmin Basics
 - Ubuntu
 tags:
-- /etc/bashrc
-- /etc/profile
+- bashrc
+- profile
 - bash
 - bashrc
 - gnu linux
