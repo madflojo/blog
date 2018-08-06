@@ -56,7 +56,7 @@ On this Salt Master, we will need to install both the `salt-master` and the `sal
 
 The official install guide for Ubuntu uses the Apt package manager to install SaltStack. In order to install these packages with Apt we will need to setup the SaltStack repository. We will do so using the `add-apt-repository` command.
 
-```shell-session
+```shell
 $ sudo add-apt-repository ppa:saltstack/salt
      Salt, the remote execution and configuration management tool.
      More info: https://launchpad.net/~saltstack/+archive/ubuntu/salt
@@ -74,7 +74,7 @@ $ sudo add-apt-repository ppa:saltstack/salt
 
 Once the Apt repository has been added we will need to refresh Apt's package cache with the `apt-get update` command.
 
-```shell-session
+```shell
 $ sudo apt-get update
 Get:1 http://security.ubuntu.com trusty-security InRelease [65.9 kB]
 Ign http://ppa.launchpad.net trusty InRelease                                  
@@ -93,7 +93,7 @@ This update command causes Apt to look through it's known package repositories a
 
 Now that we have SaltStack's Apt repository configured we can proceed with installing the required Salt packages. We will do this with the `apt-get install` command specifying the two packages we wish to install.
 
-```shell-session
+```shell
 $ sudo apt-get install salt-master salt-ssh
 Reading package lists... Done
 Building dependency tree       
@@ -123,7 +123,7 @@ In addition to the `salt-ssh` and `salt-master` packages Apt will install any de
 
 Before we can start using `salt-ssh` to manage our new minion server we will first need to tell `salt-ssh` how to connect to that server. We will do this by editing the `/etc/salt/roster` file.
 
-```shell-session
+```shell
 $ sudo vi /etc/salt/roster
 ```
 
@@ -147,7 +147,7 @@ In the example above I specified to use the `root` user. It is possible to use `
 
 With the minion now defined within the `/etc/salt/roster` file we should now be able to connect to our minion with `salt-ssh`. We can test this out by executing a `test.ping` task against this target with `salt-ssh`.
 
-```shell-session
+```shell
 $ sudo salt-ssh 'blr1-001' --priv=/home/vagrant/.ssh/id_rsa test.ping
 blr1-001:
     ----------
@@ -171,7 +171,7 @@ In many cases it's perfectly fine to use SaltStack's internal SSH key, in my cas
 
 If we look at the output of the `salt-ssh` command executed earlier, we can see that the command was not successful. The reason for this is because this master server has not accepted the host key from the new minion server. We can get around this issue by specifying the `-i` flag when running `salt-ssh`.
 
-```shell-session
+```shell
 $ sudo salt-ssh 'blr1-001' --priv /home/vagrant/.ssh/id_rsa -i test.ping
 blr1-001:
     True
@@ -183,7 +183,7 @@ The `-i` flag tells `salt-ssh` to ignore host key checks from SSH. We can see fr
 
 In the `salt-ssh` commands above we used an SSH key for authentication with the Minion server. This worked because prior to setting up Salt, I deployed the public SSH key to the minion server we are connecting with. If we didn't want to use SSH keys for authentication with the Salt Minion for whatever reason, we could also use password based authentication by specifying the password within the `roster` file.
 
-```shell-session
+```shell
 $ sudo vi /etc/salt/roster
 ```
 
@@ -198,7 +198,7 @@ blr1-001:
 
 With the above definition `salt-ssh` will now connect to our minion by establishing an SSH connection to `10.0.0.2` and login to this system as the `root` user with the password of `example`. With a password defined, we can rerun our `test.ping` this time with the `--priv` flag omitted.
 
-```shell-session
+```shell
 $ sudo salt-ssh 'blr1-001' -i test.ping
 blr1-001:
     True
@@ -247,7 +247,7 @@ As with the previous article we will use both of these repositories to setup our
 
 For the first repository, we will clone the contents into a `base` directory.
 
-```shell-session
+```shell
 $ sudo git clone https://github.com/madflojo/salt-base.git /srv/salt/base
 Cloning into '/srv/salt/base'...
 remote: Counting objects: 54, done.
@@ -258,7 +258,7 @@ Checking connectivity... done.
 
 The second repository we will clone into `/srv/salt/bencane`.
 
-```shell-session
+```shell
 $ sudo git clone https://github.com/madflojo/blog-salt.git /srv/salt/bencane
 Cloning into '/srv/salt/bencane'...
 remote: Counting objects: 46, done.
@@ -269,7 +269,7 @@ Checking connectivity... done.
 
 With all of the salt states now on our local system we can configure Salt to use these state files. To do this we will need to edit the `/etc/salt/master` configuration file.
 
-```shell-session
+```shell
 $ sudo vi /etc/salt/master
 ```
 
@@ -286,7 +286,7 @@ file_roots:
 With the above defined, we can now use our Salt states to setup a new minion server. To do this we will once again run `salt-ssh` but this time specifying the `state.highstate` task.
 
 
-```shell-session
+```shell
 $ sudo salt-ssh 'blr1-001' -i state.highstate
 ----------
           ID: salt-minion
@@ -369,7 +369,7 @@ From the results of the `state.highstate` task, we can see that `37` Salt states
 
 If we wanted to verify that this is true even further we can use the `cmd.run` Salt module to execute the `dpkg --list` command.
 
-```shell-session
+```shell
 $ sudo salt-ssh 'blr1-001' -i cmd.run "dpkg --list | grep salt"
 blr1-001:
     ii  salt-common                        2016.3.1+ds-1                    all          shared libraries that salt requires for all packages

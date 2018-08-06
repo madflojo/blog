@@ -87,7 +87,7 @@ For sake of brevity this article will assume that you already have Saltstack and
 
 This formula provides several template reactor configurations that can be used to pickup salt-api webhook requests and perform salt actions. Actions such as restarting services, executing shell commands, or even start a highstate. To get started we will first need to download and extract the formula.
 
-```shell-session
+```shell
 # wget -O /var/tmp/master.zip https://github.com/madflojo/salt-api-reactor-formula/archive/master.zip
 # cd /var/tmp/
 # unzip master.zip
@@ -95,13 +95,13 @@ This formula provides several template reactor configurations that can be used t
 
 Once extracted we can copy the reactor directory to `/srv/salt/`, this is the default salt directory and may need to be updated for your environment.
 
-```shell-session
+```shell
 # cp -R salt-api-reactor-formula-master/reactor /srv/salt/
 ```
 
 We will also need to deploy our reactor config to the `/etc/salt/master.d/` directory as this is what maps the URL endpoint to a specific salt action. Once deployed we will also need to restart the `salt-master` service.
 
-```shell-session
+```shell
 # cp salt-api-reactor-formula-master/reactor.conf /etc/salt/master.d/
 # service salt-master restart
 ```

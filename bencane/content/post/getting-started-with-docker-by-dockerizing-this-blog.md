@@ -52,7 +52,7 @@ Now that we know what Docker is, let's start learning how Docker works by first 
 
 As Docker is not installed by default step 1 will be to install the Docker package; since our example system is running **Ubuntu 14.0.4** we will do this using the **Apt** package manager.
 
-```shell-session
+```shell
 # apt-get install docker.io
 Reading package lists... Done
 Building dependency tree       
@@ -73,7 +73,7 @@ Do you want to continue? [Y/n] y
 
 To check if any containers are running we can execute the `docker` command using the `ps` option.
 
-```shell-session
+```shell
 # docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
@@ -84,7 +84,7 @@ The `ps` function of the `docker` command works similar to the Linux `ps` comman
 
 One of my favorite features of Docker is the ability to deploy a pre-built container in the same way you would deploy a package with `yum` or `apt-get`. To explain this better let's deploy a pre-built container running the **nginx** web server. We can do this by executing the `docker` command again, however, this time with the `run` option.
 
-```shell-session
+```shell
 # docker run -d nginx
 Unable to find image 'nginx' locally
 Pulling repository nginx
@@ -106,7 +106,7 @@ The `run` function of the `docker` command tells Docker to find a specified Dock
 
 By executing `docker ps` again we can see the **nginx** container running.
 
-```shell-session
+```shell
 # docker ps
 CONTAINER ID        IMAGE               COMMAND                CREATED             STATUS              PORTS               NAMES
 f6d31ab01fc9        nginx:latest        nginx -g 'daemon off   4 seconds ago       Up 3 seconds        443/tcp, 80/tcp     desperate_lalande
@@ -118,7 +118,7 @@ In the above output we can see the running container `desperate_lalande` and tha
 
 Images are one of Docker's key features and is similar to a virtual machine image. Like virtual machine images, a Docker image is a container that has been saved and packaged. Docker however, doesn't just stop with the ability to create images. Docker also includes the ability to distribute those images via Docker repositories which are a similar concept to package repositories. This is what gives Docker the ability to deploy an image like you would deploy a package with `yum`. To get a better understanding of how this works let's look back at the output of the `docker run` execution.
 
-```shell-session
+```shell
 # docker run -d nginx
 Unable to find image 'nginx' locally
 ```
@@ -127,7 +127,7 @@ The first message we see is that `docker` could not find an image named **nginx*
 
 Since this system is brand new there is no Docker image with the name **nginx**, which means Docker will need to download it from a Docker repository.
 
-```shell-session
+```shell
 Pulling repository nginx
 5c82215b03d1: Download complete
 e2a4fb18da48: Download complete
@@ -153,21 +153,21 @@ Before moving on to building a custom Docker container let's first clean up our 
 
 To start a container we executed `docker` with the `run` option, in order to stop this same container we simply need to execute the `docker` with the `kill` option specifying the container name.
 
-```shell-session
+```shell
 # docker kill desperate_lalande
 desperate_lalande
 ```
 
 If we execute `docker ps` again we will see that the container is no longer running.
 
-```shell-session
+```shell
 # docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
 
 However, at this point we have only stopped the container; while it may no longer be running it still exists. By default, `docker ps` will only show running containers, if we add the `-a` **(all)** flag it will show all containers running or not.
 
-```shell-session
+```shell
 # docker ps -a
 CONTAINER ID        IMAGE               COMMAND                CREATED             STATUS                           PORTS               NAMES
 f6d31ab01fc9        5c82215b03d1        nginx -g 'daemon off   4 weeks ago         Exited (-1) About a minute ago                       desperate_lalande  
@@ -175,7 +175,7 @@ f6d31ab01fc9        5c82215b03d1        nginx -g 'daemon off   4 weeks ago      
 
 In order to fully remove the container we can use the `docker` command with the `rm` option.
 
-```shell-session
+```shell
 # docker rm desperate_lalande
 desperate_lalande
 ```
@@ -184,7 +184,7 @@ While this container has been removed; we still have a **nginx** image available
 
 To see a full list of local images we can simply run the `docker` command with the `images` option.
 
-```shell-session
+```shell
 # docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
 nginx               latest              9fab4090484a        5 days ago          132.8 MB
@@ -204,7 +204,7 @@ The blog itself is actually static HTML pages generated by a custom static site 
 
 So far this should be a pretty simple Dockerfile, but it will show us quite a bit of the [Dockerfile Syntax](https://docs.docker.com/v1.8/reference/builder/). To get started we can clone the **GitHub** repository and creating a Dockerfile with our favorite editor; `vi` in my case.
 
-```shell-session
+```shell
 # git clone https://github.com/madflojo/blog.git
 Cloning into 'blog'...
 remote: Counting objects: 622, done.
@@ -237,7 +237,7 @@ Since we inherited the **nginx** Docker image our current Dockerfile also inheri
 
 In order to start the build from a Dockerfile we can simply execute the `docker` command with the `build` option.
 
-```shell-session
+```shell
 # docker build -t blog /root/blog
 Sending build context to Docker daemon  23.6 MB
 Sending build context to Docker daemon
@@ -309,7 +309,7 @@ Within the `Dockerfile` we added 3 instructions. The first instruction uses `RUN
 
 Now that we have a few customization tasks for Docker to perform let's try another build of the **blog** image again.
 
-```shell-session
+```shell
 # docker build -t blog /root/blog
 Sending build context to Docker daemon 19.52 MB
 Sending build context to Docker daemon
@@ -349,7 +349,7 @@ From the above build output we can see the build was successful, but we can also
 
 When Docker is building an image, it doesn't just build a single image; it actually builds multiple images throughout the build processes. In fact we can see from the above output that after each "Step" Docker is creating a new image.
 
-```shell-session
+```shell
 Step 5 : ADD requirements.txt /build/
   ---> cef11c3fb97c
 ```
@@ -394,7 +394,7 @@ RUN /build/hamerkop -c /build/config.yml
 
 Now that we have the rest of the build instructions, let's run through another build and verify that the image builds successfully.
 
-```shell-session
+```shell
 # docker build -t blog /root/blog/
 Sending build context to Docker daemon 19.52 MB
 Sending build context to Docker daemon
@@ -449,7 +449,7 @@ Successfully built 3b25263113e1
 
 With a successful build we can now start our custom container by running the `docker` command with the `run` option, similar to how we started the **nginx** container earlier.
 
-```shell-session
+```shell
 # docker run -d -p 80:80 --name=blog blog
 5f6c7a2217dcdc0da8af05225c4d1294e3e6bb28a41ea898a1c63fb821989ba1
 ```
@@ -460,7 +460,7 @@ The base **nginx** image we used exposes port 80 for the HTTP service. By defaul
 
 From the above command it appears that our container was started successfully, we can verify this by executing `docker ps`.
 
-```shell-session
+```shell
 # docker ps
 CONTAINER ID        IMAGE               COMMAND                CREATED             STATUS              PORTS                         NAMES
 d264c7ef92bd        blog:latest         nginx -g 'daemon off   3 seconds ago       Up 3 seconds        443/tcp, 0.0.0.0:80->80/tcp   blog  
