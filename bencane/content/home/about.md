@@ -48,6 +48,6 @@ weight = 5
 
 Benjamin Cane is a Principal Engineer at [American Express](https://americanexpress.io), where he is focused on engineering high availability systems for the payment network. 
 
-Benjamin started his career as a Linux and Unix Systems Administrator. Today Benjamin is focused on both the software and infrastructure side of engineering. On his off time, Benjamin is also the creator and maintainer of several Open Source projects.
+Benjamin started his career as a Linux and Unix Systems Administrator. Today he is focused on both the software and infrastructure side of engineering. On his off time, Benjamin is also the creator and maintainer of several Open Source projects.
 
 Thoughts and opinions expressed on this blog are his own.
