@@ -289,6 +289,11 @@ enableGitInfo = false
   url = "#talks"
   weight = 6
 
+[[menu.main]]
+  name = "RSS"
+  url = "https://feed.bencane.com/"
+  weight = 7
+
 #[[menu.main]]
 #  name = "Contact"
 #  url = "#contact"
