@@ -7,7 +7,7 @@ title: 'ssh-keygen: Creating SSH Private/Public Keys'
 description: A how to on generating SSH Private and Public keys and using them for passphrase less logins
 post_id: 93
 categories:
-- How To &amp; Tutorials
+- How To and Tutorials
 - Linux
 - Security
 - SysAdmin Basics

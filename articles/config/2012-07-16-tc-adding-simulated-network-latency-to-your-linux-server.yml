@@ -3,10 +3,10 @@ comments: true
 date: 2012-07-16 15:00:53+00:00
 popularity: None
 slug: tc-adding-simulated-network-latency-to-your-linux-server
-title: 'tc: Adding simulated network latency to your Linux server'
+title: 'Adding simulated network latency to your Linux server'
 post_id: 73
 categories:
-- How To &amp; Tutorials
+- How To and Tutorials
 - Linux
 - Linux Commands
 tags:
