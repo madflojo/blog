@@ -5,12 +5,9 @@
 
   {{ partial "header_image.html" . }}
 
-  <div class="article-container">
-    <h1 itemprop="name">{{ .Title }}</h1>
-
-    {{ partial "article_metadata" (dict "content" . "is_list" 0) }}
-
-    <div class="article-style" itemprop="articleBody">
+  <div class="row">
+  <p></p>
+  <p align="center">
       <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 			<!-- Top of Page -->
 			<ins class="adsbygoogle"
@@ -22,6 +19,15 @@
 			<script>
 			(adsbygoogle = window.adsbygoogle || []).push({});
 			</script>
+  </p>
+  </div>
+
+  <div class="article-container">
+    <h1 itemprop="name">{{ .Title }}</h1>
+
+    {{ partial "article_metadata" (dict "content" . "is_list" 0) }}
+
+    <div class="article-style" itemprop="articleBody">
       {{ .Content }}
     </div>
 
@@ -39,6 +45,18 @@
       </ul>
     </div>
     {{ end }}
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<!-- Bottom Of Page -->
+		<ins class="adsbygoogle"
+		     style="display:block"
+		     data-ad-client="ca-pub-0946238287085890"
+		     data-ad-slot="6955093086"
+		     data-ad-format="auto"
+		     data-full-width-responsive="true"></ins>
+		<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
 
     {{ if .Site.Params.section_pager }}
     <div class="article-widget">
