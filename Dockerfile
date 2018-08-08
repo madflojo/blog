@@ -27,4 +27,5 @@ ADD bencane /bencane
 ## Run Generator
 RUN cd /bencane && /hugo -d /usr/share/nginx/html
 RUN mkdir -p /usr/share/nginx/html/feed && mv /usr/share/nginx/html/post/index.xml /usr/share/nginx/html/feed/
-RUN find /usr/share/nginx/html -type f -name "index.xml" -not -path "/usr/share/nginx/html/feed" -delete
+RUN find /usr/share/nginx/html -type f -name "index.xml" | grep -v feed | xargs rm -f
+RUN perl -pi -e 's/post\/index.xml/feed/' /usr/share/nginx/html/feed/index.xml
