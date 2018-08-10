@@ -31,6 +31,24 @@
       {{ .Content }}
     </div>
 
+    <div class="article-widget">
+      <div class="hr-light"></div>
+      <h3>About Benjamin</h3>
+       <p>Benjamin is a Infrastructure and Software Engineer. On this blog he writes about Linux, Docker, Programming as well as other Systems topics.</p>
+      <h5>Learn more about Linux</h5>
+       <p>
+        If you liked this article, check out Benjamin's book: <a href="https://www.amazon.com/Red-Enterprise-Linux-Troubleshooting-Guide-ebook/dp/B016OQOOAK" target="_blank">Red Hat Enterprise Linux Troubleshooting Guide</a>. Where you can learn a lot more about troubleshooting Linux systems. This book is filled with tips and techniques he has learned over years of managing mission critical systems.
+      </p>
+        <div class="pub-links">
+          <a class="btn btn-primary btn-outline btn-xs" href="https://www.amazon.com/dp/1785283553/" target="_blank" rel="noopener">
+  Paperback
+          </a>
+          <a class="btn btn-primary btn-outline btn-xs" href="https://www.amazon.com/Red-Enterprise-Linux-Troubleshooting-Guide-ebook/dp/B016OQOOAK" target="_blank" rel="noopener">
+  Kindle
+          </a>
+        </div>
+    </div>
+
     {{ partial "tags.html" . }}
 
     {{ $related := .Site.RegularPages.Related . | first 5 }}
@@ -46,6 +64,8 @@
     </div>
     {{ end }}
 
+    <div class="article-widget">
+      <div class="hr-light"></div>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 		<!-- Bottom Of Page -->
 		<ins class="adsbygoogle"
@@ -57,6 +77,7 @@
 		<script>
 		(adsbygoogle = window.adsbygoogle || []).push({});
 		</script>
+    </div>
 
     {{ if .Site.Params.section_pager }}
     <div class="article-widget">
