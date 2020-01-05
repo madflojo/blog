@@ -53,7 +53,7 @@ description = "Systems and Software Engineer"
 # Enable source code highlighting? true/false
 # Documentation: https://sourcethemes.com/academic/docs/writing-markdown-latex/#highlighting-options
 highlight = true
-highlight_languages = ["go", "shell", "bash", "python"]  # Add support for highlighting additional languages
+highlight_languages = ["go", "python"]  # Add support for highlighting additional languages
 highlight_style = "github"  # For supported styles, see https://cdnjs.com/libraries/highlight.js/
 
 # Enable LaTeX math rendering? true/false
