@@ -19,7 +19,7 @@ RUN apt-get update && \
 RUN mkdir -p /build/
 
 ## Install Hugo
-RUN cd / && curl -L https://github.com/gohugoio/hugo/releases/download/v0.46/hugo_0.46_Linux-64bit.tar.gz | tar -xvzf-
+RUN cd / && curl -L https://github.com/gohugoio/hugo/releases/download/v0.62.1/hugo_0.62.1_Linux-64bit.tar.gz | tar -xvzf-
 
 ## Add blog code nd required files
 ADD bencane /bencane
@@ -29,3 +29,6 @@ RUN cd /bencane && /hugo -d /usr/share/nginx/html
 RUN mkdir -p /usr/share/nginx/html/feed && mv /usr/share/nginx/html/post/index.xml /usr/share/nginx/html/feed/
 RUN find /usr/share/nginx/html -type f -name "index.xml" | grep -v feed | xargs rm -f
 RUN perl -pi -e 's/post\/index.xml/feed/' /usr/share/nginx/html/feed/index.xml
+
+## Add Resume
+ADD resume /usr/share/nginx/html/resume

@@ -20,7 +20,7 @@ tags:
 - docker
 - swarm
 title: Running Services within a Docker Swarm
-url_custom:
+links:
 - name: Article
   url: https://blog.codeship.com/running-services-within-docker-swarm/
 

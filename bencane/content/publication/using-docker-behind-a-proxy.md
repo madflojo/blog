@@ -21,7 +21,7 @@ tags:
 - proxy
 - network routing
 title: Using Docker Behind a Proxy
-url_custom:
+links:
 - name: Article
   url: https://blog.codeship.com/using-docker-behind-a-proxy/
 

@@ -3,6 +3,7 @@ abstract: Read about a design strategy unique to platforms that require both hig
   scalability and high availability. A design strategy that involves reducing and
   removing the need for databases.
 abstract_short: Eliminate the Database for Higher Availability
+featured: true
 authors:
 - Benjamin Cane
 categories:
@@ -21,7 +22,7 @@ publication_type:
 tags:
 - systems architecture
 title: Eliminate the Database for Higher Availability
-url_custom:
+links:
 - name: Article
   url: http://americanexpress.io/eliminate-the-database-for-higher-availability/
 

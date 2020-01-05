@@ -19,7 +19,7 @@ publication_type:
 tags:
 - docker
 title: Understanding Dockers CMD and ENTRYPOINT Instructions
-url_custom:
+links:
 - name: Article
   url: https://blog.codeship.com/understanding-dockers-cmd-and-entrypoint-instructions/
 

@@ -22,7 +22,7 @@ tags:
 - vagrant
 - web application
 title: Getting started with Kubernetes
-url_custom:
+links:
 - name: Article
   url: https://blog.codeship.com/getting-started-with-kubernetes/
 

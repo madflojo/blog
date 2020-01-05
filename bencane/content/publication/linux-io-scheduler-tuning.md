@@ -2,6 +2,7 @@
 abstract: Let's adjust a Linux I/O scheduler to get the best performance out of a
   Linux system. We'll measure the impact of those changes with `pgbench`.
 abstract_short: Improving Linux System Performance with I/O Scheduler Tuning
+featured: true
 authors:
 - Benjamin Cane
 categories:
@@ -21,7 +22,7 @@ tags:
 - linux
 - i/o scheduler
 title: Improving Linux System Performance with I/O Scheduler Tuning
-url_custom:
+links:
 - name: Article
   url: https://blog.codeship.com/linux-io-scheduler-tuning/
 

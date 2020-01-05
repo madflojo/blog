@@ -55,7 +55,7 @@ url_source = ""
 
 # Custom links (optional).
 #   Uncomment line below to enable. For multiple links, use the form `[{...}, {...}, {...}]`.
-url_custom = [{name = "Paperback", url = "https://www.amazon.com/dp/1785283553/"}, {name = "Kindle", url = "https://www.amazon.com/Red-Enterprise-Linux-Troubleshooting-Guide-ebook/dp/B016OQOOAK"}]
+links = [{name = "Paperback", url = "https://www.amazon.com/dp/1785283553/"}, {name = "Kindle", url = "https://www.amazon.com/Red-Enterprise-Linux-Troubleshooting-Guide-ebook/dp/B016OQOOAK"}]
 
 # Does this page contain LaTeX math? (true/false)
 math = false

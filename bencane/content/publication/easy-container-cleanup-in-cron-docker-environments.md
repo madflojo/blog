@@ -20,7 +20,7 @@ tags:
 - docker
 - cron
 title: Easy Container Cleanup in Cron + Docker Environments
-url_custom:
+links:
 - name: Article
   url: https://blog.codeship.com/easy-container-cleanup-in-cron-docker-environments/
 

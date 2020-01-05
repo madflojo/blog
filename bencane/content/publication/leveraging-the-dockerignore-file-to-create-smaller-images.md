@@ -20,7 +20,7 @@ tags:
 - docker
 - .dockerignore
 title: Leveraging the dockerignore File to Create Smaller Images
-url_custom:
+links:
 - name: Article
   url: https://blog.codeship.com/leveraging-the-dockerignore-file-to-create-smaller-images/
 

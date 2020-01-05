@@ -21,7 +21,7 @@ tags:
 - postgres
 - pgbench
 title: Tuning PostgreSQL with pgbench
-url_custom:
+links:
 - name: Article
   url: https://blog.codeship.com/tuning-postgresql-with-pgbench/
 

@@ -21,7 +21,7 @@ tags:
 - automated restart
 - on call
 title: Ensuring Containers Are Always Running with Docker's Restart Policy
-url_custom:
+links:
 - name: Article
   url: https://blog.codeship.com/ensuring-containers-are-always-running-with-dockers-restart-policy/
 

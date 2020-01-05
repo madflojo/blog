@@ -20,7 +20,7 @@ tags:
 - docker
 - docker dns
 title: Using the Add-Host Flag for DNS Mapping within Docker Containers
-url_custom:
+links:
 - name: Article
   url: https://blog.codeship.com/using-the-add-host-flag-for-dns-mapping-within-docker-containers/
 

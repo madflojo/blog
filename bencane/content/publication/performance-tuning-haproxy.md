@@ -20,7 +20,7 @@ tags:
 - haproxy
 - load balancing
 title: Performance Tuning HAProxy
-url_custom:
+links:
 - name: Article
   url: https://blog.codeship.com/performance-tuning-haproxy/
 

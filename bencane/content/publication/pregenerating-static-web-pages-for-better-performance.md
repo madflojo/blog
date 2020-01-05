@@ -20,7 +20,7 @@ tags:
 - nginx
 - static pages
 title: Pregenerating Static Web Pages for Better Performance
-url_custom:
+links:
 - name: Article
   url: https://blog.codeship.com/pregenerating-static-web-pages-for-better-performance/
 

@@ -19,7 +19,7 @@ publication_type:
 tags:
 - docker
 title: Using Docker Push to Publish Images to Docker Hub
-url_custom:
+links:
 - name: Article
   url: https://blog.codeship.com/using-docker-push-to-publish-images-to-dockerhub/
 

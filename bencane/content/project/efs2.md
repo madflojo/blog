@@ -5,7 +5,7 @@ draft = false
 
 # Tags: can be used for filtering projects.
 # Example: `tags = ["machine-learning", "deep-learning"]`
-tags = ["golang", "infrastructure-automation", "remote-command-execution"]
+tags = ["go", "golang", "infrastructure-automation", "remote-command-execution"]
 
 # Project summary to display on homepage.
 summary = "A common sense remote command execution tool inspired by fss and written in Go."

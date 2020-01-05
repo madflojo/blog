@@ -19,7 +19,7 @@ publication_type:
 tags:
 - docker
 title: 3 Different Ways to Provide Docker Build Context
-url_custom:
+links:
 - name: Article
   url: https://blog.codeship.com/3-different-ways-to-provide-docker-build-context/
 

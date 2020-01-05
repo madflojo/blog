@@ -20,7 +20,7 @@ tags:
 - uwsgi
 - python
 title: Getting Every Microsecond Out of uWSGI
-url_custom:
+links:
 - name: Article
   url: https://blog.codeship.com/getting-every-microsecond-out-of-uwsgi/
 

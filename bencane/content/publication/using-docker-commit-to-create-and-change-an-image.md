@@ -19,7 +19,7 @@ publication_type:
 tags:
 - docker
 title: Using Docker Commit to Create and Change an Image
-url_custom:
+links:
 - name: Article
   url: https://blog.codeship.com/using-docker-commit-to-create-and-change-an-image/
 

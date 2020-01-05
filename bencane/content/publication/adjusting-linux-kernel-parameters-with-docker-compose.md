@@ -23,7 +23,7 @@ tags:
 - tunable
 - docker compose
 title: Adjusting Linux Kernel Parameters with Docker Compose
-url_custom:
+links:
 - name: Article
   url: https://blog.codeship.com/adjusting-linux-kernel-parameters-with-docker-compose/
 

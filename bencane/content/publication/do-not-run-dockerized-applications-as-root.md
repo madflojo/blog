@@ -2,6 +2,7 @@
 title = "Do Not Run Dockerized Applications as Root"
 date = 2018-09-27T23:15:45-07:00
 draft = false
+featured = true
 
 # Authors. Comma separated list, e.g. `["Bob Smith", "David Jones"]`.
 authors = ["Benjamin Cane"]
@@ -40,7 +41,7 @@ projects = []
 
 # Tags (optional).
 #   Set `tags = []` for no tags, or use the form `tags = ["A Tag", "Another Tag"]` for one or more tags.
-tags = ["Docker", "Security"]
+tags = ["Docker", "Security",]
 
 # Links (optional).
 url_pdf = ""
@@ -55,7 +56,7 @@ url_source = ""
 
 # Custom links (optional).
 #   Uncomment line below to enable. For multiple links, use the form `[{...}, {...}, {...}]`.
-url_custom = [{name = "Article", url = "https://americanexpress.io/do-not-run-dockerized-applications-as-root"}]
+links = [{name = "Article", url = "https://americanexpress.io/do-not-run-dockerized-applications-as-root"}]
 
 # Does this page contain LaTeX math? (true/false)
 math = false

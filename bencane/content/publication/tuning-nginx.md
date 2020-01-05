@@ -2,6 +2,7 @@
 abstract: Here's how to tune an out-of-the-box instance of NGINX to get more out of
   an already high-performance web server with a few common NGINX tuning parameters.
 abstract_short: Tuning NGINX for Better Performance
+featured: true
 authors:
 - Benjamin Cane
 categories:
@@ -20,8 +21,7 @@ tags:
 - nginx
 - high performance
 title: Tuning NGINX for Better Performance
-url_custom:
+links:
 - name: Article
   url: https://blog.codeship.com/tuning-nginx/
-
 ---
