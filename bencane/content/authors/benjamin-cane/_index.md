@@ -69,4 +69,4 @@ Benjamin started his career as a Linux & Unix Systems Administrator. His first r
 
 Today, he is focused on building cloud-native software solutions for financial platforms. He uses both his systems and software knowledge to build end-to-end platforms. Platforms purpose built for performance, and resiliency.
 
-Benjamin is also the creator and maintainer of several Open Source projects. 
+Thoughts and Opinions expressed on this site are my own.
