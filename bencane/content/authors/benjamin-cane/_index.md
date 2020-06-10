@@ -18,7 +18,7 @@ organizations:
   url: "https://americanexpress.com"
 
 # Short bio (displayed in user profile at end of posts)
-bio: Principal Engineer focused on building cloud-native software solutions for financial platforms. Benjamin uses both his systems and software knowledge to build end-to-end platforms. Platforms purpose built for performance, and resiliency.
+bio: Benjamin Cane is Principal Engineer at American Express. He has more than 16 years of experience with roles in both systems and software engineering. He leverages both his systems and software skills to build end-to-end platforms. Platforms, purpose built for performance and resiliency. Benjamin is also the author of [Red Hat Enterprise Linux - Troubleshooting Guide (2015, Packt Publishing)](https://www.amazon.com/dp/1785283553/), and he has published many popular articles on topics such as Linux, Docker, Python, Go and Performance Tuning.
 
 interests:
 - Distributed Systems
@@ -65,8 +65,8 @@ email: "ben@bencane.com"
 #- Visitors
 ---
 
-Benjamin started his career as a Linux & Unix Systems Administrator. His first role was at a web hosting company where he supported thousands of FreeBSD and Linux systems. Afterwards he joined a managed services company that specialized in managing mission-critical systems. This is where he started specializing in high availability architectures.
+Benjamin Cane is Principal Engineer at American Express, where he supports the card payment network. He has more than 16 years of professional experience in technology. With roles ranging from systems administration to software engineering.
 
-Today, he is focused on building cloud-native software solutions for financial platforms. He uses both his systems and software knowledge to build end-to-end platforms. Platforms purpose built for performance, and resiliency.
+For the past 13 years, Benjamin has specialized in Highly Available & Distributed Platforms. He has designed and implemented many successful programs for large and small enterprises. Where he uses both his systems and software knowledge to build end-to-end platforms. Platforms, purpose built for performance and resiliency.
 
-Benjamin is also the creator and maintainer of several Open Source projects. 
+Benjamin is also the author of [Red Hat Enterprise Linux - Troubleshooting Guide (2015, Packt Publishing)](https://www.amazon.com/dp/1785283553/), and creator of several Open Source projects.
