@@ -18,7 +18,7 @@ organizations:
   url: "https://americanexpress.com"
 
 # Short bio (displayed in user profile at end of posts)
-bio: Benjamin Cane is Principal Engineer at American Express. He has more than 16 years of experience with roles in both systems and software engineering. He leverages both his systems and software skills to build end-to-end platforms. Platforms, purpose built for performance and resiliency. Benjamin is also the author of [Red Hat Enterprise Linux - Troubleshooting Guide (2015, Packt Publishing)](https://www.amazon.com/dp/1785283553/), and he has published many popular articles on topics such as Linux, Docker, Python, Go and Performance Tuning.
+bio: Benjamin Cane is Principal Engineer at American Express. He has more than 16 years of experience with roles in both systems and software engineering. He leverages both his systems and software skills to build end-to-end platforms. Platforms, purpose built for performance and resiliency. Benjamin is also the author of [Red Hat Enterprise Linux - Troubleshooting Guide (2015, Packt Publishing)](https://www.amazon.com/dp/1785283553/), and he has published many popular articles on topics such as Linux, Docker, Python, Go and Performance Tuning. Thoughts and Opinions expressed in my articles are my own.
 
 interests:
 - Distributed Systems
@@ -70,3 +70,5 @@ Benjamin Cane is Principal Engineer at American Express, where he supports the c
 For the past 13 years, Benjamin has specialized in Highly Available & Distributed Platforms. He has designed and implemented many successful programs for large and small enterprises. Where he uses both his systems and software knowledge to build end-to-end platforms. Platforms, purpose built for performance and resiliency.
 
 Benjamin is also the author of [Red Hat Enterprise Linux - Troubleshooting Guide (2015, Packt Publishing)](https://www.amazon.com/dp/1785283553/), and creator of several Open Source projects.
+
+Thoughts and Opinions expressed on this site are my own.
