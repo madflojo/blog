@@ -12,6 +12,7 @@ lastmod: 2020-06-15T00:20:53-07:00
 featured: true
 draft: false
 url: /2020/06/15/dont-mock-a-db-use-docker-compose
+aliases: ["/post/dont-mock-a-db-use-docker-compose/"]
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
