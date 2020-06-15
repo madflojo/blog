@@ -2,7 +2,6 @@
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
 title: "Don't mock Databases, just run them with Docker"
-subtitle: "Use Docker Compose for simple unit tests"
 subtitle: "How to use Docker Compose to make unit testing easier"
 summary: "Use Docker Compose to create on-demand databases within your local & build environments"
 authors: ["Benjamin Cane"]
@@ -12,6 +11,7 @@ date: 2020-06-15T00:20:53-07:00
 lastmod: 2020-06-15T00:20:53-07:00
 featured: true
 draft: false
+url: /2020/06/15/dont-mock-a-db-use-docker-compose
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
