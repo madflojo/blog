@@ -180,7 +180,7 @@ services:
 ```
 
 
-In the above example we can see familiar parameters from before like `build` and `command`. The `command` parameter is important for this container as this is the command we wish to launch with. This `go test` command will execute all the unit tests within that directory and it's children.
+In the above example we can see familiar parameters from before like `build` and `command`. The `command` parameter is important for this container as this is the command we wish to launch with. This `go test` command will execute all the unit tests within that directory and its children.
 
 #### Defining the Cassandra services
 
