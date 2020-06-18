@@ -3,11 +3,11 @@
 
 title: "How I Structure Go Packages"
 authors: ["Benjamin Cane"]
-date: 2020-06-14T22:19:38-07:00
+date: 2020-07-06T00:19:38-07:00
 doi: ""
 
 # Schedule page publish date (NOT publication's date).
-publishDate: 2020-06-14T22:19:38-07:00
+publishDate: 2020-07-06T00:19:38-07:00
 
 # Publication type.
 # Legend: 0 = Uncategorized; 1 = Conference paper; 2 = Journal article;
