@@ -2,7 +2,6 @@
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
 title: "Don't mock Databases, just run them with Docker"
-subtitle: "Use Docker Compose for simple unit tests"
 subtitle: "How to use Docker Compose to make unit testing easier"
 summary: "Use Docker Compose to create on-demand databases within your local & build environments"
 authors: ["Benjamin Cane"]
@@ -12,6 +11,8 @@ date: 2020-06-15T00:20:53-07:00
 lastmod: 2020-06-15T00:20:53-07:00
 featured: true
 draft: false
+url: /2020/06/15/dont-mock-a-db-use-docker-compose
+aliases: ["/post/dont-mock-a-db-use-docker-compose/"]
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
@@ -51,9 +52,9 @@ Most applications have many developers. Trying to use a single database service 
 
 With the speed of development these days, running a pipeline one build at a time is a major hinderance. It's also a waste of time.
 
-What I've seen people do in response is only run the tests on the `master` branch build. Where pull requests or local unit test runs don't run these tests. This means less testing is performed on pull requests and more testing is done after merge. This in itself is fundamentally flawed.
+What I've seen people do in response is only run the tests on the `main` branch build. Where pull requests or local unit test runs don't run these tests. This means less testing is performed on pull requests and more testing is done after merge. This in itself is fundamentally flawed.
 
-The point of executing builds on pull requests is to ensure that new changes work with existing code. Once merged everything should just work. If pull requests are lacking in tests, than there is a higher likelihood of breaking the `master` build.
+The point of executing builds on pull requests is to ensure that new changes work with existing code. Once merged everything should just work. If pull requests are lacking in tests, than there is a higher likelihood of breaking the `main` build.
 
 Which means rolling back changes, this is difficult on high velocity repositories. With many pull requests being submitted and merged in the same day. It can be very difficult finding which change broke the build.
 
@@ -179,7 +180,7 @@ services:
 ```
 
 
-In the above example we can see familiar parameters from before like `build` and `command`. The `command` parameter is important for this container as this is the command we wish to launch with. This `go test` command will execute all the unit tests within that directory and it's children.
+In the above example we can see familiar parameters from before like `build` and `command`. The `command` parameter is important for this container as this is the command we wish to launch with. This `go test` command will execute all the unit tests within that directory and its children.
 
 #### Defining the Cassandra services
 
