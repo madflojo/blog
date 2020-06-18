@@ -26,9 +26,10 @@ ADD bencane /bencane
 
 ## Run Generator
 RUN cd /bencane && /hugo -d /usr/share/nginx/html
-RUN mkdir -p /usr/share/nginx/html/feed && mv /usr/share/nginx/html/post/index.xml /usr/share/nginx/html/feed/
-RUN find /usr/share/nginx/html -type f -name "index.xml" | grep -v feed | xargs rm -f
-RUN perl -pi -e 's/post\/index.xml/feed/' /usr/share/nginx/html/feed/index.xml
+RUN mkdir -p /usr/share/nginx/html/feed && cp /usr/share/nginx/html/index.xml /usr/share/nginx/html/feed/
 
 ## Add Resume
 ADD resume /usr/share/nginx/html/resume
+ADD stories /usr/share/nginx/html/stories
+ADD ads.txt /usr/share/nginx/html/
+RUN rm -f /usr/share/nginx/html/images/icon*

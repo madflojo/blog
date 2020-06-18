@@ -1,7 +1,7 @@
 +++
 title = "Masterless Salt Base"
 date = 2015-11-29T01:38:31-07:00
-draft = false
+draft = true
 
 # Tags: can be used for filtering projects.
 # Example: `tags = ["machine-learning", "deep-learning"]`

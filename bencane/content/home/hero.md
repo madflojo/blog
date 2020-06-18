@@ -3,9 +3,9 @@
 widget = "hero"  # See https://sourcethemes.com/academic/docs/page-builder/
 headless = true  # This file represents a page section.
 active = true  # Activate this widget? true/false
-weight = 10  # Order that this section will appear.
+weight = 20  # Order that this section will appear.
 
-title = "Learn More about Linux"
+title = "Learn about Linux"
 
 # Hero image (optional). Enter filename of an image in the `static/img/` folder.
 hero_media = "RHELTroubleshootingCover.jpg"
@@ -51,6 +51,6 @@ hero_media = "RHELTroubleshootingCover.jpg"
 #  label = ''
 +++
 
-This book will teach you how to troubleshoot and resolve issues with Linux. It first builds your knowledge of troubleshooting. What tools do you need, how to use them, and where to look for errors. Then it walks through troubleshooting many common scenarios. Issues like High I/O Wait, Firewalls, MySQL, Apache, etc.
+This book will teach you how to troubleshoot and resolve issues with Linux. It first builds your knowledge of troubleshooting. What tools do you need, how to use them, and where to look for errors.
 
 Many readers, use this book to prepare for Red Hat Certification Exams.
