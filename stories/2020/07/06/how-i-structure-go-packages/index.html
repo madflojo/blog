@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+	<html class="sl-root decks export offline loaded">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>How I Structure Go Packages</title>
+
+		<meta name="description" content="After writing Go applications for both Open Source and Enterprise use. I&#39;ve learned a few things about how to effectively structure Go packages. How to make them easier to test, easier to share and more importantly, production ready.">
+
+		<link rel="stylesheet" type="text/css" href="lib/offline-v2.css">
+
+
+
+	</head>
+	<body class="reveal-viewport theme-font-overpass2 theme-color-black-orange">
+		<div class="reveal">
+			<div class="slides">
+				<section data-id="e2f88908f8f13a65ba4d5b94b37a4b77" data-background-image="how-i-structure-go-packages/df0ed9b0e426a8dd2ad9ebf7511f490e"><div class="sl-block" data-block-type="text" style="width: 1280px; left: 0px; top: 602px; height: auto;" data-block-id="1fce66554196c205e876cde8f1ae56f6"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="color: rgb(255, 255, 255); text-align: center; font-size: 115%; z-index: 10;">
+<h1>How I Structure Go Packages</h1>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1280px; left: 0px; top: 664px; height: auto;" data-block-id="742991bc94d6c711eed3db4a5b28650a" data-name="text-b31361"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="color: rgb(238, 238, 238); text-align: center; font-size: 115%; z-index: 11;">
+<h3><em>Making reusable packages that don't suck</em></h3>
+</div></div></section><section data-id="66d5ef0143cb15a053734d22d5186562" data-background-image="how-i-structure-go-packages/96fcd6d01492b8e7d5f917d23a89d464"><div class="sl-block" data-block-type="text" style="width: 1280px; left: 0px; top: 0px; height: auto;" data-block-id="addd7b0560c4cc5d629cf2b3ebe324b2"><div class="sl-block-content" data-placeholder-tag="h1" style="font-size: 167%; text-align: left; z-index: 10; color: rgb(0, 0, 0);" data-placeholder-text="Text">
+<h1>
+<span style="color:rgb(17, 17, 17)"><span>Packages should solve one problem domain, be reusable by default, and </span></span><span class="adverb" style="color:rgb(17, 17, 17)"><span><span>individually</span></span></span><span style="color:rgb(17, 17, 17)"><span> testable.</span></span>
+</h1>
+</div></div></section><section data-id="ed5ce26678e61f2669802dd0eb62b0e4"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="67fb62def62923a56c26772d7c44f784"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Two Types of Packages</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 267px; height: auto;" data-block-id="51a602ec5544a683f36d27755d2d8da8"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p><span style="font-size:1.0em">In-App packages <span class="passivevoice">are created</span> as part of a greater application. These <span class="adverb">typically</span> serve a specific purpose. They are often created to isolate functionality rather than address reuse.</span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 551px; left: 720px; top: 267px; height: auto;" data-block-id="d5b95f92a1b0c9ee322536515c5d9f2e" data-name="text-ca79b1"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left;">
+<p><span style="font-size:1.0em">Stand alone packages <span class="passivevoice">are created</span> to share functionality across many applications. They should be independent of application implementation. Allowing users to call the package in many different ways.</span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 551px; left: 720px; top: 210px; height: auto;" data-block-id="dc74f41f9196a449af7c33dc2b994cda" data-name="text-dd39ab"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 13;">
+<h3>StanD alone</h3>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 210px; height: auto;" data-block-id="579d8e38cb18a3e0723b3d7224a7d743" data-name="text-fad7f1"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 14;">
+<h3>In-App Packages</h3>
+</div></div></section><section data-id="45d9cace91cbd0c25577f070d61abf45"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 94px; height: auto;" data-block-id="b7feea2f607a8e510e9673473a11ce2f"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Directory Structure</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1233px; left: 38px; top: 135px; height: auto;" data-block-id="69cb96ed1c54d500851ea32205cc444a"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p>There are many proposed structures for In-App packages. But there is no standard everyone follows. </p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 551px; left: 720px; top: 6px; height: auto;" data-block-id="ef7711f119ce331c8d92b5e8d7821788" data-name="text-9d994a"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 12;">
+<h2 style="text-align: right;">In-App</h2>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-73dc26" data-block-id="57e6603c2ac606041ac7b5c09bc52c98" style="height: auto;"><div class="sl-block-content sl-block-group-content" style="transform-origin: 313.5px 428.5px; z-index: 13;">
+<div class="sl-block" data-block-type="code" data-name="code-7f6b99" data-block-id="672cb760badfd69e3476fef6cd3b1a4c" style="width: 551px; height: 229px; left: 38px; top: 412px;"><div class="sl-block-content notranslate" data-highlight-theme="darcula" data-code-frame="osx" style="z-index: 14;"><pre style="font-size: 16px; line-height: 19px;" class="bash"><code>$ find . -type d
+./internal/app/
+./internal/pkg/
+./internal/pkg/nonreusablepkg2/
+./internal/pkg/nonreusablepkg1/
+./pkg/reusablepkg1/
+./pkg/reusablepkg2/</code></pre></div></div>
+<div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 216px; height: auto;" data-block-id="a78e2cda3a8c9e7fbdb831232753674f" data-name="text-a3dbc9"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 15; text-align: left;">
+<p>There are recommendations such as creating a <span style="color:rgb(218, 165, 32)">/pkg</span> directory for public sharable packages. While creating an <span style="color:rgb(218, 165, 32)">/internal/pkg</span> directory for internal only packages.</p>
+</div></div>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" style="height: auto;" data-block-id="08f53b4c7ad004358b5aca6ec0932ba9" data-name="group-38f685"><div class="sl-block-content sl-block-group-content" style="transform-origin: 995.5px 428.5px; z-index: 16;">
+<div class="sl-block" data-block-type="code" style="width: 551px; height: 229px; left: 720px; top: 412px;" data-origin-id="672cb760badfd69e3476fef6cd3b1a4c" data-block-id="350e6c65b3d351846746aecc46daf50b" data-name="code-b441ab"><div class="sl-block-content notranslate" data-highlight-theme="darcula" data-code-frame="osx" style="z-index: 17;"><pre style="font-size: 16px; line-height: 19px;" class="bash"><code>$ find . -type d
+./app/
+./reusablepkg1/
+./nonreusablepkg1/
+./reusablepkg2/</code></pre></div></div>
+<div class="sl-block" data-block-type="text" style="width: 551px; left: 720px; top: 216px; height: auto;" data-origin-id="a78e2cda3a8c9e7fbdb831232753674f" data-block-id="f0187a1881046cf3962f3cbc1cdd9ba2" data-name="text-ab247e"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 18; text-align: left;">
+<p><span style="font-size:1.0em">I put all packages in the repository top level under their own package names. I like this method as it keeps all packages in the same place, a sane easy to find location.</span></p>
+</div></div>
+</div></div></section><section data-id="98503c0b8749827309af0a2e99ba0dbc"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 94px; height: auto;" data-block-id="676ed23534ca608a8a91f2c23ee4325c"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Directory Structure</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1233px; left: 38px; top: 135px; height: auto;" data-block-id="302b17365a7e10a07b99130b1e95232f"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p>For stand alone packages, there is a common pattern followed by most.</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 551px; left: 720px; top: 6px; height: auto;" data-name="text-9d994a" data-block-id="e16341267fd2dc001d1f6de73603a091"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 12;">
+<h2 style="text-align:right">Stand Alone</h2>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-73dc26" style="height: auto;" data-block-id="1eb7eea039a9cf881e24f407f785d083"><div class="sl-block-content sl-block-group-content" style="transform-origin: 299px 309.5px; z-index: 13;">
+
+<div class="sl-block" data-block-type="text" style="width: 522px; left: 38px; top: 216px; height: auto;" data-name="text-a3dbc9" data-block-id="9f5a512f0f63d76ccbd3e9ea88ddfb12"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 17; text-align: left;">
+<p>Stand alone packages should be in their own repository.</p>
+
+<p>The code files should <span class="passivevoice">be located</span> in the top level directory. Any sub-packages should be directories in the top level.</p>
+</div></div>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" style="height: auto;" data-name="group-38f685" data-block-id="bc322cd94eb171167d84f11dfe8d9bf0"><div class="sl-block-content sl-block-group-content" style="transform-origin: 920px 360px; z-index: 18;">
+<div class="sl-block" data-block-type="code" style="width: 560px; height: 288px; left: 640px; top: 216px;" data-name="code-b441ab" data-block-id="fff277ea2fc38c243dfe0358ca260189"><div class="sl-block-content notranslate" data-highlight-theme="darcula" data-code-frame="osx" style="z-index: 21;"><pre style="font-size: 16px; line-height: 19px;" class="bash"><code>$ find . -type f
+./go.mod
+./drivers/redis/redis_test.go
+./drivers/redis/redis.go
+./drivers/cassandra/cassandra.go
+./drivers/cassandra/cassandra_test.go
+./LICENSE
+./go.sum
+./README.md
+./CONTRIBUTING.md
+./hord_test.go
+./hord.go</code></pre></div></div>
+
+</div></div></section><section data-id="7133faf6314406d3275e89530ce161b3" data-auto-animate=""><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 94px; height: auto;" data-block-id="9f4016219e2cd38cc72e71f86b1a3419" data-name="text-9573c1"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Naming and Organization</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1233px; left: 38px; top: 135px; height: auto;" data-block-id="0fd1d7355f3ab7d4c123736c3f110b65" data-name="text-592936"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p>Naming files within a package is a key part of keeping a package organized. The guidelines below apply to both in-app and stand-alone packages.</p>
+
+<p> </p>
+
+<ul>
+	<li class="fragment" data-fragment-index="0">The primary file, the one that should have the package documentation should have the same name as the package. For example, a package by the name of <span style="color:#DAA520">config</span> should start with a <span style="color:#DAA520">config/config.go</span> file.</li>
+	<li class="fragment" data-fragment-index="1">It's good to break out functionality into multiple files. Make sure that similar functionality is grouped together. I.E. <span style="color:#DAA520">yaml.go</span>, <span style="color:#DAA520">env.go</span>, <span style="color:#DAA520">json.go</span>, or <span style="color:#DAA520">consul.go</span>.</li>
+	<li class="fragment" data-fragment-index="2">When breaking out functionality, keep <strong>types</strong>, <strong>constants</strong> or <strong>errors</strong> where they are referenced or where they logically sit. Many times, this may be the base file i.e. <span style="color:#DAA520">config.go</span>. Avoid creating a <span style="color:#DAA520">constants.go</span> or <span style="color:#DAA520">types.go</span>.</li>
+	<li class="fragment" data-fragment-index="3">Apply the same logic to utility functions, put them where they are most used, or default to the base file. Avoid creating a <span style="color:#DAA520">util.go</span>.</li>
+</ul>
+</div></div>
+</section><section data-id="9cb00fc02f67981cdb75dac997748ed5"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="0ce9edb6bc61643e65c307170fc09b24"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Structuring the Package Interface</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 168px; height: auto;" data-block-id="ce30549bfff0852762339851e41e0c69"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left;">
+<p><span>As important as naming and directory structure. How we structure the interface is how users work with our package. The functions, methods, and types we export from our package dictates how users use it.</span></p>
+
+<p> </p>
+
+<p><span>Some packages export simple functions that hold no long term state. Other packages will export structures to hold data and provide methods of access. Many packages, will do both.</span></p>
+</div></div>
+</section><section data-id="33495329e8f8c0b536e61b18e998a17b"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 94px; height: auto;" data-block-id="4fa37d499b6d47d7874b166ba92bcc87"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Just Functions</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1233px; left: 38px; top: 135px; height: auto;" data-block-id="829ab120a45065d2a947e209890e54af"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p>Many packages provide users with simple helper functions. These functions take data as input, and provide something new or modified as output.</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 551px; left: 720px; top: 6px; height: auto;" data-name="text-9d994a" data-block-id="9c8eb71d10661b49b791f7468608f843"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 12;">
+<h2 style="text-align:right">Package Interface</h2>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-73dc26" style="height: auto;" data-block-id="5677f8f87ec8da083ef15eb553f1b5fe"><div class="sl-block-content sl-block-group-content" style="transform-origin: 361.476px 443px; z-index: 13;">
+
+<div class="sl-block" data-block-type="text" style="width: 646.951px; left: 38px; top: 245px; height: auto;" data-name="text-a3dbc9" data-block-id="ba2a311d596fd1cd27485fe7003db82c"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 15; text-align: left;">
+<ul>
+	<li><span style="font-size:1.0em">These types of packages should never <span class="passivevoice">be used</span> to keep data. As this prevents users from creating multiple instances to work with different sets of data.</span></li>
+	<li><span style="font-size:1.0em">If you find yourself using <span style="color:#DAA520">init()</span> to create a <span style="color:#DAA520">sync.Map</span> or initialize other things. Ask yourself, if I run <span class="complexword">multiple</span> tests in parallel, will it break?</span></li>
+	<li><span style="font-size:1.0em">Watch out from turning these packages into a generic <strong>utils</strong> package. It's easy to group helper functions into one package, but a package should solve one problem. Utilities is not one problem.</span></li>
+</ul>
+</div></div>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" style="height: auto;" data-name="group-38f685" data-block-id="c52dc2b67936b97e74ece3611c09f8b9"><div class="sl-block-content sl-block-group-content" style="transform-origin: 976.462px 404.253px; z-index: 16;">
+<div class="sl-block" data-block-type="code" style="width: 538.925px; height: 318.506px; left: 707px; top: 245px;" data-name="code-b441ab" data-block-id="1d3d77d8314e117c5e8edef46eec9108"><div class="sl-block-content notranslate" data-highlight-theme="darcula" data-code-frame="osx" style="z-index: 18;"><pre style="font-size: 16px; line-height: 19px;" class="go"><code>package config
+
+// Marshal will take in an interface and format it
+// into config data.
+func Marshal(in interface{}) ([]byte, error) {
+	// do stuff
+}
+
+// Unmarshal will take in raw config data and parse
+// it into the provided interface.
+func Unmarshal(in []byte, out interface{}) error {
+	// do stuff
+}
+</code></pre></div></div>
+
+</div></div></section><section data-id="2c97a1c10ae07d1ea22de152ca5d92c5"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 94px; height: auto;" data-block-id="92de55ddf13010327d42ff2b0dc3e9d7"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Structs with Methods</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 529.96px; left: 38px; top: 135px; height: auto;" data-block-id="73489711913f3bf56f9d1f2afcb39d77"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p>Some packages store context, data, or control services. These packages usually export a pointer to a custom type with methods. Each pointer, is an individual instance a user can interact with.</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 551px; left: 720px; top: 6px; height: auto;" data-name="text-9d994a" data-block-id="1b68e417320b574e143c93c0d6b4e37f"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 12;">
+<h2 style="text-align:right">Package Interface</h2>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-73dc26" style="height: auto;" data-block-id="85e4ae91f8795eedcad4facdb7e2b0ae"><div class="sl-block-content sl-block-group-content" style="transform-origin: 302.98px 514.5px; z-index: 13;">
+
+<div class="sl-block" data-block-type="text" style="width: 529.96px; left: 38px; top: 324px; height: auto;" data-name="text-a3dbc9" data-block-id="253760befd9b1b7a433b63556c8c5f4c"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 15; text-align: left;">
+<ul>
+	<li>
+	<p><span>By using the custom types with our getter and setter methods. Users can create many instances of </span><span style="color:#DAA520">Config</span><span> each with different data.</span></p>
+	</li>
+	<li>
+	<p><span>When writing tests, each test should have its own instances of </span><span style="color:#DAA520">Config</span><span>. Then, they can run in parallel.</span></p>
+	</li>
+	<li>
+	<p><span>Stick to using </span><span style="color:#DAA520">New()</span><span> or </span><span style="color:#DAA520">Dial()</span><span> to create new instances. Users would be calling </span><span style="color:#DAA520">config.New()</span><span>.</span></p>
+	</li>
+</ul>
+</div></div>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" style="height: auto;" data-name="group-38f685" data-block-id="d4f527d5e6209c4c9860e75265f16055"><div class="sl-block-content sl-block-group-content" style="transform-origin: 927.011px 374.087px; z-index: 16;">
+<div class="sl-block" data-block-type="code" style="width: 688.022px; height: 642.175px; left: 583px; top: 53px;" data-name="code-b441ab" data-block-id="a905e3193cf3d3aa3d7045b2806f1eee"><div class="sl-block-content notranslate" data-highlight-theme="darcula" data-code-frame="osx" style="z-index: 18;"><pre style="font-size: 16px; line-height: 19px;" class="go"><code>package config
+
+import "sync"
+
+// Config is a custom type for holding and changing configuration
+// data.
+type Config struct {
+	sync.RWMutex
+	item string
+}
+
+// New will create a new instance of configuration.
+// Each instance is unique and can hold different information.
+func New() *Config {
+	// setup the config object
+	return &amp;Config{}
+}
+
+// Item is used to access Config.item
+func (c *Config) Item() string {
+	c.RLock()
+	defer c.RUnlock()
+	return c.item
+}
+
+// SetItem is used to change Config.item
+func (c *Config) SetItem(s string) {
+	c.Lock()
+	defer c.Unlock()
+	c.item = s
+}</code></pre></div></div>
+
+</div></div></section><section data-id="dbcfd75563ef9fe0965596cae2abe161"><div class="sl-block" data-block-type="text" style="width: 971.018px; left: 38px; top: 86px; height: auto;" data-block-id="7c8148c1747e1af4e22c64c57ced2f63"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Push Dependencies, Don't initialize them again</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1210.38px; left: 38px; top: 127px; height: auto;" data-block-id="35b472d284b204d5adb971ccf732da4b"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p>Sometimes, it is necessary for packages to load outside dependencies. This is common with Config, Logging, etc. It's tempting to re-initialize these on package load, but don't do that. Let the calling application push those dependencies to the package.</p>
+</div></div>
+<div class="sl-block" data-block-type="code" data-name="code-f6a513" data-block-id="0b74b9bc5131de51ac6637053eb383f4" style="width: 543.076px; height: 375.273px; left: 16.9238px; top: 329.817px;"><div class="sl-block-content notranslate" data-highlight-theme="darcula" data-code-frame="osx" style="z-index: 12; border-width: 1px;"><pre class="go" style="font-size: 16px; line-height: 19px;"><code>package database
+
+import "github.com/some/logger"
+
+// don't do this... just don't
+func init() {
+	log = logger.New()
+	cfg = config.New()
+}
+
+func MyFunc() {
+	// do work
+	log.Printf("Tell someone about it")
+}</code></pre></div></div>
+<div class="sl-block" data-block-type="code" data-name="code-2c71f7" data-block-id="79ee668f1cfacd704c35f0a16c17fd8a" style="width: 680.652px; height: 375.273px; left: 582.582px; top: 329.817px;"><div class="sl-block-content notranslate" data-highlight-theme="darcula" data-code-frame="osx" style="z-index: 13;"><pre class="go" style="font-size: 16px; line-height: 19px;"><code>package database
+
+// imagine some imports here
+
+type DB struct {
+	cfg *config.Config
+	log *logger.Logger
+}
+
+func Dial(log *logger.Logger, cfg *config.Config) (*DB, error) {
+	// create a new DB control object
+}
+
+func (db *DB) MyFunc() {
+	// do work
+	db.log.Printf("Tell someone about it")
+}</code></pre></div></div>
+<div class="sl-block" data-block-type="text" data-name="text-8d932d" data-block-id="cf87580007c1a81b5d4bd57dd0e1ae81" style="height: auto; width: 540px; left: 20px; top: 290.909px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14;">
+<h3 style="text-align: left;">Do not even...</h3>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 540px; left: 582.582px; top: 290.909px;" data-block-id="af7a28a4bfeae7fac8028679fd1419ee" data-name="text-81dbae"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 15;">
+<h3 style="text-align:left">Better, but not perfect</h3>
+</div></div></section><section data-id="8e44f2690f30294a7ff493d3598f448f"><div class="sl-block" data-block-type="text" style="width: 1142.64px; left: 38px; top: 86px; height: auto;" data-block-id="e14c7379b2835e2647f96805497b5853"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>You don't need those dependencies, not like that atleast</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1210.38px; left: 38px; top: 127px; height: auto;" data-block-id="e26487a54d40f4ab1f4a96b3b045b2b7"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p><span>In the example before, we pushed a config object into our database package. But is that what we want? Now our package </span><span class="passivevoice"><span><span>is locked</span></span></span><span> into using this specific config package. What did it buy us? </span><span class="adverb"><span><span>Dynamically</span></span></span><span> update our DB config? It, sounds nice, but doesn't work like you think it will.</span></p>
+
+<p> </p>
+
+<p><span>In this case, the implementing app should create a new DB instance and shut the old one down. That's the whole point of this package structure.</span></p>
+</div></div>
+<div class="sl-block" data-block-type="code" data-name="code-2c71f7" style="width: 514.896px; height: 242.72px; left: 38px; top: 428px;" data-block-id="fa51b7fd8b6295b2fc4958fff8e4ca52"><div class="sl-block-content notranslate" data-highlight-theme="darcula" data-code-frame="osx" style="z-index: 12;"><pre class="go" style="font-size: 16px; line-height: 19px;"><code>package database
+
+type DB struct {
+	server   string
+	password string
+}
+
+func Dial(server, password string) (*DB, error) {
+	// create a new DB control object
+}</code></pre></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 540px; left: 38px; top: 385.773px;" data-name="text-81dbae" data-block-id="db404aca01af90a7419e0c8572c3d32c"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<h3 style="text-align:left">NOw We are Talking</h3>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 683.929px; left: 578px; top: 495.36px; height: auto;" data-block-id="9adb251c09f09865bc6b7e0df386c849" data-name="text-7a9f71"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 14; text-align: left;">
+<p>When pushing dependencies, ask yourself. Is there a better way of doing this? A way that doesn't kill reusability?</p>
+</div></div></section><section data-id="24e795dacaae2af030d7c46b3f9d2172"><div class="sl-block" data-block-type="text" style="width: 692.511px; left: 38px; top: 86px; height: auto;" data-block-id="91fc91e15274a138c9de451c60578a46"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>But What about that logger? Just... Don't</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 692.511px; left: 38px; top: 168px; height: auto;" data-block-id="ff4dad7db8ccb45bb9eae47ba5238e09"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left;">
+<p><span>Logging has no place in stand alone or in-app packages. It should only </span><span class="passivevoice"><span><span>be executed</span></span></span><span> within the implementing application.</span></p>
+
+<p> </p>
+
+<p><span>While logging within packages is a pattern that is popular in other languages. That doesn't mean it is right for Go. </span></p>
+
+<ul>
+	<li><span>Is it the right log level? An error to you, might not be an error to me.</span></li>
+	<li>
+<span>It removes the users ability to action on error. </span><span class="qualifier"><span><span>Maybe</span></span></span><span> I need to do more than log.</span>
+</li>
+</ul>
+</div></div>
+<div class="sl-block" data-block-type="image" style="width: 491.513px; height: 276.476px; left: 765.541px; top: 236.064px; min-width: 1px; min-height: 1px;" data-block-id="9df033bc7d574a8994f8d772e88f35d8"><div class="sl-block-content" style="z-index: 11;"><img data-natural-width="480" data-natural-height="270" style="" data-lazy-loaded="" data-src="how-i-structure-go-packages/f99953fa61677d6e231aa09140c3bd6c.gif"></div></div></section><section data-id="658f7ae4e8b0f1d09ae5103162bd53f3"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="ed2859b925c2ad501416cd405d0896c7"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Handle Errors by Passing them up the stack</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 168px; height: auto;" data-block-id="b4e37653fccee47904be34e12bb5f805"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p><span>But if you can't log, how do you get errors to the user? That's where multi-value returns, and custom error types come into the picture.</span></p>
+
+<p> </p>
+
+<p><span>As a package, it's preferable to pass any errors to the calling application. This allows the calling application to check the error and perform a specific action.</span></p>
+</div></div>
+<div class="sl-block" data-block-type="code" data-name="code-129ec8" data-block-id="0eee0d80d347890cc1cdf77f6515fe1d" style="width: 590.326px; height: 208.168px; left: 652.044px; top: 223.832px;"><div class="sl-block-content notranslate" data-highlight-theme="darcula" data-code-frame="osx" style="z-index: 12;"><pre class="go" style="font-size: 16px; line-height: 19px;"><code>myVal, err := db.MyFunc()
+if err == db.ErrMyCustomError {
+	// do something fancy
+}
+if err != db.ErrMyCustomError &amp;&amp; err != nil {
+	// ok maybe log and do something less fancy
+}</code></pre></div></div></section><section data-id="0c231bf508e1bc15ddeedf2083e55cf3"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="93c5abf632e032318dc27fd9eaf5c9b8"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Handling Errors Asynchronously</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 442px; left: 38px; top: 168px; height: auto;" data-block-id="9ceebc3d7cafa9598007132d0dd5dae8"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p><span style="font-size:0.9em">Sometimes a package must perform tasks in the background. When writing these types of packages it is still better to provide the user with an error. But rather than returning the error on a function, call back to the user with an error.</span></p>
+
+<p> </p>
+
+<p><span style="font-size:0.9em">I like two ways of accomplishing this. Either through an <strong>error channel</strong>, or an <strong>error function</strong>. Error functions are user defined functions that the package can callback with errors.</span></p>
+</div></div>
+<div class="sl-block" data-block-type="code" data-name="code-129ec8" style="width: 772.484px; height: 406.886px; left: 493.758px; top: 168px;" data-block-id="8b541cc3dd0bf9c14a6b116adada72ed"><div class="sl-block-content notranslate" data-highlight-theme="darcula" data-code-frame="osx" style="z-index: 12;"><pre class="go" style="font-size: 16px; line-height: 19px;"><code>type Setup struct {
+	// user defined error function
+	errFunc func(error)
+}
+
+func main() {
+	// on setup
+	err := New(Setup{
+		errFunc: func(err error) {
+			if err == db.ErrMyCustomError {
+				// do something fancy
+			}
+			if err != db.ErrMyCustomError &amp;&amp; err != nil {
+				// ok maybe log and do something less fancy
+			}
+		},
+	})
+}</code></pre></div></div>
+<div class="sl-block" data-block-type="text" style="width: 767.242px; left: 499px; top: 589.523px; height: auto;" data-block-id="bc52ab0768f3174d59068c2adf0e29a3" data-name="text-9cecf9"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 13; text-align: left;">
+<p><span style="font-size:0.9em">Packages should <span class="passivevoice">be made</span> asynchronous only when necessary. It is often easier to <span class="complexword">implement</span> asynchronous execution within the implementing application itself. This includes error handling.</span></p>
+</div></div></section><section data-id="2f2b8465b051c7f4a16e2702d5b82e01"><div class="sl-block" data-block-type="text" style="width: 978.545px; left: 38px; top: 86px; height: auto;" data-block-id="191b157dc10f538792f19b9a714e84f6"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>If you can't convert an In-App package to STandAlone it's too tightly coupled</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 987.577px; left: 38px; top: 168px; height: auto;" data-block-id="ec85f98acff58bfee97763bfcfbb5c38"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left;">
+<p><span>Earlier we discussed the differences between in-app and stand alone packages. While there is a often a difference in the locations of these packages. </span><span class="adverb"><span><span>Functionally</span></span></span><span>, and </span><span class="adverb"><span><span>structurally</span></span></span><span>, there should be no difference between the two.</span></p>
+
+<p> </p>
+
+<p><span>A well structured in-app package, should be able to </span><span class="passivevoice"><span><span>be moved</span></span></span><span> to a stand alone package with minimal changes.</span></p>
+</div></div>
+</section><section data-id="ef3205845ca45bac085ac1429d8d027f"><div class="sl-block" data-block-type="text" style="width: 1076px; left: 102px; top: 194px; height: auto;" data-block-id="c1fc6c49ef3e737524c4096bf7345ddd"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>Summary</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1076px; left: 102px; top: 235px; height: auto;" data-block-id="c31682dae24478478c77aa892dc8862e"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<ul>
+	<li>Naming and location of packages are important. But there is no official standard, try to keep it sane.</li>
+	<li>In app and stand alone packages should functionally and structurally work the same.</li>
+	<li>When storing data, use structs with pointers and methods. Not only is this better for users, its also easier to keep things goroutine safe.</li>
+	<li>When not storing data, keep it simple.</li>
+	<li>Don't initialize dependencies, push them from the implementing application. Or better yet, structure the package to not require them.</li>
+	<li>Always, pass errors to users for error handling. Don't assume a package knows better than the implementing application. </li>
+</ul>
+</div></div></section><section data-id="a97b2df67a73f4bf1b9315cf4c7187f8" id="eof-bio"><div class="sl-block" data-block-type="text" style="width: 551px; left: 25px; top: 35px; height: auto;" data-block-id="1b3c95b0e48a1a5de588f6347e70a029"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h1><span style="font-size:1.4em">EOF</span></h1>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 455px; left: 25px; top: 118px; height: auto;" data-block-id="66fe841f7a907e20c07d4f5d0b8a82ea"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left; font-size: 91%;" dir="ui">
+<p><strong>Benjamin Cane</strong></p>
+<p><em>Principal Engineer - American Express</em></p>
+</div></div>
+<div class="sl-block" data-block-type="image" style="width: 740px; height: 719.898px; left: 540px; top: 0.102px; min-width: 1px; min-height: 1px;" data-block-id="042125442ea80648fecb1f438b662d42"><div class="sl-block-content" style="z-index: 11;"><img style="left: -74px; top: 0px; width: 852px; height: 720px;" data-natural-width="1535" data-natural-height="1297" data-crop-x="0.086854" data-crop-y="0" data-crop-width="0.868545" data-crop-height="1" data-lazy-loaded="" data-src="how-i-structure-go-packages/5b97de493e1e0757aa47dbb73b7b6ba2.jpg"></div></div>
+<div class="sl-block" data-block-type="text" data-name="text-17083d" data-block-id="8245c263d201c2e091745ef15669d57c" style="height: auto; width: 455px; left: 25px; top: 188px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13; font-size: 53%;">
+<p style="text-align:left"><span style="font-size:1.0em"><strong>Twitter: <a href="https://twitter.com/madflojo" target="_blank">@madflojo</a> | LinkedIn: <a href="https://linkedin.com/in/bencane/" target="_blank">Benjamin Cane</a> | Site: <a href="https://bencane.com" target="_blank">bencane.com</a></strong></span></p>
+</div></div></section>
+			</div>
+		</div>
+
+		<script>
+			var SLConfig = {"deck": {"id":1815328,"slug":"how-i-structure-go-packages","title":"How I Structure Go Packages","description":"After writing Go applications for both Open Source and Enterprise use. I've learned a few things about how to effectively structure Go packages. How to make them easier to test, easier to share and more importantly, production ready.","width":1280,"height":720,"margin":0.05,"visibility":"self","published_at":"2020-06-13T17:54:11.266Z","sanitize_messages":null,"thumbnail_url":"https://s3.amazonaws.com/media-p.slid.es/thumbnails/50bcc52492d6ef1291fe6c744f8e73b0/thumb.jpg?1592458935","view_count":1,"user":{"id":980594,"username":"madflojo","name":"Benjamin Cane","description":"Benjamin Cane is Principal Engineer at American Express. He has more than 16 years of experience with roles in both systems and software engineering. He leverages both his systems and software skills to build end-to-end platforms.","thumbnail_url":"https://www.gravatar.com/avatar/0f43618f25d8806e99569fd56d513f0a?s=140\u0026d=https%3A%2F%2Fstatic.slid.es%2Fimages%2Fdefault-profile-picture.png","paid":true,"pro":true,"lite":false,"team_id":null,"settings":{"id":2432622,"present_controls":true,"present_upsizing":true,"present_pointer":false,"present_notes":true,"default_deck_tag_id":null}},"background_transition":"slide","transition":"fade","theme_id":null,"theme_font":"overpass2","theme_color":"black-orange","auto_slide_interval":0,"comments_enabled":true,"forking_enabled":true,"rolling_links":false,"center":false,"shuffle":false,"should_loop":false,"share_notes":false,"slide_number":false,"slide_count":17,"rtl":false,"version":2,"collaborative":true,"deck_user_editor_limit":3,"data_updated_at":1592458894707,"font_typekit":null,"font_google":null,"time_limit":null,"navigation_mode":"default","upsizing_enabled":true,"notes":{}}};
+
+
+			// Use local fonts
+			SLConfig.fonts_url = 'lib/fonts/';
+		</script>
+
+		<script src="lib/reveal.js"></script>
+		<script src="lib/reveal-plugins.js"></script>
+		<script src="lib/offline.js"></script>
+
+		<!-- Initialize the presentation -->
+		<script>
+			Reveal.initialize({
+				width: 1280,
+				height: 720,
+				margin: 0.05,
+				
+
+				hash: true,
+				controls: true,
+				progress: true,
+				mouseWheel: false,
+				showNotes: false,
+				slideNumber: false,
+				fragmentInURL: true,
+
+				autoSlide: 0,
+				autoSlideStoppable: true,
+
+				autoAnimateMatcher: SL.deck.AutoAnimate.matcher,
+
+				center: false,
+				shuffle: false,
+				loop: false,
+				rtl: false,
+				navigationMode: "default",
+
+				transition: "fade",
+				backgroundTransition: "slide",
+
+				highlight: {
+					escapeHTML: false
+				},
+
+				plugins: [ RevealZoom, RevealNotes, RevealMarkdown, RevealHighlight ]
+			});
+		</script>
+
+		
+
+	</body>
+</html>
