@@ -2,8 +2,8 @@
 # A Skills section created with the Featurette widget.
 widget = "featurette"  # See https://sourcethemes.com/academic/docs/page-builder/
 headless = true  # This file represents a page section.
-active = true  # Activate this widget? true/false
-weight = 2 # Order that this section will appear.
+active = false # Activate this widget? true/false
+weight = 90 # Order that this section will appear.
 
 title = "Skills"
 subtitle = ""

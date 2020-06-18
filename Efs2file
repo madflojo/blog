@@ -5,3 +5,4 @@ RUN CMD docker rm -f blog
 RUN CMD docker run -d --restart=always -p 80:80 --name blog madflojo/blog
 RUN CMD docker ps -a
 RUN CMD docker images
+RUN CMD docker system prune -af

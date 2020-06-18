@@ -4,10 +4,10 @@
 
 widget = "pages"  # See https://sourcethemes.com/academic/docs/page-builder/
 headless = true  # This file represents a page section.
-active = false  # Activate this widget? true/false
-weight = 30  # Order that this section will appear.
+active = false # Activate this widget? true/false
+weight = 10  # Order that this section will appear.
 
-title = "Recent Publications"
+title = "Stories"
 subtitle = ""
 
 [content]
@@ -27,7 +27,7 @@ subtitle = ""
   [content.filters]
     tag = ""
     category = ""
-    publication_type = ""
+    publication_type = "1"
     exclude_featured = false
   
 [design]
@@ -36,7 +36,7 @@ subtitle = ""
   #   2 = Compact
   #   3 = Card
   #   4 = Citation (publication only)
-  view = 2
+  view = 3
   
 [design.background]
   # Apply a background color, gradient, or image.
@@ -45,15 +45,15 @@ subtitle = ""
   #   Any HTML color name or Hex value is valid.
     
   # Background color.
-  # color = "navy"
+  # color = "black"
   
   # Background gradient.
   # gradient_start = "DeepSkyBlue"
   # gradient_end = "SkyBlue"
   
   # Background image.
-  image = "publications.jpeg"  # Name of image in `static/img/`.
-  image_darken = 0.6  # Darken the image? Range 0-1 where 0 is transparent and 1 is opaque.
+  # image = "stories.jpeg"  # Name of image in `static/img/`.
+  # image_darken = 0.6  # Darken the image? Range 0-1 where 0 is transparent and 1 is opaque.
 
   # Text color (true=light or false=dark).
   # text_color_light = true  
@@ -66,6 +66,3 @@ subtitle = ""
  css_class = ""
 +++
 
-{{% alert note %}}
-Quickly discover relevant content by [filtering publications]({{< ref "/publication/_index.md" >}}).
-{{% /alert %}}
