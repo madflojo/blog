@@ -4,10 +4,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title>How I Structure Go Packages</title>
+    <title>How I Structure Go Packages</title>
     <meta name="author" content="Benjamin Cane">
 
-		<meta name="description" content="After writing Go applications for both Open Source and Enterprise use. I&#39;ve learned a few things about how to effectively structure Go packages. How to make them easier to test, easier to share and more importantly, production ready.">
+    <meta name="description" content="After writing Go applications for both Open Source and Enterprise use. I have learned a few things about how to effectively structure Go packages. How to make them easier to test, easier to share and more importantly, production ready.">
   <meta property="twitter:card" content="summary_large_image">
   
   <meta property="twitter:site" content="@madflojo">
@@ -16,14 +16,14 @@
   <meta property="og:site_name" content="Benjamin Cane">
   <meta property="og:url" content="https://bencane.com/stories/2020/07/06/how-i-structure-go-packages/">
   <meta property="og:title" content="How I Structure Go Packages | Benjamin Cane">
-  <meta property="og:description" content="After writing Go applications for both Open Source and Enterprise use. I&#39;ve learned a few things about how to effectively structure Go packages. How to make them easier to test, easier to share and more importantly, production ready.">
+  <meta property="og:description" content="After writing Go applications for both Open Source and Enterprise use. I have learned a few things about how to effectively structure Go packages. How to make them easier to test, easier to share and more importantly, production ready.">
   <meta property="og:image" content="https://bencane.com/img/bcane-train.jpg">
   <meta property="twitter:image" content="https://bencane.com/img/bcane-train.jpg">
   <meta property="og:locale" content="en-us">
   
 
 
-		<link rel="stylesheet" type="text/css" href="lib/offline-v2.css">
+    <link rel="stylesheet" type="text/css" href="lib/offline-v2.css">
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-3378969-11"></script>
@@ -387,29 +387,35 @@ func main() {
 </div></div>
 <div class="sl-block" data-block-type="text" style="width: 1076px; left: 102px; top: 235px; height: auto;" data-block-id="c31682dae24478478c77aa892dc8862e"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
 <ul>
-	<li>Naming and location of packages are important. But there is no official standard, try to keep it sane.</li>
-	<li>In app and stand alone packages should functionally and structurally work the same.</li>
-	<li>When storing data, use structs with pointers and methods. Not only is this better for users, its also easier to keep things goroutine safe.</li>
-	<li>When not storing data, keep it simple.</li>
-	<li>Don't initialize dependencies, push them from the implementing application. Or better yet, structure the package to not require them.</li>
-	<li>Always, pass errors to users for error handling. Don't assume a package knows better than the implementing application. </li>
+	<li class="fragment" data-fragment-index="0">Naming and location of packages are important. But there is no official standard, try to keep it sane.</li>
+	<li class="fragment" data-fragment-index="1">In app and stand alone packages should functionally and structurally work the same.</li>
+	<li class="fragment" data-fragment-index="2">When storing data, use structs with pointers and methods. Not only is this better for users, its also easier to keep things goroutine safe.</li>
+	<li class="fragment" data-fragment-index="3">When not storing data, keep it simple.</li>
+	<li class="fragment" data-fragment-index="4">Don't initialize dependencies, push them from the implementing application. Or better yet, structure the package to not need them.</li>
+	<li class="fragment" data-fragment-index="5">Always, pass errors to users for error handling. Don't assume a package knows better than the implementing application. </li>
 </ul>
 </div></div></section><section data-id="a97b2df67a73f4bf1b9315cf4c7187f8" id="eof-bio"><div class="sl-block" data-block-type="text" style="width: 551px; left: 25px; top: 35px; height: auto;" data-block-id="1b3c95b0e48a1a5de588f6347e70a029"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
 <h1><span style="font-size:1.4em">EOF</span></h1>
 </div></div>
-<div class="sl-block" data-block-type="text" style="width: 455px; left: 25px; top: 118px; height: auto;" data-block-id="66fe841f7a907e20c07d4f5d0b8a82ea"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left; font-size: 91%;" dir="ui">
-<p><strong>Benjamin Cane</strong></p>
-<p><em>Principal Engineer - American Express</em></p>
+<div class="sl-block" data-block-type="text" style="width: 502.087px; left: 29.078px; top: 115.099px; height: auto;" data-block-id="66fe841f7a907e20c07d4f5d0b8a82ea"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left;" dir="ui">
+<h2><strong>Benjamin Cane</strong></h2>
 </div></div>
 <div class="sl-block" data-block-type="image" style="width: 740px; height: 719.898px; left: 540px; top: 0.102px; min-width: 1px; min-height: 1px;" data-block-id="042125442ea80648fecb1f438b662d42"><div class="sl-block-content" style="z-index: 11;"><img style="left: -74px; top: 0px; width: 852px; height: 720px;" data-natural-width="1535" data-natural-height="1297" data-crop-x="0.086854" data-crop-y="0" data-crop-width="0.868545" data-crop-height="1" data-lazy-loaded="" data-src="how-i-structure-go-packages/5b97de493e1e0757aa47dbb73b7b6ba2.jpg"></div></div>
-<div class="sl-block" data-block-type="text" data-name="text-17083d" data-block-id="8245c263d201c2e091745ef15669d57c" style="height: auto; width: 455px; left: 25px; top: 188px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13; font-size: 53%;">
-<p style="text-align:left"><span style="font-size:1.0em"><strong>Twitter: <a href="https://twitter.com/madflojo" target="_blank">@madflojo</a> | LinkedIn: <a href="https://linkedin.com/in/bencane/" target="_blank">Benjamin Cane</a> | Site: <a href="https://bencane.com" target="_blank">bencane.com</a></strong></span></p>
+<div class="sl-block" data-block-type="text" data-name="text-17083d" data-block-id="8245c263d201c2e091745ef15669d57c" style="height: auto; width: 455px; left: 29.078px; top: 199.887px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13; font-size: 90%;">
+<p style="text-align:left"><span style="font-size:1.0em">Twitter: <a href="https://twitter.com/madflojo" target="_blank">@madflojo</a> <br>
+LinkedIn: <a href="https://linkedin.com/in/bencane/" target="_blank">Benjamin Cane</a></span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-name="text-676afa" data-block-id="99c6651fb3a95fc69412b59d4880342f" style="height: auto; width: 495.726px; left: 29.078px; top: 589px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14; text-align: left;">
+<p>Like this? Check out my book <a href="https://www.amazon.com/dp/1785283553/" target="_blank">Red Hat Enterprise Linux Troubleshooting Guide</a> or my blog <a href="https://bencane.com" target="_blank">BenCane.com</a>.</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 502.087px; left: 29.078px; top: 156.099px; height: auto;" data-block-id="5e2498cfaaa8c4a67b0e627e3edca007" data-name="text-8fb10f"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 15; text-align: left;" dir="ui">
+<p><span style="color:#ADD8E6"><span style="font-size:1.0em"><em>Principal Engineer - American Express</em></span></span></p>
 </div></div></section>
 			</div>
 		</div>
 
 		<script>
-			var SLConfig = {"deck": {"id":1815328,"slug":"how-i-structure-go-packages","title":"How I Structure Go Packages","description":"After writing Go applications for both Open Source and Enterprise use. I've learned a few things about how to effectively structure Go packages. How to make them easier to test, easier to share and more importantly, production ready.","width":1280,"height":720,"margin":0.05,"visibility":"self","published_at":"2020-06-13T17:54:11.266Z","sanitize_messages":null,"thumbnail_url":"https://s3.amazonaws.com/media-p.slid.es/thumbnails/50bcc52492d6ef1291fe6c744f8e73b0/thumb.jpg?1592458935","view_count":1,"user":{"id":980594,"username":"madflojo","name":"Benjamin Cane","description":"Benjamin Cane is Principal Engineer at American Express. He has more than 16 years of experience with roles in both systems and software engineering. He leverages both his systems and software skills to build end-to-end platforms.","thumbnail_url":"https://www.gravatar.com/avatar/0f43618f25d8806e99569fd56d513f0a?s=140\u0026d=https%3A%2F%2Fstatic.slid.es%2Fimages%2Fdefault-profile-picture.png","paid":true,"pro":true,"lite":false,"team_id":null,"settings":{"id":2432622,"present_controls":true,"present_upsizing":true,"present_pointer":false,"present_notes":true,"default_deck_tag_id":null}},"background_transition":"slide","transition":"fade","theme_id":null,"theme_font":"overpass2","theme_color":"black-orange","auto_slide_interval":0,"comments_enabled":true,"forking_enabled":true,"rolling_links":false,"center":false,"shuffle":false,"should_loop":false,"share_notes":false,"slide_number":false,"slide_count":17,"rtl":false,"version":2,"collaborative":true,"deck_user_editor_limit":3,"data_updated_at":1592458894707,"font_typekit":null,"font_google":null,"time_limit":null,"navigation_mode":"default","upsizing_enabled":true,"notes":{}}};
+			var SLConfig = {"deck": {"id":1815328,"slug":"how-i-structure-go-packages","title":"How I Structure Go Packages","description":"After writing Go applications for both Open Source and Enterprise use. I've learned a few things about how to effectively structure Go packages. How to make them easier to test, easier to share and more importantly, production ready.","width":1280,"height":720,"margin":0.05,"visibility":"all","published_at":"2020-06-18T06:01:39.435Z","sanitize_messages":null,"thumbnail_url":"https://s3.amazonaws.com/media-p.slid.es/thumbnails/50bcc52492d6ef1291fe6c744f8e73b0/thumb.jpg?1592458935","view_count":1,"user":{"id":980594,"username":"madflojo","name":"Benjamin Cane","description":"Benjamin Cane is Principal Engineer at American Express. He has more than 16 years of experience with roles in both systems and software engineering. He leverages both his systems and software skills to build end-to-end platforms.","thumbnail_url":"https://www.gravatar.com/avatar/0f43618f25d8806e99569fd56d513f0a?s=140\u0026d=https%3A%2F%2Fstatic.slid.es%2Fimages%2Fdefault-profile-picture.png","paid":true,"pro":true,"lite":false,"team_id":null,"settings":{"id":2432622,"present_controls":true,"present_upsizing":true,"present_pointer":false,"present_notes":true,"default_deck_tag_id":null}},"background_transition":"slide","transition":"slide","theme_id":null,"theme_font":"overpass2","theme_color":"black-orange","auto_slide_interval":0,"comments_enabled":true,"forking_enabled":true,"rolling_links":false,"center":false,"shuffle":false,"should_loop":false,"share_notes":false,"slide_number":false,"slide_count":17,"rtl":false,"version":2,"collaborative":true,"deck_user_editor_limit":3,"data_updated_at":1592541919541,"font_typekit":null,"font_google":null,"time_limit":null,"navigation_mode":"default","upsizing_enabled":true,"notes":{}}};
 
 
 			// Use local fonts
@@ -447,7 +453,7 @@ func main() {
 				rtl: false,
 				navigationMode: "default",
 
-				transition: "fade",
+				transition: "slide",
 				backgroundTransition: "slide",
 
 				highlight: {
