@@ -29,10 +29,12 @@ ADD bencane /bencane
 RUN cd /bencane && /hugo -d /usr/share/nginx/html
 RUN mkdir -p /usr/share/nginx/html/feed && cp /usr/share/nginx/html/index.xml /usr/share/nginx/html/feed/
 
-## Add Resume
+## Add Resume, Stories, and Index
 ADD resume /usr/share/nginx/html/resume
 ADD stories /usr/share/nginx/html/stories
 ADD ads.txt /usr/share/nginx/html/
+ADD index /tmp/index
+RUN mv /tmp/index/* /usr/share/nginx/html/
 RUN rm -f /usr/share/nginx/html/images/icon*
 RUN mkdir /usr/share/nginx/heavy && mv /usr/share/nginx/html/* /usr/share/nginx/heavy/ && \
 /minify -rs -o /usr/share/nginx/html /usr/share/nginx/heavy
