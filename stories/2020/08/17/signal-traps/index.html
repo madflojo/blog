@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+	<html class="sl-root decks export offline loaded">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>Signal Traps: What are signals and how they work</title>
+    <meta name="author" content="Benjamin Cane">
+
+		<meta name="description" content="Signals are a vital process control mechanism for POSIX systems. In modern-day applications, they are essential to ensure lossless shutdowns. In this story, learn about signals, what they are, how they work, and why we need them.">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@madflojo">
+  <meta property="twitter:creator" content="@madflojo">
+  
+  <meta property="og:site_name" content="Benjamin Cane">
+  <meta property="og:url" content="https://bencane.com/stories/2020/08/17/signal-traps/">
+  <meta property="og:title" content="Signal Traps: What are signals and how they work | Benjamin Cane">
+  <meta name="image" property="og:image" content="https://bencane.com/stories/2020/08/17/signal-traps/signal-lights.jpg">
+  <meta property="twitter:image" content="https://bencane.com/stories/2020/08/17/signal-traps/signal-lights.jpg">
+
+  <meta property="og:description" content="Signals are a vital process control mechanism for POSIX systems. In modern-day applications, they are essential to ensure lossless shutdowns. In this story, learn about signals, what they are, how they work, and why we need them.">
+  <meta property="og:locale" content="en-us">
+  
+  <link rel="stylesheet" type="text/css" href="lib/offline-v2.css">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-3378969-11"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-3378969-11');
+</script>
+
+
+	</head>
+	<body class="reveal-viewport theme-font-overpass2 theme-color-black-orange">
+		<div class="reveal">
+			<div class="slides">
+				<section data-id="e2f88908f8f13a65ba4d5b94b37a4b77" data-background-image="signal-traps/9aedd0b2e03d6d54c38ec2e63e96cd9d"><div class="sl-block" data-block-type="text" style="width: 741.5px; left: 7px; top: 11px; height: auto;" data-block-id="1fce66554196c205e876cde8f1ae56f6"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="color: rgb(255, 255, 255); text-align: left; font-size: 375%; z-index: 10;">
+<h1>Signal TRAPS</h1>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 7px; top: 445px; height: auto;" data-block-id="742991bc94d6c711eed3db4a5b28650a" data-name="text-b31361"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="color: rgb(238, 238, 238); text-align: left; font-size: 115%; z-index: 11;">
+<h3><em>What Are Signals and how to use them</em></h3>
+</div></div></section><section data-id="09ab801953ca0016e06990cada2b3fac" data-background-image="signal-traps/b182c5b0036a2820d25e41aef68d416d"><div class="sl-block" data-block-type="text" style="width: 874px; left: 20px; top: 10px; height: auto;" data-block-id="4057aa058801620370219d934f0809ad"><div class="sl-block-content" data-placeholder-tag="h1" style="font-size: 168%; text-align: left; z-index: 10;" data-placeholder-text="Text">
+<h1><span style="color:rgb(17, 17, 17)">To run production applications best, we must know how apps run.</span></h1>
+</div></div></section><section data-id="ff631eab1d6b495226fd76882ef91e82"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="d8103449f50f45a499cf4b40c02dd136"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>What Are Signals?</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1162px; left: 38px; top: 144px; height: auto;" data-block-id="d68c59ce16bc5c291fd11fd232ae6fea"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p>In Unix, Linux, and other POSIX-Compliant operating systems, signals are a process control mechanism that sends shut down notifications to running processes.</p>
+
+<p> </p>
+
+<p>If you've stopped a process on a POSIX-Compliant system, then you've used signals.</p>
+</div></div>
+</section><section data-id="30418848b11bc1fe81ff2dbba8ada363"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="b2c526aa459c41190b2cb9c25e2965b0"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Why are they IMportant</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1162px; left: 38px; top: 127px; height: auto;" data-block-id="2fecd0d66f846d011cc41a41ec968a7a"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left;">
+<p>Signals are essential for both ops and developers to understand. </p>
+
+<p> </p>
+
+<p><span style="color:#ADD8E6"><strong>For Ops</strong></span>, whether it is Docker, Kubernetes, or a Stand-Alone process on Linux, to shut down a service a signal is involved.</p>
+
+<p> </p>
+
+<p><span style="color:#00FF00"><strong>For Developers</strong></span>, signals tell our software to stop. We can use this to gracefully shutdown our applications.</p>
+</div></div>
+</section><section data-id="7e6f9c3481c5dfc8840e6fb7e3db0ac9"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="3534068d83d56474d6764533337b75c8"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>How signals work</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1185px; left: 38px; top: 127px; height: auto;" data-block-id="365a3c6ef80aeeb72e5dc45c2e2ce030"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p>When stopping a process, it is typical for users to use the <span style="color:#DAA520">kill</span> command. <span style="font-size:calc(var(--rem) * 1px * 1.0625)">This command will send the specified signal to the system's Kernel. The Kernel will then either kill the process itself or forward the signal to the target process.</span></p>
+</div></div>
+<div class="sl-block" data-block-type="image" data-name="image-9ac3c4" data-block-id="23c406bc2ea6b4026bab320d3c8d3219" style="width: 421.606px; height: 278.4px; left: 698.394px; top: 292.8px; min-width: 1px; min-height: 1px;"><div class="sl-block-content" style="z-index: 12;"><img data-natural-width="421" data-natural-height="278" style="" data-lazy-loaded="" data-src="signal-traps/6a2de2497b75e5454b7b622aa1e30a86.png"></div></div></section><section data-id="7a31ab4d4698b7244933c2e69c5c9610"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="676892cbfd9133bf81222686805c9908"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Common Signals</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1188px; left: 39px; top: 127px; height: auto;" data-block-id="59414eb6621970af5ae161055e4f659d"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p>There are many different types of signals, and each has a default behavior. There are also some with undocumented conventions such as <strong>SIGHUP</strong>.</p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-name="text-5a166f" data-block-id="b7b2423851df8385f49ebd707944c22d" style="height: auto; width: 1187px; left: 38px; top: 216px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12; text-align: left;">
+<ul>
+	<li class="fragment" data-fragment-index="0" style="text-align:left">
+<strong>SIGHUP</strong> [1] - Generally used to signal configuration refresh or in multi-process services indicate the control process should restart without restarting workers.</li>
+	<li class="fragment" data-fragment-index="1" style="text-align:left">
+<strong>SIGINT</strong> [2] - Sent to a process from a CRTL+C press and used to stop the process.</li>
+	<li class="fragment" data-fragment-index="2" style="text-align:left">
+<strong>SIGQUIT</strong> [3] - Sent to a process from a CTRL+\ press and used to stop the process and create a core dump.</li>
+	<li class="fragment" data-fragment-index="3" style="text-align:left">
+<strong>SIGKILL</strong> [9] - This signal is never sent to the process as it triggers the Kernel to force stop the process.</li>
+	<li class="fragment" data-fragment-index="4" style="text-align:left">
+<strong>SIGTERM</strong> [15] - The Default signal sent when executing the kill command with no options. This signal is the primary signal used to stop processes.</li>
+</ul>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1188px; left: 38px; top: 637px; height: auto;" data-block-id="b46d400176c744fcb1f4683a8ec1b63f" data-name="text-120419"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 13; text-align: left;">
+<p><span style="font-size:0.7em"><em><strong>Note: </strong>The signals referenced with the associated [value] represent the Ubuntu implementation. A reasonably common application. To determine the Signal to Value mapping on your operating system, reference the manpages via <span style="color:#DAA520">man 7 signal</span>.</em></span></p>
+</div></div></section><section data-id="986003f683a5330f6c0f4ad7a43c7939"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="0003a51d7d578baaea8be45506b22045"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Trapping Signals</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 493px; left: 38px; top: 127px; height: auto;" data-block-id="bbab5a4a62435e664f24162a82414238"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p>We can bypass the default actions for a signal by using signal traps.</p>
+
+<p> </p>
+
+<p>A signal trap, as shown, will allow the application to capture the SIGTERM signal. The goal is to avoid an immediate shutdown, allowing for any pre-shutdown activity.</p>
+
+<p> </p>
+
+<p>When transactional safety is vital to an application, this concept of a graceful shutdown is a crucial resiliency feature.</p>
+</div></div>
+<div class="sl-block" data-block-type="code" data-name="code-7eea75" data-block-id="ab2e5beb533e1f7a955b5c20782aeadb" style="width: 709px; height: 410px; left: 551px; top: 106.5px;"><div class="sl-block-content notranslate" data-highlight-theme="darcula" data-code-frame="osx" style="z-index: 12;" data-code-wrap="true"><pre style="font-size: 16px; line-height: 19px;" class="go"><code data-line-numbers="">// Kick off a Graceful Shutdown Goroutine
+go func() {
+	// Make the Trap
+	trap := make(chan os.Signal, 1)
+	signal.Notify(trap, syscall.SIGTERM)
+
+	// Wait for a signal then action
+	s := &lt;-trap
+	log.Infof("Received shutdown signal %s", s)
+
+	// Shutdown the HTTP Server
+	err := srv.httpServer.Shutdown(context.Background())
+	if err != nil {
+		log.Errorf("Error shutting down %s", err)
+	}
+
+	// Shutdown the app
+	os.Exit(0)
+}()</code></pre></div></div>
+<div class="sl-block" data-block-type="text" style="width: 634px; left: 560px; top: 525px; height: auto;" data-block-id="06efc9a699a4ee2969401d30bb176314" data-name="text-115f2b"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 13; text-align: left; font-size: 63%;">
+<p>For a full service example check out: <a href="https://github.com/madflojo/healthchecks-example" target="_blank">github.com/madflojo/healthchecks-example</a></p>
+</div></div></section><section data-id="53e08dc1a5f31509f698e3f0a770a19d"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="fac5540b2386554fcc64e68c6c4e00fe"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Signals in the Wild</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1162px; left: 38px; top: 127px; height: auto;" data-block-id="ac157b61283bbdc5560cd100945b3bbe"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p><span>In today's environments, there are many ways to run applications. The most common being the following.</span></p>
+
+<p> </p>
+
+<ul>
+	<li>
+<span class="hardreadability" style="font-size:calc(var(--rem) * 1px * 1.0625)"><strong>Stand-Alone Process</strong> - This is the more traditional approach to run a service</span><span style="font-size:calc(var(--rem) * 1px * 1.0625)">. </span><span class="hardreadability" style="font-size:calc(var(--rem) * 1px * 1.0625)">Generally, non-container processes will run via </span><span class="hardreadability" style="font-size:calc(var(--rem) * 1px * 1.0625)">systemd, a task scheduler, or some other process manager</span><span style="font-size:calc(var(--rem) * 1px * 1.0625)">. But not always, some applications have their little startup quirks.</span>
+</li>
+	<li><span style="font-size:calc(var(--rem) * 1px * 1.0625)"><strong>Docker Containers</strong> - Docker, has changed how applications run in production. While it's a little less common to run Docker alone, it's by no means rare.</span></li>
+	<li><span style="font-size:calc(var(--rem) * 1px * 1.0625)"><strong>Kubernetes</strong> - Many applications run as containers within Kubernetes clusters. Kubernetes has its way of managing the application lifecycle.</span></li>
+</ul>
+</div></div>
+</section><section data-id="90e10644f10f79bf7183f781c8e87e96"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="d5f2d30e69630f43301d09c5e5e1b524"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Stand-Alone Processes</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 619px; left: 38px; top: 127px; height: auto;" data-block-id="b51185e000976f881fbf87fafdfc7a0b"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p><span>A stand-alone process is a process that runs without any process manager or container. These processes </span><span class="passivevoice">start</span><span> with simple start scripts or a series of shell commands. </span><br>
+ </p>
+
+<p><span>To stop these processes, we leverage the </span><span style="color:#DAA520">kill</span><span> command. When executed with no options, the </span><span style="color:#DAA520">kill</span><span> command sends a SIGTERM. If another signal </span><span class="passivevoice">is required,</span><span> there are two ways to do that. We can send the signal using the signal number (i.e., 1 for SIGHUP, 9 for SIGKILL). Or, we can specify the signal by name with the </span><span style="color:#DAA520">-s</span><span> option.</span></p>
+</div></div>
+<div class="sl-block" data-block-type="code" data-name="code-7eea75" style="width: 556px; height: 381.5px; left: 695px; top: 127px;" data-block-id="6d48e7f1370d09f3bbc38e39f05582e3"><div class="sl-block-content notranslate" data-highlight-theme="darcula" data-code-frame="osx" style="z-index: 12;" data-code-wrap="true"><pre style="font-size: 16px; line-height: 19px;" class="bash"><code># Send a SIGTERM to PID 7158
+$ kill 7158
+
+# Send a SIGHUP to PID 7158
+$ kill -1 7158
+# Or
+$ kill -s SIGHUP 7158
+
+# Send the kernal a SIGKILL for PID 7158
+$ kill -9 7158
+# Or
+$ kill -s SIGKILL 7158</code></pre></div></div>
+<div class="sl-block" data-block-type="text" style="width: 551px; left: 729px; top: 4px; height: auto;" data-name="text-4ffbab" data-block-id="b0f107f507cccb81b283cfbe08430568"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: right; z-index: 13;">
+<h2>Signals in the Wild</h2>
+</div></div></section><section data-id="c362213bdd37800dfef2624f4d81acd0"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="82b4011bdc2a069989adaf0debf10a6e"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Docker</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 631px; left: 38px; top: 316px; height: auto;" data-block-id="c3045c8fc92b97e72404c3baf2af9f56"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p><span style="font-size:1.0em">A word of caution, Docker, will not send signals to all processes within the container. Docker will only forward the signal to the primary running process. This information is vital for containers that use entry-point scripts. <a href="https://medium.com/@madflojo/shutdown-signals-with-docker-entry-point-scripts-5e560f4e2d45" target="_blank">Check out this article</a> to learn more about making sure entry-point scripts pickup shutdown signals.</span></p>
+</div></div>
+<div class="sl-block" data-block-type="code" data-name="code-7eea75" style="width: 493px; height: 304px; left: 713.5px; top: 309px;" data-block-id="94987b35bcdea2278b961eafbd1dc922"><div class="sl-block-content notranslate" data-highlight-theme="darcula" data-code-frame="osx" style="z-index: 12;" data-code-wrap="true"><pre style="font-size: 16px; line-height: 19px;" class="bash"><code># Stop a container with a SIGTERM
+$ docker stop some_container
+
+# Stop a container with a SIGTERM, and
+# a max stop time (30 seconds).
+$ docker stop -t 30 some_container
+
+# Stop a container with a SIGKILL
+$ docker kill some_container
+
+# Stop a container with a SIGINT
+$ docker kill -s SIGINT some_container</code></pre></div></div>
+<div class="sl-block" data-block-type="text" style="width: 551px; left: 729px; top: 4px; height: auto;" data-name="text-4ffbab" data-block-id="838c55ef8aa961dc1db89b6b4d05d5d3"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: right; z-index: 13;">
+<h2>Signals in the Wild</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1212px; left: 38px; top: 137px; height: auto;" data-block-id="772973721412562c144168d4764dc5a8" data-name="text-817702"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 14; text-align: left;">
+<p><span style="font-size:1.0em">Many users of Docker never realize that Docker uses signals to stop processes. By default, when you use the stop option to stop a container, Docker will send the process a SIGTERM. To send alternative signals, we can use the kill option, which defaults to SIGKILL. As a general practice, avoid using SIGKILL (more about this later).</span></p>
+</div></div></section><section data-id="3315c4107c7ecb06219d4b368d6047e6"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="b3bf792a1381232c28c5bfae2d268e74"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Kubernetes</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1208px; left: 38px; top: 127px; height: auto;" data-block-id="dcef196f6f546c2f489613e2e407a679"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left; color: rgb(255, 255, 255);">
+<p><span style="font-size:1.0em">Like Docker, Kubernetes will send containerized applications a SIGTERM. If the container fails to finish in time, Kubernetes will then use a SIGKILL to kill the app immediately.</span></p>
+
+<p> </p>
+
+<p><span style="font-size:1.0em">By default, Kubernetes will wait 30 seconds for a container to stop. We can change this default by using the <span style="color:#DAA520">--grace-period</span> option. This setting is known as </span><span style="color:rgb(218, 165, 32); font-size:calc(var(--rem) * 1px * 1.0625)">terminationGracePeriodSeconds </span><span style="font-size:1em">within the Pod Spec.</span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 551px; left: 729px; top: 4px; height: auto;" data-name="text-4ffbab" data-block-id="0d885c42cdb6a7288e289e27fb21eb02"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: right; z-index: 13;">
+<h2>Signals in the Wild</h2>
+</div></div></section><section data-id="d3cc4038e9b20364933d41cf96685abd"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="995636c96870a3709d0c23008a00dd1c"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>A Small Rant about kill -9</h2>
+</div></div>
+
+<div class="sl-block" data-block-type="code" data-name="code-7eea75" style="width: 528px; height: 168px; left: 720px; top: 144px;" data-block-id="11f770ee8c71714c8e3b7bee19df2d51"><div class="sl-block-content notranslate" data-highlight-theme="darcula" data-code-frame="osx" style="z-index: 11;" data-code-wrap="true"><pre style="font-size: 16px; line-height: 19px;" class="bash"><code># This is a last resort
+$ kill -9 1234
+
+# It's the same as this
+$ kill -s SIGKILL 1234</code></pre></div></div>
+<div class="sl-block" data-block-type="text" style="width: 625px; left: 38px; top: 144px; height: auto;" data-name="text-817702" data-block-id="cdcfd1b74ffceb8e0f4fb5eaee742526"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left;">
+<p><span style="font-size:1.0em">SIGKILL is sent to the kernel and never sent to the target process. Meaning the process is never able to cleanly shutdown.</span><br>
+ </p>
+
+<p>While it's essential to know how to kill a service that doesn't seem to want to stop on its own, it's equally important to understand the ramifications of using SIGKILL. When executing SIGKILL, the application is not cleanly closing connections; it's not closing file handlers, it's only stopped.</p>
+
+<p><br>
+Use the SIGKILL or <span style="color:#DAA520">-9</span> option only as a last resort, never during the first attempt.</p>
+</div></div>
+<div class="sl-block" data-block-type="image" data-name="image-0cd250" data-block-id="af72956e32a3df48d3d7d3e4ef35ac8c" style="width: 528px; height: 265.65px; left: 720px; top: 341px; min-width: 1px; min-height: 1px;"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="640" data-natural-height="322" data-lazy-loaded="" data-src="signal-traps/5cef24c635c2c7a9a344c236d9869f41.gif"></div></div></section><section data-id="ef3205845ca45bac085ac1429d8d027f"><div class="sl-block" data-block-type="text" style="width: 1076px; left: 102px; top: 194px; height: auto;" data-block-id="c1fc6c49ef3e737524c4096bf7345ddd"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>Summary</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1120px; left: 80px; top: 235px; height: auto;" data-block-id="c31682dae24478478c77aa892dc8862e"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<ul>
+	<li class="fragment" data-fragment-index="0">Signals control how processes shut down, they have defaults, but you can also trap them to override the default action.</li>
+	<li class="fragment" data-fragment-index="1">While SIGTERM is a less impactful shutdown signal unless you write traps, the process will still not shut down cleanly.</li>
+	<li class="fragment" data-fragment-index="2">Docker and Kubernetes both have a time limit to how long they will wait for a container to stop. Make sure you give applications enough time.</li>
+	<li class="fragment" data-fragment-index="3">Knowing signals and how they notify processes helps you understand how the overall system and application work together.</li>
+	<li class="fragment" data-fragment-index="4">It also helps you understand why using <span style="color:#DAA520">kill -9</span> is a bad thing, seriously people stop running it unnecessarily.</li>
+</ul>
+</div></div></section><section data-id="a97b2df67a73f4bf1b9315cf4c7187f8" id="eof-bio"><div class="sl-block" data-block-type="text" style="width: 551px; left: 25px; top: 35px; height: auto;" data-block-id="1b3c95b0e48a1a5de588f6347e70a029"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h1><span style="font-size:1.4em">EOF</span></h1>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 502.087px; left: 29.078px; top: 115.099px; height: auto;" data-block-id="66fe841f7a907e20c07d4f5d0b8a82ea"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left;" dir="ui">
+<h2><strong>Benjamin Cane</strong></h2>
+</div></div>
+<div class="sl-block" data-block-type="image" style="width: 740px; height: 719.898px; left: 540px; top: 0.102px; min-width: 1px; min-height: 1px;" data-block-id="042125442ea80648fecb1f438b662d42"><div class="sl-block-content" style="z-index: 11;"><img style="left: -74px; top: 0px; width: 852px; height: 720px;" data-natural-width="1535" data-natural-height="1297" data-crop-x="0.086854" data-crop-y="0" data-crop-width="0.868545" data-crop-height="1" data-lazy-loaded="" data-src="signal-traps/5b97de493e1e0757aa47dbb73b7b6ba2.jpg"></div></div>
+<div class="sl-block" data-block-type="text" data-name="text-17083d" data-block-id="8245c263d201c2e091745ef15669d57c" style="height: auto; width: 316px; left: 29.078px; top: 199.887px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13; font-size: 90%;">
+<p style="text-align:left"><span style="font-size:1.0em">- Twitter: <a href="https://twitter.com/madflojo" target="_blank">@madflojo</a> <br>
+- LinkedIn: <a href="https://linkedin.com/in/bencane/" target="_blank">Benjamin Cane</a> <br>
+- WebSite: <a href="https://bencane.com" target="_blank">BenCane.com</a></span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-name="text-676afa" data-block-id="99c6651fb3a95fc69412b59d4880342f" style="height: auto; width: 510px; left: 25px; top: 359px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14; text-align: left;">
+<p>Like this? Check out some of my other stuff:</p>
+
+<ul>
+	<li><a href="https://www.amazon.com/dp/1785283553/" target="_blank">Red Hat Enterprise Linux Troubleshooting Guide</a></li>
+	<li><a href="https://bencane.com/stories/2020/07/06/how-i-structure-go-packages/" target="_blank">How I Structure Go Packages</a></li>
+	<li>
+<a href="https://medium.com/@madflojo/software-design-by-example-c53b7b484807" target="_blank">Software Design by Example</a><br>
+	 </li>
+</ul>
+
+<p>You can also share this on <a href="https://twitter.com/intent/tweet?url=https://bencane.com/stories/2020/08/17/signal-traps/&amp;text=Signal%20Traps%3A%20What%20are%20signals%20and%20how%20to%20use%20them%20-%20@madflojo" target="_blank">Twitter</a>, <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://bencane.com/stories/2020/08/17/signal-traps/&amp;title=Signal%20Traps%3A%20What%20are%20signals%20and%20how%20to%20use%20them" target="_blank">LinkedIn</a>, or <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fbencane.com%2Fstories%2F2020%2F08%2F17%2Fsignal-traps%2F&amp;title=Signal%20Traps%3A%20What%20are%20signals%20and%20how%20to%20use%20them" target="_blank">Reddit</a>!</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 502.087px; left: 29.078px; top: 156.099px; height: auto;" data-block-id="5e2498cfaaa8c4a67b0e627e3edca007" data-name="text-8fb10f"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 15; text-align: left;" dir="ui">
+<p><span style="font-size:1.0em"><em>Principal Engineer - American Express</em></span></p>
+</div></div></section>
+			</div>
+		</div>
+
+		<script>
+			var SLConfig = {"deck": {"id":1889941,"slug":"signal-traps","title":"Signal Traps","description":"Signals are a vital process control mechanism for POSIX systems. In modern-day applications, they are essential to ensure lossless shutdowns. In this story, learn about signals, what they are, how they work, and why we need them.","width":1280,"height":720,"margin":0.05,"visibility":"self","published_at":"2020-06-18T06:01:39.435Z","sanitize_messages":null,"thumbnail_url":"https://s3.amazonaws.com/media-p.slid.es/thumbnails/bbc324cd0054b952fb421f6d680cf9dc/thumb.jpg?1595486968","view_count":0,"user":{"id":980594,"username":"madflojo","name":"Benjamin Cane","description":"Benjamin Cane is Principal Engineer at American Express. He has more than 16 years of experience with roles in both systems and software engineering. He leverages both his systems and software skills to build end-to-end platforms.","thumbnail_url":"https://www.gravatar.com/avatar/0f43618f25d8806e99569fd56d513f0a?s=140\u0026d=https%3A%2F%2Fstatic.slid.es%2Fimages%2Fdefault-profile-picture.png","paid":true,"pro":true,"lite":false,"team_id":null,"settings":{"id":2432622,"present_controls":true,"present_upsizing":true,"present_pointer":false,"present_notes":true,"default_deck_tag_id":null}},"background_transition":"slide","transition":"slide","theme_id":null,"theme_font":"overpass2","theme_color":"black-orange","auto_slide_interval":0,"comments_enabled":true,"forking_enabled":true,"rolling_links":false,"center":false,"shuffle":false,"should_loop":false,"share_notes":false,"slide_number":false,"slide_count":14,"rtl":false,"version":2,"collaborative":false,"deck_user_editor_limit":3,"data_updated_at":1597296059666,"font_typekit":null,"font_google":null,"time_limit":null,"navigation_mode":"default","upsizing_enabled":true,"notes":{}}};
+
+
+			// Use local fonts
+			SLConfig.fonts_url = 'lib/fonts/';
+		</script>
+
+		<script src="lib/reveal.js"></script>
+		<script src="lib/reveal-plugins.js"></script>
+		<script src="lib/offline.js"></script>
+
+		<!-- Initialize the presentation -->
+		<script>
+			Reveal.initialize({
+				width: 1280,
+				height: 720,
+				margin: 0.05,
+				
+
+				hash: true,
+				controls: true,
+				progress: true,
+				mouseWheel: false,
+				showNotes: false,
+				slideNumber: false,
+				fragmentInURL: true,
+
+				autoSlide: 0,
+				autoSlideStoppable: true,
+
+				autoAnimateMatcher: SL.deck.AutoAnimate.matcher,
+
+				center: false,
+				shuffle: false,
+				loop: false,
+				rtl: false,
+				navigationMode: "default",
+
+				transition: "slide",
+				backgroundTransition: "slide",
+
+				highlight: {
+					escapeHTML: false
+				},
+
+				plugins: [ RevealZoom, RevealNotes, RevealMarkdown, RevealHighlight ]
+			});
+		</script>
+
+		
+
+	</body>
+</html>

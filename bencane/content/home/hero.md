@@ -51,6 +51,4 @@ hero_media = "RHELTroubleshootingCover.jpg"
 #  label = ''
 +++
 
-This book will teach you how to troubleshoot and resolve issues with Linux. It first builds your knowledge of troubleshooting. What tools do you need, how to use them, and where to look for errors.
-
-Many readers, use this book to prepare for Red Hat Certification Exams.
+This book will teach you Linux basics and how to troubleshoot & resolve issues with Linux. Many readers, use this book to prepare for Red Hat Certification Exams.

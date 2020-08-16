@@ -9,24 +9,47 @@
 </script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous" type="text/javascript">
 </script>
-  <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.2.1/lux/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" type="text/css">
+  <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.2.1/materia/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" type="text/css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" type="text/css">
+<style>
+.backimg {
+  content: "";
+  background: url(bg.jpg);
+  background-repeat: no;
+  background-size: cover;
+  opacity: 0.3;
+  top: 100;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: fixed;
+  z-index: -1;   
+}
+
+@media only screen and (max-width: 840px) {
+    .jumbotron {
+        background: #222 !important;
+        background-image: none !important;
+    }
+
+
+}
+</style>
 </head>
 <body>
-  <div class="container">
-    <div class="jumbotron">
-      <h1 class="display-1">Ben Cane</h1>
-      <hr class="my-4">
+<div class="backimg"></div>
+  <div class="jumbotron" style="background: #222 url(bsd-bg.png) bottom right no-repeat ">
+    <div class="container">
+      <h1 class="display-2 text-white">Benjamin Cane</h1>
       <div class="row">
-          <div class="col-md-8">
-          <p class="lead">Principal Engineer focused on creating
-          mission critical infrastructure and software platforms.</p>
+          <div class="col-md-6">
+          <p class="lead text-white">Building mission-critical infrastructure and software platforms. Platforms purpose-built for performance and resiliency.</p>
           </div>
         <div class="col-md-4">
-          <ul class="list-unstyled">
-            <li><i class="fab fa-github"></i> <a href="https://github.com/madflojo">github.com/madflojo</a></li>
-            <li><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/bencane/">linkedin.com/in/bencane</a></li>
-            <li><i class="fas fa-blog"></i> <a href="https://bencane.com">bencane.com</a></li>
+          <ul class="list-unstyled text-white">
+            <li><i class="fab fa-github"></i> <a class="text-white" href="https://github.com/madflojo">github.com/madflojo</a></li>
+            <li><i class="fab fa-medium"></i> <a class="text-white" href="https://medium.com/@madflojo">medium.com/@madflojo</a></li>
+            <li><i class="fab fa-linkedin"></i> <a class="text-white" href="https://www.linkedin.com/in/bencane/">linkedin.com/in/bencane</a></li>
           </ul>
         </div>
       </div>
@@ -38,50 +61,53 @@
       <div class="col-md-6">
         <h2><i class="fas fa-user-circle"></i> About Me</h2>
 
-        <p class="lead">I spent the majority of my career designing and building
-        hosting platforms. These platforms were purpose built to
-        support highly available mission critical applications.</p>
+        <p class="lead">I spent the majority of my career building hosting platforms 
+        for mission-critical services. These platforms were purpose-built for high 
+        availability, scale, and low latency.</p> 
+        <p class="lead">Most recently, I am focused on building a cloud-native 
+        payment network. My role includes infrastructure and software architecture. 
+        I ensure the hosting platform and application are fast, scalable, and 
+        always online.</p>
+        <p class="lead">My passion is building end to end distributed systems. 
+        I enjoy designing the software, infrastructure, and all the glue in 
+        between.</p>
 
-        <p class="lead">Today, I use my systems and software engineering skills
-        to create end-to-end platforms. I work with infrastructure
-        teams to build performant and resilient hosting solutions.
-        While also creating services &amp; frameworks that enables
-        feature teams.</p>
-
-        <p class="lead">Regardless of whether it's infrastructure, or software.
-        Every day I use my skills to build platforms for Scale,
-        Performance &amp; Availability.</p>
       </div>
         <div class="col-md-6">
+        <div class="card bg-dark text-white">
+        <div class="card-header"><i class="fa fa-tools" aria-hidden="true"></i> Primary Skills</div>
+        <div class="card-body">
           <b>Linux</b>
           <div class="progress">
-            <div class="progress-bar bg-success" role="progressbar" style="width: 90%" aria-valuenow="9" aria-valuemin="0" aria-valuemax="10"></div>
+            <div class="progress-bar  bg-primary" role="progressbar" style="width: 90%" aria-valuenow="9" aria-valuemin="0" aria-valuemax="10"></div>
           </div>
           <br>
           <b>Python</b>
           <div class="progress">
-            <div class="progress-bar bg-success" role="progressbar" style="width: 55%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="10"></div>
+            <div class="progress-bar  bg-primary" role="progressbar" style="width: 55%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="10"></div>
           </div>
           <br>
           <b>Golang</b>
           <div class="progress">
-            <div class="progress-bar bg-success" role="progressbar" style="width: 80%" aria-valuenow="8" aria-valuemin="0" aria-valuemax="10"></div>
+            <div class="progress-bar  bg-primary" role="progressbar" style="width: 80%" aria-valuenow="8" aria-valuemin="0" aria-valuemax="10"></div>
           </div>
           <br>
           <b>Docker</b>
           <div class="progress">
-            <div class="progress-bar bg-success" role="progressbar" style="width: 90%" aria-valuenow="9" aria-valuemin="0" aria-valuemax="10"></div>
+            <div class="progress-bar  bg-primary" role="progressbar" style="width: 90%" aria-valuenow="9" aria-valuemin="0" aria-valuemax="10"></div>
           </div>
           <br>
           <b>Distributed Systems Architecture</b>
           <div class="progress">
-            <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="7" aria-valuemin="0" aria-valuemax="10"></div>
+            <div class="progress-bar  bg-primary" role="progressbar" style="width: 70%" aria-valuenow="7" aria-valuemin="0" aria-valuemax="10"></div>
           </div>
           <br>
           <b>High Availability</b>
           <div class="progress">
-            <div class="progress-bar bg-success" role="progressbar" style="width: 90%" aria-valuenow="9" aria-valuemin="0" aria-valuemax="10"></div>
+            <div class="progress-bar  bg-primary" role="progressbar" style="width: 90%" aria-valuenow="9" aria-valuemin="0" aria-valuemax="10"></div>
           </div>
+        </div>
+        </div>
         </div>
     </div>
     <hr class="my-4">
@@ -104,10 +130,12 @@
               Featured Articles
             </div>
             <ul class="list-group list-group-flush">
+              <li class="list-group-item"><i class="far fa-newspaper"></i> <a href="https://bencane.com/stories/2020/07/06/how-i-structure-go-packages/">How I structure Go packages</a> - <small>Personal Blog | 07/2020</small>
               <li class="list-group-item"><i class="far fa-newspaper"></i> <a href="https://americanexpress.io/choosing-go/">Choosing Go at American Express</a> - <small>American Express Technology Blog | 11/2019</small>
               <li class="list-group-item"><i class="far fa-newspaper"></i> <a href="https://americanexpress.io/do-not-run-dockerized-applications-as-root/">Do Not Run Dockerized Applications as Root</a> - <small>American Express Technology Blog | 09/2018</small>
               <li class="list-group-item"><i class="far fa-newspaper"></i> <a href="https://blog.codeship.com/adjusting-linux-kernel-parameters-with-docker-compose/">Adjusting Linux Kernel Parameters with Docker Compose</a> - <small>CodeShip Blog | 12/2017</small></li>
               <li class="list-group-item"><i class="far fa-newspaper"></i> <a href="https://blog.codeship.com/linux-io-scheduler-tuning/">Improving Linux System Performance with I/O Scheduler Tuning</a> - <small>CodeShip Blog | 02/2017</small></li>
+              <li class="list-group-item"><i class="far fa-newspaper"></i> <a href="http://bencane.com/2012/08/06/troubleshooting-high-io-wait-in-linux/">Troubleshooting High I/O Wait in Linux</a> - <small>Personal Blog | 08/2012</small></li>
             </ul>
           </div>
 
@@ -144,8 +172,8 @@
           </div>
         </div>
         </div>
-        <hr class="my-4">
         <div style="page-break-before: always"></div>
+        <hr class="my-4">
         <h2><i class="fas fa-briefcase"></i> Career</h2>
         <h3 class="text-right">American Express</h3>
         <h4>Principal Engineer | <small>03/2018 - Present</small></h4>
@@ -161,8 +189,8 @@
           <li>Contributing to the creation of company wide Cloud Native practices and frameworks</li>
           <li>Senior member of the Jedi Council. An internal group of engineers hand picked by the CIO to advocate and drive engineering culture</li>
         </ul>
-        <span class="badge badge-pill badge-dark">Golang</span> <span class="badge badge-pill badge-dark">Redis</span> <span class="badge badge-pill badge-dark">Envoy</span> <span class="badge badge-pill badge-dark">Consul</span> <span class="badge badge-pill badge-dark">Docker</span>
-        <span class="badge badge-pill badge-dark">Red Hat Enterprise Linux</span> <span class="badge badge-pill badge-dark">gRPC</span> <span class="badge badge-pill badge-dark">Couchbase</span> <span class="badge badge-pill badge-dark">Prometheus</span>
+        <h4><span class="badge badge-pill badge-dark">Golang</span> <span class="badge badge-pill badge-dark">Redis</span> <span class="badge badge-pill badge-dark">Envoy</span> <span class="badge badge-pill badge-dark">Consul</span> <span class="badge badge-pill badge-dark">Docker</span>
+        <span class="badge badge-pill badge-dark">Red Hat Enterprise Linux</span> <span class="badge badge-pill badge-dark">gRPC</span> <span class="badge badge-pill badge-dark">Couchbase</span> <span class="badge badge-pill badge-dark">Prometheus</span></h4>
         <hr class="my-4">
         <h4>Staff Engineer | <small>01/2016 - 02/2018</small></h4>
         <p class="lead">As a Staff Engineer, I was a Director level infrastructure and software engineer. I led a small team of 4-6 highly skilled Sr. Engneers who were acting in the capacity of an Architecture team. I was responsible for driving DevOps principles within the mission critical platforms team. I also owned the architecture for several applications within the Card Authorizations Network.</p>
@@ -176,9 +204,8 @@
             <li>Drove a practice of hands-free automated functional testing with developer notifications via Slack</li>
             <li>Member of an internal "High Speed Engineer" group. A group of selected engineers focused on pushing Open Source within American Express.</li>
           </ul>
-        <span class="badge badge-pill badge-dark">Red Hat Enterprise Linux</span> <span class="badge badge-pill badge-dark">CI/CD</span> <span class="badge badge-pill badge-dark">Saltstack</span> <span class="badge badge-pill badge-dark">Python</span> <span class="badge badge-pill badge-dark">Splunk</span> <span class="badge badge-pill badge-dark">Docker</span>
+        <h4><span class="badge badge-pill badge-dark">Red Hat Enterprise Linux</span> <span class="badge badge-pill badge-dark">CI/CD</span> <span class="badge badge-pill badge-dark">Saltstack</span> <span class="badge badge-pill badge-dark">Python</span> <span class="badge badge-pill badge-dark">Splunk</span> <span class="badge badge-pill badge-dark">Docker</span></h4>
         <hr class="my-4">
-        <div style="page-break-before: always"></div>
         <h4>Lead Technical Architect | <small>10/2011 - 01/2016</small></h4>
         <p class="lead">As a Lead Technical Architect, I was a Infrastructure Architect. I was part of the mission critical platforms team. I was responsible for infrastructure running Card Authorizations and Manage File Transfer capabilities. Both of these platforms had availability requirements of 99.999% or higher.</p>
 
@@ -191,7 +218,8 @@
           <li>Drove the design of an automatic DNS and IP based site failover for the Card Authorizations API</li>
           <li>Leader of several tiger teams focused on tuning and resolving long standing issues. This included identifying Java performance issues and redesigning our Oracle database replication architecture</li>
         </ul>
-        <span class="badge badge-pill badge-dark">Red Hat Enterprise Linux</span> <span class="badge badge-pill badge-dark">Oracle RAC</span> <span class="badge badge-pill badge-dark">Saltstack</span> <span class="badge badge-pill badge-dark">Python</span> <span class="badge badge-pill badge-dark">Splunk</span> <span class="badge badge-pill badge-dark">Puppet</span> <span class="badge badge-pill badge-dark">vmWare</span>
+        <h4><span class="badge badge-pill badge-dark">Red Hat Enterprise Linux</span> <span class="badge badge-pill badge-dark">Oracle RAC</span> <span class="badge badge-pill badge-dark">Saltstack</span> <span class="badge badge-pill badge-dark">Python</span> <span class="badge badge-pill badge-dark">Splunk</span> <span class="badge badge-pill badge-dark">Puppet</span> <span class="badge badge-pill badge-dark">vmWare</span></h4>
+        <div style="page-break-before: always"></div>
         <hr class="my-4">
         <h3 class="text-right">Stratus Technologies</h3>
 
@@ -206,7 +234,7 @@
           <li>Was a Escalation point for critical on-call issue resolution</li>
           <li>Primary engineer for bi-annual system performance tuning efforts</li>
         </ul>
-        <span class="badge badge-pill badge-dark">Red Hat Enterprise Linux</span> <span class="badge badge-pill badge-dark">Oracle RAC</span> <span class="badge badge-pill badge-dark">Perl</span> <span class="badge badge-pill badge-dark">Kickstart</span> <span class="badge badge-pill badge-dark">vmWare</span>
+        <h4><span class="badge badge-pill badge-dark">Red Hat Enterprise Linux</span> <span class="badge badge-pill badge-dark">Oracle RAC</span> <span class="badge badge-pill badge-dark">Perl</span> <span class="badge badge-pill badge-dark">Kickstart</span> <span class="badge badge-pill badge-dark">vmWare</span></h4>
         <hr class="my-4">
         <h3 class="text-right">IPOWER</h3>
         <h4>Systems Engineer | <small>09/2004 - 08/2007</small></h4>
@@ -220,24 +248,22 @@
           <li>Managed and Trained the Level III and outsourced Level II Technical Support Groups</li>
           <li>Wrote a custom knowledge base in PHP & MySQL</li>
         </ul>
-        <span class="badge badge-pill badge-dark">FreeBSD</span> <span class="badge badge-pill badge-dark">Solaris</span> <span class="badge badge-pill badge-dark">Apache HTTPD</span> <span class="badge badge-pill badge-dark">MySQL</span> <span class="badge badge-pill badge-dark">PHP</span> <span class="badge badge-pill badge-dark">Perl</span>  <span class="badge badge-pill badge-dark">Bind</span>
-        <span class="badge badge-pill badge-dark">Qmail</span>
+        <h4><span class="badge badge-pill badge-dark">FreeBSD</span> <span class="badge badge-pill badge-dark">Solaris</span> <span class="badge badge-pill badge-dark">Apache HTTPD</span> <span class="badge badge-pill badge-dark">MySQL</span> <span class="badge badge-pill badge-dark">PHP</span> <span class="badge badge-pill badge-dark">Perl</span>  <span class="badge badge-pill badge-dark">Bind</span> <span class="badge badge-pill badge-dark">Qmail</span></h4>
         <hr class="my-4">
-        <div style="page-break-before: always"></div>
         <h2><i class="fas fa-code-branch"></i> Open Source Projects</h2>
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-6 ">
             <div class="card">
-              <div class="card-body">
+              <div class="card-body bg-dark text-white">
                 <h4 class="card-title">Automatron</h4>
                 <p class="card-text">Automatron is an Open Source project of mine written in Python. It is a framework for creating self-healing infrastructure. It allows users to define health checks (Nagios compatible) that are run against a host. When these health checks fail, Automatron will perform actions to correct the issue.</p>
                 <a href="https://github.com/madflojo/automatron" class="btn btn-primary"><i class="fab fa-github"></i> Source</a>
               </div>
             </div>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-6 ">
             <div class="card">
-              <div class="card-body">
+              <div class="card-body bg-dark text-white">
                 <h4 class="card-title">MockItOut</h4>
                 <p class="card-text">MockItOut is a simple to use HTTP stub server. With a small YAML configuration you can quickly create test end-points for HTTP APIs. Unlike other mock servers this project is language agnostic and easy to setup.</p>
                 <a href="https://github.com/madflojo/mockitout" class="btn btn-primary"><i class="fab fa-github"></i> Source</a>
@@ -247,9 +273,9 @@
         </div>
         <p></p>
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-6 ">
             <div class="card">
-              <div class="card-body">
+              <div class="card-body bg-dark text-white">
                 <h4 class="card-title">TestCerts</h4>
                 <p class="card-text">A Go package for creating temporary x509 test certificates. There are many Certificate generation tools out there, but most focus on being a CLI tool. This package is focused on providing helper functions for creating Certificates. These helper functions can be used as part of Go tests per the example below.</p>
                 <a href="https://github.com/madflojo/testcerts" class="btn btn-primary"><i class="fab fa-github"></i> Source</a>
@@ -258,7 +284,7 @@
           </div>
           <div class="col-sm-6">
             <div class="card">
-              <div class="card-body">
+              <div class="card-body bg-dark text-white">
                 <h4 class="card-title">Tasks</h4>
                 <p class="card-text">Tasks is an easy to use in-process scheduler for recurring tasks in Go. Tasks is focused on high frequency tasks that run quick, and often. The goal of Tasks is to support concurrent running tasks at scale without scheduler induced jitter.</p>
                 <a href="https://github.com/madflojo/tasks" class="btn btn-primary"><i class="fab fa-github"></i> Source</a>
