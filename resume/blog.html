@@ -37,6 +37,10 @@
   z-index: -1;   
 }
 
+.image-parent {
+  max-width: 100px;
+}
+
 @media only screen and (max-width: 840px) {
     .jumbotron {
         background: #222 !important;
@@ -143,6 +147,8 @@
               Featured Articles
             </div>
             <ul class="list-group list-group-flush">
+              <li class="list-group-item"><i class="far fa-newspaper"></i> <a href="https://medium.com/@madflojo/shutdown-signals-with-docker-entry-point-scripts-5e560f4e2d45">Shutdown Signals with Docker Entrypoint Scripts</a> - <small>Medium | 08/2020</small>
+              <li class="list-group-item"><i class="far fa-newspaper"></i> <a href="https://bencane.com/stories/2020/08/17/signal-traps/">Signal Traps</a> - <small>Personal Blog | 08/2020</small>
               <li class="list-group-item"><i class="far fa-newspaper"></i> <a href="https://bencane.com/stories/2020/07/06/how-i-structure-go-packages/">How I structure Go packages</a> - <small>Personal Blog | 07/2020</small>
               <li class="list-group-item"><i class="far fa-newspaper"></i> <a href="https://americanexpress.io/choosing-go/">Choosing Go at American Express</a> - <small>American Express Technology Blog | 11/2019</small>
               <li class="list-group-item"><i class="far fa-newspaper"></i> <a href="https://americanexpress.io/do-not-run-dockerized-applications-as-root/">Do Not Run Dockerized Applications as Root</a> - <small>American Express Technology Blog | 09/2018</small>
@@ -159,7 +165,11 @@
               Books
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item"><i class="fas fa-book"></i> <a href="https://www.amazon.com/dp/1785283553/">Troubleshooting Red Hat Enterprise Linux</a> - <small>Packt Publishing | 10/2015</small></li>
+              <li class="list-group-item d-flex justify-content-between align-items-center""><a href="https://www.amazon.com/dp/1785283553/">Troubleshooting Red Hat Enterprise Linux</a>
+          <div class="image-parent">
+              <img src="/img/RHELTroubleshootingCover.jpg" class="img-fluid" alt="Red Hat Troubleshooting Guide">
+          </div>
+</li>
             </ul>
           </div>
           <p></p>
