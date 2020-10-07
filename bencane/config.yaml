@@ -21,7 +21,7 @@ params:
 
   homeInfoParams:
     Title: "Hi \U0001F44B my name is Benjamin"
-    Content: "You have stumbled upon my blog. Here you will find articles about Docker, Linux, Go, Python, and pretty much anything else I tinker with daily. I hope you enjoy the content!"
+    Content: "You have stumbled upon my blog. Here you will find articles about Docker, Linux, Go, Python, and pretty much anything else I tinker with daily. I hope you enjoy the content! Thoughts and Opinions are my own, not my employers."
 
   socialIcons:
     - name: twitter
