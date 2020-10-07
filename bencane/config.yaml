@@ -38,6 +38,9 @@ menu:
     - name: Archives
       url: /post/
       weight: 5
+    - name: Buy me a Coffee
+      url: https://www.buymeacoffee.com/madflojo
+      weight: 10
 
 taxonomies:
   category: categories
