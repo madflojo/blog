@@ -33,9 +33,8 @@ RUN mkdir -p /usr/share/nginx/html/feed && cp /usr/share/nginx/html/index.xml /u
 ADD resume /usr/share/nginx/html/resume
 ADD stories /usr/share/nginx/html/stories
 ADD ads.txt /usr/share/nginx/html/
-RUN cp -r /usr/share/nginx/html/resume/* /usr/share/nginx/html/
-RUN rm -f /usr/share/nginx/html/images/icon*
-RUN mkdir /usr/share/nginx/heavy && mv /usr/share/nginx/html/* /usr/share/nginx/heavy/ && \
-/minify -rs -o /usr/share/nginx/html /usr/share/nginx/heavy
-ADD resume/blog.html /usr/share/nginx/html/index.html
-ADD resume/index.html /usr/share/nginx/html/resume/index.html
+#RUN cp -r /usr/share/nginx/html/resume/* /usr/share/nginx/html/
+#RUN rm -f /usr/share/nginx/html/images/icon*
+#RUN mkdir /usr/share/nginx/heavy && mv /usr/share/nginx/html/* /usr/share/nginx/heavy/ && \
+#/minify -rs -o /usr/share/nginx/html /usr/share/nginx/heavy
+ADD resume/resume.html /usr/share/nginx/html/resume/index.html

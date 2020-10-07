@@ -1,0 +1,20 @@
+<div class="profile">
+    {{- with .Site.Params.profileMode }}
+    <div class="profile_inner">
+        {{- if .imageUrl}}<img src="{{ .imageUrl}}" alt="{{ .imageTitle | default "profile image" }}" />{{- end}}
+        <h1>{{- .title | default $.Site.Title -}}</h1>
+        <span>{{- .subtitle -}}</span>
+        {{- partial "social_icons.html" $.Site.Params.socialIcons -}}
+
+        {{- with .buttons }}
+        <div class="buttons">
+            {{- range . -}}
+            <a class="button" href="{{ .url }}" rel="noopener" title="{{ .name | humanize }}">
+                <span class="button-inner">{{ .name }}</span>
+            </a>
+            {{- end -}}
+        </div>
+        {{- end }}
+    </div>
+    {{- end}}
+</div>

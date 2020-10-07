@@ -1,0 +1,70 @@
+baseURL: 'https://bencane.com/'
+title: Benjamin Cane
+paginate: 5
+theme: hugo-PaperMod
+enableRobotsTXT: true
+googleAnalytics: UA-3378969-11
+
+params:
+  description: 'Distributed Systems and Software Engineer'
+  author: Benjamin Cane
+  ShowReadingTime: true
+  defaultTheme: auto
+  ShowShareButtons: true
+  profileMode:
+    enabled: false
+    imageUrl: 'img/bcane-train.jpg'
+    imageTitle: Benjamin Cane
+    buttons:
+      - name: Archives
+        url: post
+
+  homeInfoParams:
+    Title: "Hi \U0001F44B my name is Benjamin"
+    Content: "You have stumbled upon my blog. Here you will find articles about Docker, Linux, Go, Python, and pretty much anything else I tinker with daily. I hope you enjoy the content!"
+
+  socialIcons:
+    - name: twitter
+      url: 'https://twitter.com/madflojo'
+    - name: medium
+      url: 'https://medium.com/@madflojo'
+    - name: linkedin
+      url: 'https://www.linkedin.com/in/bencane/'
+    - name: github
+      url: 'https://github.com/madflojo'
+
+menu:
+  main:
+    - name: Archives
+      url: /post/
+      weight: 5
+
+taxonomies:
+  category: categories
+  tag: tags
+  series: series
+
+privacy:
+  vimeo:
+    disabled: false
+    simple: true
+
+  twitter:
+    disabled: false
+    enableDNT: true
+    simple: true
+
+  instagram:
+    disabled: false
+    simple: true
+
+  youtube:
+    disabled: false
+    privacyEnhanced: true
+
+services:
+  instagram:
+    disableInlineCSS: true
+  twitter:
+    disableInlineCSS: true
+
