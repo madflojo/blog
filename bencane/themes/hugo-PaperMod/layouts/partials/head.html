@@ -48,6 +48,15 @@
 {{ end -}}
 <!--Ads-->
 <script data-ad-client="ca-pub-0946238287085890" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ES58R18XYQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-ES58R18XYQ');
+</script>
 <!-- Misc -->
 {{- if eq (getenv "HUGO_ENV") "production" | or (eq .Site.Params.env "production") }}
 {{- template "_internal/google_analytics_async.html" . }}
