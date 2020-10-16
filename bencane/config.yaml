@@ -38,7 +38,7 @@ menu:
     - name: Archives
       url: /post/
       weight: 5
-    - name: Buy me a Coffee
+    - name: Support this blog
       url: https://www.buymeacoffee.com/madflojo
       weight: 10
 
