@@ -20,8 +20,8 @@ params:
         url: post
 
   homeInfoParams:
-    Title: "Hi \U0001F44B my name is Benjamin"
-    Content: "You have stumbled upon my blog. Here you will find articles about Docker, Linux, Go, Python, and pretty much anything else I tinker with daily. I hope you enjoy the content! Thoughts and Opinions are my own, not my employers."
+    Title: "Hi \U0001F44B"
+    Content: "My name is Benjamin Cane, and you've landed on my engineering blog. I have a background in distributed systems operations, architecture, and development. You will find articles about all sorts of topics like Docker, Linux, Go, Python, and lots more. I hope you enjoy the blog."
 
   socialIcons:
     - name: twitter
@@ -38,6 +38,9 @@ menu:
     - name: Archives
       url: /post/
       weight: 5
+    - name: Talks
+      url: /talks/
+      weight: 6
     - name: Support this blog
       url: https://www.buymeacoffee.com/madflojo
       weight: 10
