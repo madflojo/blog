@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+	<html class="sl-root decks export offline loaded">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>Logging for High Performance Applications</title>
+
+		<meta name="description" content="This talk explores balancing the right level of logging with the performance degradation taken by logging too much. It covers why logging impacts performance and what you can do to reduce the overhead from logging.">
+
+    <meta name="author" content="Benjamin Cane">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@madflojo">
+  <meta property="twitter:creator" content="@madflojo">
+  
+  <meta property="og:site_name" content="Benjamin Cane">
+  <meta property="og:url" content="https://bencane.com/stories/2020/11/24/logging-for-high-performance-apps/">
+  <meta property="og:title" content="Logging for High Performance Applications">
+  <meta name="image" property="og:image" content="https://bencane.com/stories/2020/11/24/logging-for-high-performance-apps/hatchet.jpeg">
+  <meta property="twitter:image" content="https://bencane.com/stories/2020/11/24/logging-for-high-performance-apps/hatchet.jpeg">
+  <meta property="og:description" content="This talk explores balancing the right level of logging with the performance degradation taken by logging too much. It covers why logging impacts performance and what you can do to reduce the overhead from logging.">
+  <meta property="og:locale" content="en-us">
+  
+  <link rel="stylesheet" type="text/css" href="lib/offline-v2.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-3378969-11"></script>
+<script>  window.dataLayer = window.dataLayer || [];  function gtag(){dataLayer.push(arguments);}  gtag('js', new Date());
+  gtag('config', 'UA-3378969-11');
+</script>
+
+
+	</head>
+	<body class="reveal-viewport theme-font-league theme-color-mint-beige">
+		<div class="reveal">
+			<div class="slides">
+				<section data-id="fefb91b2c94965137059b0ecf93bba5f" data-background-image="logging-for-high-performance-applications/1bd119907b901cd543bfea2fae976801"><div class="sl-block" data-block-type="text" style="width: 938px; left: 12px; top: 572.75px; height: auto;" data-block-id="a3cf811eee011f096042331025d55545"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10; font-size: 95%;">
+<h1 style="text-align:left">Logging for High Performance Applications</h1>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 932px; left: 12px; top: 648.25px; height: auto;" data-block-id="2928327e1a405e50130ae8dacd22be53" data-name="text-e70ecc"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11; text-align: left;">
+<p style="text-align:right">Maintaining the balance between too much and too little</p>
+</div></div>
+<div class="sl-block" data-block-type="line" data-name="line-05b908" data-block-id="1b8c92f53de4705a614ed0bc9b341703" style="width: auto; height: auto; min-width: 0px; min-height: 0px; left: 12px; top: 651.25px;"><div class="sl-block-content" data-line-x1="0" data-line-y1="0" data-line-x2="932" data-line-y2="0" data-line-color="#ffffff" data-line-start-type="none" data-line-end-type="none" style="z-index: 12;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="932" height="1" viewbox="0 0 932 1"><line stroke="rgba(0,0,0,0)" stroke-width="15" x1="0" y1="0" x2="932" y2="0"></line><line class="line-element" stroke="#ffffff" stroke-width="2" x1="0" y1="0" x2="932" y2="0"></line></svg></div></div></section><section data-id="8aba5021f66daadb3169ff2d7654c852" data-background-image="logging-for-high-performance-applications/334548a44fa4048678bda13ba98ec251">
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 71px; top: 12px; height: auto;" data-block-id="56c4137958d7a39fc10e8560269d9fc6">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 11; font-size: 148%;" dir="ui">
+<h1><span style="font-size:0.7em">For high throughput, low latency applications, a single unoptimized operation can cause performance degradation.</span></h1>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div></section><section data-id="049796a492736cc42976446deb9368ed"><div class="sl-block" data-block-type="text" style="width: 832px; left: 48px; top: 105px; height: auto;" data-block-id="0ac3d356d1f6c98c7e82e3539e6fe585"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Logging and Performance  🌲🏎</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 382px; left: 48px; top: 303px; height: auto;" data-block-id="67fb59095532c716211fcd5440cd8ed9">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 11;" dir="ui">
+<p>We can find out with a simple experiment using Go's default log package and benchmarks.</p>
+
+<p> </p>
+
+<p>Our experiment will compare the execution of these two functions.</p>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div>
+<div class="sl-block" data-block-type="code" data-name="code-0e9ea0" data-block-id="056ef6f3e9fb02e11c7a5acd57fe7c43" style="width: 500px; height: 300px; left: 447px; top: 303px;"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="osx-grey" style="z-index: 12;"><pre class="go" style="font-size: 16px; line-height: 19px;"><code>func Reverse(s string) string {
+  var r string
+  for _, x := range s {
+    r = string(x) + r
+  }
+  return r
+}
+
+func ReverseLog(s string) {
+  r := Reverse(s)
+  log.Printf("The reverse of %s is %s", s, r)
+}</code></pre></div></div>
+<div class="sl-block" data-block-type="text" style="width: 895px; left: 48px; top: 193px; height: auto;" data-block-id="8691991f6e8a9ff1350a6492a8cd2070" data-name="text-4cb998">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 13;" dir="ui">
+<p>In general, logging is an expensive operation; but how expensive is it anyway?</p>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div></section><section data-id="06d803aa3c08417f3005269a1fa25c77"><div class="sl-block" data-block-type="text" style="width: 832px; left: 48px; top: 105px; height: auto;" data-block-id="0d87f818a405f9c3ef0347bc4f9fed20"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Just how expensive is logging? 💰</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 48px; top: 193px; height: auto;" data-block-id="f97f15b8621b82672ebcc441c6a3471e">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 11;" dir="ui">
+<p>To figure out how much overhead a single log statement can add, we can use Go's benchmark tests.</p>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div>
+<div class="sl-block" data-block-type="code" data-name="code-e1c96e" data-block-id="7ca583deed04ff7636c0ecb8a8b7e07e" style="width: 838.345px; height: 188.072px; left: 48px; top: 315.4px;"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="osx-grey" style="z-index: 12;"><pre style="font-size: 16px; line-height: 19px;" class="bash"><code data-line-numbers="5|6">$ go test -bench . -benchmem
+goos: darwin
+goarch: amd64
+pkg: github.com/madflojo/logging-benchmarks
+BenchmarkReverse/No_Logs-4       8108514      142 ns/op     6 B/op    3 allocs/op
+BenchmarkReverse/Default_Logs-4  579961       2144 ns/op    70 B/op   6 allocs/op</code></pre></div></div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 48px; top: 548.617px; height: auto;" data-block-id="7217cc83b32b2c4496cbbbd72d142af8" data-name="text-f66196">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 13;" dir="ui">
+<p>From these tests, we can see that a normal execution of our function takes <strong>142ns</strong>. But once we add a single log statement, our execution time increases to <strong>2.1μs</strong>.</p>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div></section><section data-id="412340aa972a1549bba103bd7f28a727"><div class="sl-block" data-block-type="text" style="width: 832px; left: 48px; top: 105px; height: auto;" data-block-id="6c9b08c11b678982dc7ff10f9718b5f4"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Understanding the overhead 🔬</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 47px; top: 210px; height: auto;" data-block-id="a39118e8dae219f9780a2cfda7498451">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 11;" dir="ui">
+<p>But why does logging add so much overhead? We can use Go's CPU profiling to breakdown where we spend our time.</p>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div>
+<div class="sl-block" data-block-type="image" data-name="image-2933ed" data-block-id="33acedb697a5ab19668531b0e95f6781" style="width: 926.591px; height: 192.731px; left: 16.7045px; top: 311px; min-width: 1px; min-height: 1px;"><div class="sl-block-content fragment" style="z-index: 12;" data-fragment-index="0"><img style="" data-natural-width="2500" data-natural-height="520" data-lazy-loaded="" data-src="logging-for-high-performance-applications/a004243e6056bd95d6acae3915d6abe6.png"></div></div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 47px; top: 525px; height: auto;" data-block-id="fa144ee6ac82f2604cf6d0e23c75ff7c" data-name="text-acbc20">
+<div class="sl-block-content fragment" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 13;" dir="ui" data-fragment-index="1">
+<p>Most of the execution time is spent writing to standard out. </p>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 13;" class="_1KJtL"></grammarly-extension>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div></section><section data-id="1ad3331a0de8a132399d092c22d71922"><div class="sl-block" data-block-type="text" style="width: 832px; left: 48px; top: 105px; height: auto;" data-block-id="0f5c18f556868abf411dd24108a55cad"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Overhead at scale ⏱</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 895px; left: 48px; top: 210px; height: auto;" data-block-id="146b9ba9b9165a736f78f1a49d4efa47">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 11; font-size: 80%;" dir="ui">
+<p>We know a single log statement is<span style="color:rgb(255, 255, 255)"> </span><strong>2μs</strong> of overhead, but that's not so much, right? Let's see how much overhead this is at 2,000 requests per second.</p>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div>
+<div class="sl-block" data-block-type="math" data-name="math-dccb8a" data-block-id="0ed6242e2e6bdadd233c656062710c8b" style="width: auto; height: auto; left: 325px; top: 280px;"><div class="sl-block-content notranslate" style="z-index: 12; font-size: 75%;"><div class="math-input">2\mu\times2000=4000\mu</div></div></div>
+<div class="sl-block" data-block-type="text" style="width: 895px; left: 48px; top: 343px; height: auto;" data-block-id="1c3e114a211360e2805d0d442934e5d2" data-name="text-b2e0e1">
+<div class="sl-block-content fragment" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 13; font-size: 80%;" dir="ui" data-fragment-index="0">
+<p>Not too bad, but let's be realistic, most applications have more than one log entry per request. Let's say on average we have five per request.</p>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div>
+<div class="sl-block" data-block-type="math" style="width: auto; height: auto; left: 269px; top: 420px;" data-block-id="197b73aaff04086839033974c7ee304d" data-name="math-7ee98a"><div class="sl-block-content notranslate fragment" style="z-index: 14; font-size: 75%;" data-fragment-index="0"><div class="math-input">(2\mu\times2000)\times5=20000\mu</div></div></div>
+<div class="sl-block" data-block-type="text" style="width: 887px; left: 48px; top: 498px; height: auto;" data-block-id="1d856d77cc878d96d654dc5a3a15f30e" data-name="text-9943a3">
+<div class="sl-block-content fragment" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 15; font-size: 80%;" dir="ui" data-fragment-index="1">
+<p>So far the overhead may not seem like much. But let's put this in context by figuring out how many executions we could have performed in 20ms.</p>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div>
+<div class="sl-block" data-block-type="math" style="width: auto; height: auto; left: 188.5px; top: 575px;" data-block-id="bd755b94b16bb221506c62f07d0629e6" data-name="math-349052"><div class="sl-block-content notranslate fragment" style="z-index: 16; font-size: 75%;" data-fragment-index="1"><div class="math-input">((2\mu\times2000)\times5)\div.100\mu=200000</div></div></div></section><section data-id="5362d7fa91049135f4b83775d6f0119c"><div class="sl-block" data-block-type="text" style="width: 832px; left: 48px; top: 105px; height: auto;" data-block-id="a7f1588a0f14c1c0f27090de5c38b070"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>But What about Async Logging? 🔁</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 889px; left: 48px; top: 210px; height: auto;" data-block-id="99534548aed11607cd5425bc272b511f">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 11;" dir="ui">
+<p>Most modern log libraries are asynchronous, right? Doesn't that mean they eliminate the logging overhead?</p>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div>
+<div class="sl-block" data-block-type="text" style="width: 889px; left: 48px; top: 329px; height: auto;" data-block-id="bbb89d1e32bb3a530983d00af37aad0b" data-name="text-1b8c11">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 13;" dir="ui">
+<p>Let's experiment again using the Uber Zap ⚡️ logger. A logging library that is known for its performance-focused async logging.</p>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div>
+<div class="sl-block" data-block-type="code" data-name="code-e83d53" data-block-id="b60d32b295544e3df914991d510aff1a" style="width: 853px; height: 144px; left: 48px; top: 441px;"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="osx-grey" style="z-index: 14;"><pre class="go" style="font-size: 16px; line-height: 19px;"><code>func ReverseZap(s string) {
+  r := Reverse(s)
+  logger.Info("Reverser ran", zap.String("original", s), zap.String("reversed", r))
+}</code></pre></div></div></section><section data-id="260c7c217986fb8b935b7066ddcea601"><div class="sl-block" data-block-type="text" style="width: 832px; left: 48px; top: 105px; height: auto;" data-block-id="4f5d38bf77c6c8a89c40b2f0747963e6"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>It's fast, but Not A free Lunch 🍱</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 48px; top: 210px; height: auto;" data-block-id="0a79b35cf97b09c3f5016ffd182c39a8">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 11;" dir="ui">
+<p>Zap is quick, a lot faster than the default logging library. But the performance is not free; it is still 4 x slower than not logging; it also allocates more Bytes per operation.</p>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div>
+<div class="sl-block" data-block-type="code" data-name="code-c44561" data-block-id="adf31d11cb7b5deebffed57d8c3930a7" style="width: 894px; height: 194px; left: 33px; top: 380px;"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="osx-grey" style="z-index: 12;"><pre class="bash" style="font-size: 16px; line-height: 19px;"><code data-line-numbers="5,7">$ go test -bench . -benchmem
+goos: darwin
+goarch: amd64
+pkg: github.com/madflojo/logging-benchmarks
+BenchmarkReverse/No_Logs-4       8108514      142 ns/op     6 B/op    3 allocs/op
+BenchmarkReverse/Default_Logs-4  579961       2144 ns/op    70 B/op   6 allocs/op
+BenchmarkReverse/Zap_Logs-4      2480517      473 ns/op     137 B/op  4 allocs/op</code></pre></div></div></section><section data-id="81f4055093469fafe6120bf46bf3eadf"><div class="sl-block" data-block-type="text" style="width: 832px; left: 48px; top: 105px; height: auto;" data-block-id="b025b053da95580500e6f26b853c75b2"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Breaking down how Async loggers work 🔍</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 48px; top: 210px; height: auto;" data-block-id="0fe533c7dd8c46c3f5624cc0f7067247">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 11;" dir="ui">
+<p>Async loggers are not magic; they all work under the same principle of putting log data into a buffer and having another thread/goroutine/worker perform the slow work.</p>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 48px; top: 584px; height: auto;" data-block-id="fa03eb5af1fe63fb6b3914f69d19f9cc" data-name="text-31ed1e">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 12;" dir="ui">
+<p>Even though this work is out of the transaction path, the overall application is still spending resources logging.</p>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div>
+<div class="sl-block" data-block-type="image" data-name="image-8dff8a" data-block-id="ff899197fb4cb66d37bbfcd5a4999a06" style="width: 806.4px; height: 244.626px; left: 48px; top: 339.374px; min-width: 1px; min-height: 1px;"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="745" data-natural-height="226" data-lazy-loaded="" data-src="logging-for-high-performance-applications/bd672a6fc96894e993b0238ee3d0a992.png"></div></div></section><section data-id="a5d99f734cc7b7013eeefa0f9773c8a9"><div class="sl-block" data-block-type="text" style="width: 832px; left: 48px; top: 105px; height: auto;" data-block-id="317e737cafdc15b14ba48b82f1607747"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>What have we learned so far? 📝</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 48px; top: 210px; height: auto;" data-block-id="96fc9e08e3bde668928828920a223d7a">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 11;" dir="ui">
+<ul>
+	<li class="fragment" data-fragment-index="0">A single sync log call can drastically slow execution</li>
+	<li class="fragment" data-fragment-index="1">Async logs are fast, but they use more resources and still impact execution time</li>
+	<li class="fragment" data-fragment-index="2">The more transactions you process, the more logs you create</li>
+	<li class="fragment" data-fragment-index="3">When logging too much, it's possible to fill the async buffer/queue which can slow an application even further</li>
+</ul>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 48px; top: 584px; height: auto;" data-name="text-31ed1e" data-block-id="34112ea3b8922ce9527df9341e910385">
+<div class="sl-block-content fragment" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 12;" dir="ui" data-fragment-index="4">
+<p>If logging is such a performance drain why even log in the first place?</p>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div></section><section data-id="89a1e151cb94859d88d22ecb552e0fd1" data-background-image="logging-for-high-performance-applications/fc4cc520f0721263065d450f7c970b47.gif"><div class="sl-block" data-block-type="text" style="width: 887px; left: 47px; top: 15px; height: auto;" data-block-id="ebb77f9390a0f3b0ee63976221bba992"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10; font-size: 146%;">
+<h3 style="text-align:left">A slow application that can be managed is more performant than a Fast application that is broken</h3>
+</div></div></section><section data-id="16dde133b0754b667ed9b277958edc98"><div class="sl-block" data-block-type="text" style="width: 832px; left: 48px; top: 105px; height: auto;" data-block-id="939aacc1ee47d3293275f2db2a79cc9f"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Are you sure Logs are still relevant? 👴🏼 </h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 48px; top: 210px; height: auto;" data-block-id="338f4e456eb63a8ab7fbfd87bbc8cadf"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 11;">
+<p>With the addition of metrics and tracing to the observability stack, it's understandable to question the value logs. However, logs still provide insights other telemetry methods do not.</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 48px; top: 420px; height: auto;" data-block-id="51cc9e17946a2d02a5bf89b5cfb91ff9" data-name="text-955ff0"><div class="sl-block-content fragment" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 12;" data-fragment-index="0">
+<h3><span style="font-size:1.2em">📈 Metrics give us stats</span></h3>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 48px; top: 490px; height: auto;" data-block-id="1812433a5f394723bf126f7bd76cc0cd" data-name="text-539c3c"><div class="sl-block-content fragment" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 13;" data-fragment-index="1">
+<h3><span style="font-size:1.2em">🔍 Tracing gives us request level insights</span></h3>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 48px; top: 560px; height: auto;" data-block-id="b7f27c204dd593b4ea0590c29c74b087" data-name="text-345ad4"><div class="sl-block-content fragment" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 14;" data-fragment-index="2">
+<h3><span style="font-size:1.2em">🌲 Logging tells us what is happening within the system</span></h3>
+</div></div></section><section data-id="9d4f3c1a7043a8fb2769fddb9e821f29"><div class="sl-block" data-block-type="text" style="width: 832px; left: 48px; top: 96px; height: auto;" data-block-id="004ed5cd57b184d745d4bece8b2e6d59"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Metrics give us Stats<span style="font-size:68.4px"> <span style="font-size:0.7em">📈</span></span>
+</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 48px; top: 194px; height: auto;" data-block-id="8edcc815cd30b0865d8a65c286d60ded">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 11;" dir="ui">
+<p>Before Prometheus and other metrics tools became standard, it was common to extrapolate business and system metrics from logs. This meant having to log every event in the system so that those metrics could be created. Now we can easily create thousands of different metrics with much less overhead.</p>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 48px; top: 394.692px; height: auto;" data-block-id="7ee306060be754307c97ff22156af367" data-name="text-5289b8">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 12;" dir="ui">
+<ul>
+	<li>Don't create log messages for the sole purpose of tracking data. Use metrics.</li>
+	<li>Metrics have less overhead per metric than logs</li>
+	<li>Use metrics to track business data such as types of requests, users, etc.</li>
+	<li>Also, use metrics to track system data such as database connections, worker pool sizes, etc.</li>
+</ul>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div></section><section data-id="d0e943fdc785d249ca994d3c5a770164"><div class="sl-block" data-block-type="text" style="width: 832px; left: 48px; top: 105px; height: auto;" data-block-id="bbf275178916c54822df3bf2d119a0e4"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Tracing gives us Request Visibility 🔍</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 48px; top: 194px; height: auto;" data-block-id="806d463c53bc17035848618bd95a5912">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 11;" dir="ui">
+<p>Like metrics, before tracing existed, it was necessary to log at least once for every transaction. Afterward, you would have to piece together a request from each service's logs: a time consuming and usually fruitless exercise.</p>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 48px; top: 371.418px; height: auto;" data-block-id="c12a311235cfa386a7954fa21748f927" data-name="text-47bae1">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 12;" dir="ui">
+<ul>
+	<li>Tracing allows you to reduce how much you log per request</li>
+	<li>Most tracing tools provide sampling, keeping the overhead of tracing low with the cost of less visibility</li>
+	<li>It's important to use protocol-based errors with tracing to signal the transaction failed</li>
+</ul>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div></section><section data-id="8f12a954073c381fa90551b49faa9642"><div class="sl-block" data-block-type="text" style="width: 832px; left: 48px; top: 105px; height: auto;" data-block-id="6c68f8803b4eb9f84c0b8e32d3ea853b"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Logs tell us what the system is doing 🌲</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 48px; top: 202px; height: auto;" data-block-id="5c854704abb4f4081466789aacc0f90e">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 11;" dir="ui">
+<p>When working with a platform with tracing and metrics implemented, we can focus on logging the application's internals. Request level logs can be pushed down to debug, and request errors can be made into warn logs.</p>
+
+<p> </p>
+
+<p>Logging becomes less about request level tracking and focuses more on what the service is doing, DB connectivity, reconnection attempts, dependency errors, etc.</p>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div></section><section data-id="547817fd3ed2224e1b65e0f93177d6aa"><div class="sl-block" data-block-type="text" style="width: 832px; left: 48px; top: 105px; height: auto;" data-block-id="6a42e5f75863994763d3f78fd6cd1d64"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Logs Change In the age of Observability, but they still Matter 🖥</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 48px; top: 272px; height: auto;" data-name="text-f31043" data-block-id="8c231642a1d43631b987d06dde9aae92">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 12;" dir="ui">
+<ul>
+	<li class="fragment" data-fragment-index="0">Metrics can tell you something is wrong</li>
+	<li class="fragment" data-fragment-index="1">Tracing can tell you which transactions failed due to something being wrong</li>
+	<li class="fragment" data-fragment-index="2">Logs tell us what went wrong with both the system and the request</li>
+	<li class="fragment" data-fragment-index="3">With tracing, you don't need to log every request, just the failed ones</li>
+</ul>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 53.5px; top: 560px; height: auto;" data-name="text-4e1b18" data-block-id="7c5e8eba9a52c1f0719721dc5788b509">
+<div class="sl-block-content fragment" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 13;" dir="ui" data-fragment-index="4">
+<p>Since logs are still important, we must find the balance between logging enough to support the system, while maintaining adequate performance.</p>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div></section><section data-id="ef5621960da55ddb961a1e7a7aeb5bc7" data-background-image="logging-for-high-performance-applications/8cf8f7a56045c8c1ef450fc57e432691"><div class="sl-block" data-block-type="text" style="width: 533px; left: 20px; top: 70px; height: auto;" data-block-id="4313acf183377c5ba03ddbb86d9fff6e"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10; text-align: left;">
+<h3><span style="font-size:1.8em">logs are expensive, So make every log operation count</span></h3>
+</div></div></section><section data-id="216c1c9427754a19adf48548bec003f6"><div class="sl-block" data-block-type="text" style="width: 832px; left: 48px; top: 105px; height: auto;" data-block-id="becf824865c1dd498824c446f69c94e6"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>say a lot, with just a little 📣</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 48px; top: 188px; height: auto;" data-block-id="a039d067c6448a284323837174e599f5">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 11;" dir="ui">
+<p>When we do log, it's important to relay the most information possible with the least amount of log calls. There are a few best practices we can follow to help achieve this goal.</p>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 48px; top: 337px; height: auto;" data-block-id="24e26bede0b88f1a81dd638f85ec6469" data-name="text-41657b">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 12;" dir="ui">
+<ul>
+	<li>Use appropriate log levels</li>
+	<li>Provide as much context as possible</li>
+	<li>Use Structured logs to make it easier to relay context.</li>
+	<li>Context is not limited to transactional details; context explains the why and the what</li>
+	<li>Reduce logs per request, pass errors up the stack to request handlers for logging</li>
+</ul>
+</div>
+<grammarly-extension style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 11;" class="_1KJtL"></grammarly-extension>
+</div></section><section data-id="a0987c15ec5e883f88a396da365c4a66"><div class="sl-block" data-block-type="text" style="width: 832px; left: 48px; top: 105px; height: auto;" data-block-id="1e1713f50a587372df5b3327e1a8d5e8"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Getting Levels right 🆙</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 894px; left: 48px; top: 175px;" data-name="text-e7f4c1" data-block-id="3fba7975da6181cb439e5310e3bfebe9"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11; text-align: left; font-size: 72%;">
+<p>Log levels are important because they both drive action and change the performance overhead of a log statement. Each log level tells ops what to do with the information. Some log levels are disabled by default; when disabled, the performance overhead is negligible.</p>
+</div></div>
+<div class="sl-block" data-block-type="table" data-name="table-c6799a" data-block-id="b361a2bbef28df19694f2f63bc771a8c" style="height: auto; min-width: 120px; width: 883px; left: 48px; top: 266.528px;"><div class="sl-block-content" style="z-index: 12; font-size: 63%;" data-table-has-header="true" data-table-cols="3" data-table-rows="7"><table><tbody>
+<tr>
+<th style="width: 82px;">Level</th>
+<th style="width: 157px;">Default On/Off</th>
+<th>Description</th>
+</tr>
+<tr>
+<td style="width: 82px;">Critical, Fatal</td>
+<td style="width: 157px;">On</td>
+<td>Critical errors, the service is crashing or in a terrible state. You want to wake someone up for this and immediately fix it.</td>
+</tr>
+<tr>
+<td style="width: 82px;">Error</td>
+<td style="width: 157px;">On</td>
+<td>Important to fix errors; most likely, someone needs to wake up at night to fix them.  This should not typically be used for individual requests but rather system-level problems.</td>
+</tr>
+<tr>
+<td style="width: 82px;">Warn</td>
+<td style="width: 157px;">On</td>
+<td>These are errors someone should know about and react to trends. This is where you put request level problems.</td>
+</tr>
+<tr>
+<td style="width: 82px;">Info</td>
+<td style="width: 157px;">On</td>
+<td>This is just information, i.e. connected to a DB or fetched config. Don't log the request received logs here.</td>
+</tr>
+<tr>
+<td style="width: 82px;">Debug</td>
+<td style="width: 157px;">Off</td>
+<td>Request level logs go here, also use this for internals that are useful but not important to log all the time.</td>
+</tr>
+<tr>
+<td style="width: 82px;">Trace</td>
+<td style="width: 157px;">Off</td>
+<td>Log raw transactional details here, but be careful not to log anything sensitive. Logs are not secure, they are open to many.</td>
+</tr>
+</tbody></table></div></div></section><section data-id="d063eb50b18fcc5d8fe290049a9df088"><div class="sl-block" data-block-type="text" style="width: 832px; left: 48px; top: 105px; height: auto;" data-block-id="2fe3de55257e6c68a304fa1d9b1ad2f0"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Anatomy of a log message</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" data-name="text-dc4c2e" data-block-id="39d40dcb6482051c57ae263d0305c6e1" style="height: auto; width: 389px; left: 48px; top: 193.5px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11; text-align: left;">
+<p>Let's breakdown this "real life" example log message with an Ops perspective.</p>
+</div></div>
+<div class="sl-block" data-block-type="code" data-name="code-a2dd33" data-block-id="26e0996a7dfa0a9218cff3765f18922d" style="width: 493px; height: 195.5px; left: 452px; top: 193.5px;"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="osx-grey" style="z-index: 12;"><pre class="go" style="font-size: 16px; line-height: 19px;"><code data-line-numbers="4,3,5,6">{
+	"timestamp": 1605067527000,
+	"service": "my-service-1",
+	"level": "ERROR",
+	"request_id": "0000000001",
+	"message": "Workflow execution failed"
+}</code></pre></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 475px; left: 5px; top: 402px;" data-block-id="bb2f1d42b3690b0766a793170247896f" data-name="text-e7f4c1"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13; text-align: left; font-size: 82%;">
+<h3>What we know:</h3>
+
+<ul>
+	<li>The ERROR level means we should be worried about this failure</li>
+	<li>We know which service this log is from</li>
+	<li>We can use the request ID to find other logs</li>
+</ul>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 463px; left: 486px; top: 402px;" data-block-id="3b03de7df50bd3f505187525be721670" data-name="text-f9d98b"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14; text-align: left; font-size: 82%;">
+<h3>What we Don't know:</h3>
+
+<ul>
+	<li>Why did the workflow fail?</li>
+	<li>Which workflow failed?</li>
+	<li>Is this a critical workflow?</li>
+</ul>
+</div></div></section><section data-id="6810a3229fe30e2087dc516825419db5"><div class="sl-block" data-block-type="text" style="width: 832px; left: 48px; top: 105px; height: auto;" data-block-id="c0b787cfe5bb0a2c68f8c289775a34eb"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Anatomy of a Good log message ✅</h2>
+</div></div>
+<div class="sl-block" data-block-type="code" data-name="code-a2dd33" style="width: 839px; height: 194.5px; left: 42px; top: 193.5px;" data-block-id="7bad61fd5a00b7ed506d02243106efa3"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="osx-grey" style="z-index: 12;" data-code-wrap="true"><pre class="go" style="font-size: 16px; line-height: 19px;"><code data-line-numbers="5">{
+	"timestamp": 1605067527000,
+	"level": "ERROR",
+	"request_id": "0000000001",
+	"message": "Task example.task1 failed during example.workflow42 execution - call to db failed: password expired"
+}</code></pre></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 839px; left: 42px; top: 430px;" data-name="text-e7f4c1" data-block-id="1dc4037090ae09b8b264dcfcd4c9c4c4"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13; text-align: left; font-size: 82%;">
+<h3>What we now know:</h3>
+
+<ul>
+	<li>We know which workflow failed - (example.workflow42)</li>
+	<li>We know which task in that workflow failed - (example.task1)</li>
+	<li>We know why it failed - (password expired)</li>
+</ul>
+</div></div></section><section data-id="a9eb5f963ed968ef8681ea05d87e61d1"><div class="sl-block" data-block-type="text" style="width: 832px; left: 48px; top: 105px; height: auto;" data-block-id="12b6ef0a4b4835207d4ebb1d96866044"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Logging in common functions 🚨</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 894px; left: 48px; top: 172.254px;" data-name="text-e7f4c1" data-block-id="3df570fb694e90a004bb264bc925734f"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11; text-align: left; font-size: 82%;">
+<p><span style="font-size:0.9em">A common reason for "over logging" is to put log statements in both request handlers and the functions those handlers call. Not only does this increase the complexity of the code, but this also increases the number of logs per request.</span></p>
+</div></div>
+<div class="sl-block" data-block-type="image" data-name="image-704ace" data-block-id="407df7399189f96ae259ae155a219e6d" style="width: 603.917px; height: 389px; left: 162.041px; top: 261.254px; min-width: 1px; min-height: 1px;"><div class="sl-block-content" style="z-index: 12;"><img data-natural-width="562" data-natural-height="362" style="" data-lazy-loaded="" data-src="logging-for-high-performance-applications/594474d972ba8f075ac202dd9a6da512.png"></div></div>
+<div class="sl-block" data-block-type="text" data-name="text-1a38fd" data-block-id="6c737c8e44bbaba3bc81aedeabc50760" style="height: auto; width: 85.3046px; left: 198.356px; top: 462.591px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13; font-size: 60%;">
+<p><strong><span style="font-size:0.9em"><span style="color:#000000">🌲 x 2</span></span></strong></p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 85.3046px; left: 430.704px; top: 313.148px;" data-block-id="05be96b7c58ae51cd95771bc8edb660b" data-name="text-1020f7"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14; font-size: 60%;">
+<p><strong><span style="font-size:0.9em"><span style="color:#000000">🌲 x 1</span></span></strong></p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 85.3046px; left: 430.704px; top: 386.381px;" data-block-id="042cf0850c66371a21fe43ae6d21133b" data-name="text-9b9190"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 15; font-size: 60%;">
+<p><strong><span style="font-size:0.9em"><span style="color:#000000">🌲 x 1</span></span></strong></p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 85.3046px; left: 430.704px; top: 462.591px;" data-block-id="b3ac002480d1b733e8742e7f206d7e66" data-name="text-4d42b3"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 16; font-size: 60%;">
+<p><strong><span style="font-size:0.9em"><span style="color:#000000">🌲 x 1</span></span></strong></p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 85.3046px; left: 430.704px; top: 537.207px;" data-block-id="46e533ee04e7dac931f3fb4edc9766c4" data-name="text-96933b"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 17; font-size: 60%;">
+<p><strong><span style="font-size:0.9em"><span style="color:#000000">🌲 x 1</span></span></strong></p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 85.3046px; left: 430.704px; top: 610.788px;" data-block-id="d0caccc0ea86890cbb0255ad42ab7871" data-name="text-46c811"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 18; font-size: 60%;">
+<p><strong><span style="font-size:0.9em"><span style="color:#000000">🌲 x 1</span></span></strong></p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-name="text-7f7eac" data-block-id="7b958d26337b715676c3959a0eea370d" style="height: auto; width: 863.232px; left: 47px; top: 650.254px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 19;">
+<p><span style="font-size:1.0em">⚠️ Don't log at each function call, log the results from the handler</span></p>
+</div></div></section><section data-id="47461061a11f078e07b58bc453b75951"><div class="sl-block" data-block-type="text" style="width: 832px; left: 48px; top: 105px; height: auto;" data-block-id="30eb8188dc3e1caa2864b0163a929615"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Pass Errors back to the Handler 🔁</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 894px; left: 47px; top: 179px;" data-name="text-e7f4c1" data-block-id="1a0905d737d49e5de1cca21c160b2d52"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11; text-align: left; font-size: 82%;">
+<p>Instead of logging within each function, pass the error to the request handler allowing the handler to log appropriately. This not only keeps code cleaner and easier to test, but it also makes it easier to add request level context.</p>
+</div></div>
+<div class="sl-block" data-block-type="code" data-name="code-a9e2fb" data-block-id="431e5ebde94e0392a95145219304ef1f" style="width: 924px; height: 342.763px; left: 17px; top: 298px;"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="osx-grey" style="z-index: 12;"><pre class="go" style="font-size: 16px; line-height: 19px;"><code data-line-numbers="4,12,1,9,7,14">func MyFunction(...) (string, error) {
+	// do work
+	if err != nil {
+		return nil, fmt.Errorf("unable to perform function because - %s", err)
+	}
+	return results, nil
+}
+
+func RequestHander(...) {
+	r, err := MyFunction(...)
+	if err != nil {
+		logger.Warn("Request from %s from IP %s failed - %s", req.RequestID, 
+		req.IPAddr, err)
+	}
+}</code></pre></div></div></section><section data-id="01a996d0a5522467163e2579f6e8cdee"><div class="sl-block" data-block-type="text" style="width: 832px; left: 48px; top: 105px; height: auto;" data-block-id="47f2834fce6413981a827d4510e10aab"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Logging Best Practices in Summary 📖</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 894px; left: 47px; top: 179px;" data-name="text-e7f4c1" data-block-id="31fc15d6f186d343446085eaf7ee8521"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11; text-align: left;">
+<ul>
+	<li class="fragment" data-fragment-index="0">Make sure the log level used reflects the action you want someone to take</li>
+	<li class="fragment" data-fragment-index="1">Warnings should trigger an action when there are many of them; a single warning is not important</li>
+	<li class="fragment" data-fragment-index="2">Errors and Criticals should trigger immediate action; use these only when someone should wake up and do something.</li>
+	<li class="fragment" data-fragment-index="3">When logging, add as much context as possible to the message so that ops know what broke and why it broke</li>
+	<li class="fragment" data-fragment-index="4">It's easier to add context by sending errors back to request handlers and let the handlers worry about logging</li>
+</ul>
+</div></div></section><section data-id="b0ad228c3d5f86dbf724d07b1f6b683a" data-background-image="logging-for-high-performance-applications/0b6b4c1dd1523892bc1e06c3a4ab3312"><div class="sl-block" data-block-type="text" style="width: 320px; left: 430.084px; top: 420px; height: auto;" data-block-id="6212a4bb3dbeea9702f0de2257baf9d8"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10; text-align: left;">
+<h3>Finding Balance is hard, but we can improve by practicing everyday</h3>
+</div></div></section><section data-id="0d6c44cf9d45ba3b57fce682ddb7faed"><div class="sl-block" data-block-type="text" style="width: 806px; left: 77px; top: 45.9843px; height: auto;" data-block-id="c14b1d004cf1083d48d3fa986bf3eb43"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>What this talk has taught us 🧙🏼‍♂️</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 806px; left: 77px; top: 140px; height: auto;" data-block-id="b4c7d15476f83b0970cdde1e58e7a81f"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11; text-align: left;">
+<ul>
+	<li class="fragment" data-fragment-index="0">Logging too much is very easy to do by logging in the wrong places</li>
+	<li class="fragment" data-fragment-index="1">Logging too much impacts performance, even with async logging</li>
+	<li class="fragment" data-fragment-index="2">Logging too little makes an application unmanageable</li>
+	<li class="fragment" data-fragment-index="3">Implementing metrics and tracing help reduce how much logging is required, without them you probably need to log at least once per request, but be careful</li>
+	<li class="fragment" data-fragment-index="4">Use log levels to give yourself the ability to drill further with a log config change</li>
+	<li class="fragment" data-fragment-index="5">When you do log, make it worthwhile don't log junk</li>
+</ul>
+</div></div></section><section data-id="38b66a3d4d03f9a0f3bd15e409a1f3aa"><div class="sl-block" data-block-type="text" style="width: 551px; left: 15.274px; top: 4px; height: auto;" data-block-id="5f1bbcb8eb32864b36d446dd72e8ab31"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h1><span style="font-size:1.4em">EOF</span></h1>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 502.087px; left: 15.274px; top: 109px; height: auto;" data-block-id="5090f764735e23b871c7bdc5dde4842a"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left;" dir="ui">
+<h2><strong>Benjamin Cane</strong></h2>
+</div></div>
+<div class="sl-block" data-block-type="image" style="width: 551.156px; height: 699.619px; left: 408.844px; top: 0.381px; min-width: 1px; min-height: 1px;" data-block-id="8bb7fc4774d04c6195a6c45cec836b2e"><div class="sl-block-content" style="z-index: 11;"><img style="left: -21px; top: 0px; width: 828px; height: 700px;" data-natural-width="1535" data-natural-height="1297" data-crop-x="0.02526" data-crop-y="0" data-crop-width="0.665647" data-crop-height="1" data-lazy-loaded="" data-src="logging-for-high-performance-applications/5b97de493e1e0757aa47dbb73b7b6ba2.jpg"></div></div>
+<div class="sl-block" data-block-type="text" data-name="text-17083d" style="height: auto; width: 455px; left: 15.274px; top: 175px;" data-block-id="588831eea9545f7e9d4e56f18b617edd"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13; font-size: 90%;">
+<p style="text-align:left"><span style="font-size:1.0em"><a href="https://twitter.com/madflojo" target="_blank">Twitter</a> | <a href="https://www.linkedin.com/in/bencane/" target="_blank">LinkedIn</a> | <a href="https://bencane.com" target="_blank">Blog</a></span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-name="text-676afa" style="height: auto; width: 384.726px; left: 15.274px; top: 244px;" data-block-id="85fa5ed8fe62996e55ec54b4431aa206"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14; text-align: left;">
+<p>Like this talk? Check out my some of my other talks:</p>
+
+<ul>
+	<li><a href="https://go-pkg-structure.dev/" target="_blank">Structuring Go Packages</a></li>
+	<li><a href="https://bencane.com/stories/2020/08/17/signal-traps/" target="_blank">Signal Traps</a></li>
+</ul>
+
+<p>Or if you really like this, <a href="https://www.buymeacoffee.com/madflojo/extras" target="_blank">Buy an offline copy</a>!</p>
+</div></div>
+</section>
+			</div>
+		</div>
+
+		<script>
+			var SLConfig = {"deck": {"id":1968124,"slug":"logging-for-high-performance-applications","title":"Logging for High Performance Applications","description":"This talk explores balancing the right level of logging with the performance degradation taken by logging too much. It covers why logging impacts performance and what you can do to reduce the overhead from logging.","width":960,"height":700,"margin":0.05,"visibility":"self","published_at":null,"sanitize_messages":null,"thumbnail_url":"https://s3.amazonaws.com/media-p.slid.es/thumbnails/6ae678f2944231699c5501927998fd0c/thumb.jpg?1604959302","view_count":2,"user":{"id":980594,"username":"madflojo","name":"Benjamin Cane","description":"Benjamin Cane is Principal Engineer at American Express. He has more than 16 years of experience with roles in both systems and software engineering. He leverages both his systems and software skills to build end-to-end platforms.","thumbnail_url":"https://www.gravatar.com/avatar/0f43618f25d8806e99569fd56d513f0a?s=140\u0026d=https%3A%2F%2Fstatic.slid.es%2Fimages%2Fdefault-profile-picture.png","account_type":"pro","team_id":null,"settings":{"id":2432622,"present_controls":true,"present_upsizing":true,"present_pointer":false,"present_notes":true,"default_deck_tag_id":null}},"background_transition":"slide","transition":"slide","theme_id":null,"theme_font":"league","theme_color":"mint-beige","auto_slide_interval":0,"comments_enabled":true,"forking_enabled":false,"rolling_links":false,"center":false,"shuffle":false,"should_loop":false,"share_notes":false,"slide_number":false,"slide_count":27,"rtl":false,"version":2,"collaborative":null,"deck_user_editor_limit":3,"data_updated_at":1606066732530,"font_typekit":null,"font_google":null,"time_limit":null,"navigation_mode":"default","upsizing_enabled":true,"notes":{}}};
+
+
+			// Use local fonts
+			SLConfig.fonts_url = 'lib/fonts/';
+		</script>
+
+		<script src="lib/reveal.js"></script>
+		<script src="lib/reveal-plugins.js"></script>
+		<script src="lib/offline.js"></script>
+
+		<!-- Initialize the presentation -->
+		<script>
+			Reveal.initialize({
+				width: 960,
+				height: 700,
+				margin: 0.05,
+				
+
+				hash: true,
+				controls: true,
+				progress: true,
+				mouseWheel: false,
+				showNotes: false,
+				slideNumber: false,
+				fragmentInURL: true,
+
+				autoSlide: 0,
+				autoSlideStoppable: true,
+
+				autoAnimateMatcher: SL.deck.AutoAnimate.matcher,
+
+				center: false,
+				shuffle: false,
+				loop: false,
+				rtl: false,
+				navigationMode: "default",
+
+				transition: "slide",
+				backgroundTransition: "slide",
+
+				highlight: {
+					escapeHTML: false
+				},
+
+				plugins: [ RevealZoom, RevealNotes, RevealMarkdown, RevealHighlight ]
+			});
+		</script>
+
+		
+
+	</body>
+</html>
