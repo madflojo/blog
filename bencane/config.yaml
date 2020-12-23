@@ -41,6 +41,9 @@ menu:
     - name: Talks
       url: /talks/
       weight: 6
+    - name: Books
+      url: /books/
+      weight: 7
     - name: Support this blog
       url: https://www.buymeacoffee.com/madflojo
       weight: 10
