@@ -4,7 +4,7 @@ title: "How to Structure a Go Command-Line Project"
 date: 2020-12-29T00:01:00-07:00
 draft: false
 subtitle: "A detailed example of a Go project structure, specifically for command-line tools."
-summary: "What is the best project structure for Go command-line applications? Where should packages go, and where should my application code start? Let's discuss a layout I have found useful."
+summary: "Best practices around structuring Go command-line applications where packages go, parse command-line arguments, and optimize for testing."
 authors: ["Benjamin Cane"]
 tags: ["golang",]
 categories: ["Software Engineering"]

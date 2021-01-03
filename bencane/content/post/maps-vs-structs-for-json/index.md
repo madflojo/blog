@@ -1,7 +1,7 @@
 ---
 title: "Golang Maps vs. Structs, which method should you use to parse JSON"
 subtitle: "Which is the best method for parsing JSON and why?"
-summary: "Should I use maps or structs to parse JSON in Go? Which is best? Which is safest? How about we find out?"
+summary: "This article covers how to use maps and structs to parse JSON, which is better and safer. It also covers how to work with maps safely."
 date: 2020-12-08T00:29:19-07:00
 authors: ["Benjamin Cane"]
 tags: ["golang",]
