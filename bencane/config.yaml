@@ -44,7 +44,7 @@ menu:
     - name: Books
       url: /books/
       weight: 7
-    - name: Support this blog
+    - name: Buy Me A Coffee
       url: https://www.buymeacoffee.com/madflojo
       weight: 10
 
