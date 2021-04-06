@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+	<html class="sl-root decks export offline loaded">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+   <title>Feature Toggles - Observations from the Real World</title>
+
+    <meta name="description" content="Feature Toggles are a powerful practice in our engineering tool belt. This talk covers observations from using Feature Toggles in the real world.">
+
+    <meta name="author" content="Benjamin Cane">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@madflojo">
+  <meta property="twitter:creator" content="@madflojo">
+  
+  <meta property="og:site_name" content="Benjamin Cane">  <meta property="og:url" content="https://bencane.com/stories/2021/04/07/feature-toggles">  <meta property="og:title" content="Feature Toggles - Observations from the Real World">
+  <meta name="image" property="og:image" content="https://bencane.com/stories/2021/04/07/feature-toggles/toggles.jpg">
+  <meta property="twitter:image" content="https://bencane.com/stories/2021/04/07/feature-toggles/toggles.jpg">
+  <meta property="og:description" content="Feature Toggles are a powerful practice in our engineering tool belt. This talk covers observations from using Feature Toggles in the real world.">
+  <meta property="og:locale" content="en-us">
+    <link rel="stylesheet" type="text/css" href="lib/offline-v2.css"><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-3378969-11"></script>
+<script>  window.dataLayer = window.dataLayer || [];  function gtag(){dataLayer.push(arguments);}  gtag('js', new Date());  gtag('config', 'UA-3378969-11');
+</script>
+
+	</head>
+	<body class="reveal-viewport theme-font-league theme-color-coral-blue">
+		<div class="reveal">
+			<div class="slides">
+				<section data-id="5d7a50b8f05037eedfcd8646a4406611" data-background-image="feature-toggles/7ac72743e0f9bbb4e5cb514bc0d9e180" data-background-opacity="0.9"><div class="sl-block" data-block-type="text" style="width: 1247px; left: 17px; top: 527.5px; height: auto;" data-block-id="b6bc9b1565c51e6b895dc2f3d6ca4f24"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="text-align: right; font-size: 188%; z-index: 10;">
+<h1>Feature Toggles</h1>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1061px; left: 203px; top: 666px; height: auto;" data-block-id="cd29487d6c65bd9a43425177df0b734e" data-name="text-b5bc6e"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="text-align: right; z-index: 11; font-size: 50%;">
+<h1>Observations FROM using feature toggles in The Real-World</h1>
+</div></div></section><section data-id="b3913817a044e75f6ce60c01136789eb" data-background-image="feature-toggles/0effa5946afb4ab61d7f3301e1807667" data-background-opacity="0.93"><div class="sl-block" data-block-type="text" style="width: 584px; left: 17px; top: 199px; height: auto;" data-block-id="b9923a7688c139c283fe733013bc2091"><div class="sl-block-content" data-placeholder-tag="h1" style="text-align: left; z-index: 10;" data-placeholder-text="Text">
+<h1>To build reliable Software Quickly, we must separate shipping code from Delivering Features.</h1>
+</div></div></section><section data-id="e0c8c335c7992532d0b613b5ff716c74"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="3db3404ab44ef111baece8457402160d"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>What Are Feature Toggles?</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1188px; left: 44.5px; top: 171px; height: auto;" data-block-id="dadee1f07e8462388013678a85aa97f2"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p>Feature Toggles (aka Feature Flags) is a practice that encourages the deployment of code with functionality disabled or inactive. Turning toggles on is a <strong>secondary activity</strong> that only happens <strong>after the system as a whole is ready</strong>.</p>
+
+<p> </p>
+
+<p>The benefit of this practice is that it allows Engineering teams to focus on continuously shipping code while maintaining production integrity.</p>
+</div></div></section><section data-id="0dff722ce2276ed058544d7544776226"><div class="sl-block" data-block-type="text" style="width: 602px; left: 38px; top: 86px; height: auto;" data-block-id="3979be5929e818e195dda842bf116814"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>ACtual Benefits</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1221px; left: 38px; top: 160px; height: auto;" data-block-id="625f23c52b6ac479ab76641c11d7a6c1"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p>The benefits of feature toggles far exceed the textbook theory. Here are some examples of situations where toggles helped me personally.</p>
+
+<p> </p>
+
+<ul>
+	<li class="fragment" data-fragment-index="0">
+<span style="font-size:0.7em"><strong>Pre-release testing found a new feature wasn't working correctly.</strong></span>
+
+	<ul>
+		<li><span style="font-size:0.7em">We just turned it off and the release continued as planned. Fixed in the next release.</span></li>
+	</ul>
+	</li>
+	<li class="fragment" data-fragment-index="1">
+<span style="font-size:0.7em"><strong>A capability required changes in more than one service, but one of them wasn't ready in time for a coordinated release.</strong></span>
+	<ul>
+		<li><span style="font-size:0.7em">We deployed the ready services with the new capabilities disabled.</span></li>
+	</ul>
+	</li>
+	<li class="fragment" data-fragment-index="2">
+<span style="font-size:0.7em"><strong>We changed how production worked, and we broke it in unforeseen ways.</strong></span>
+	<ul>
+		<li class="visible"><span style="font-size:0.7em">We turned the toggle off, and production is back to normal.</span></li>
+	</ul>
+	</li>
+	<li class="fragment" data-fragment-index="3">
+<span style="font-size:0.7em"><strong>Testing teams didn't have time to test new functionality before we pushed the release to production.</strong></span>
+	<ul>
+		<li><span style="font-size:0.7em">Deployed with it off, tested with the toggle on later when there was more time.</span></li>
+	</ul>
+	</li>
+</ul>
+</div></div></section><section data-id="a485e63415431dc2a70ba419d2897aea"><div class="sl-block" data-block-type="text" style="width: 669px; left: 38px; top: 86px; height: auto;" data-block-id="3e0a3d56d34a8c4f0fa0dff6eb9d3286"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>The 2 (really 3) types of Toggles</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1192px; left: 38px; top: 160px; height: auto;" data-block-id="9b74655ea6c4f3075d5d888b70e292de"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p>There are primarily <span style="color:#A52A2A"><s>2</s></span> 3 types of Feature Toggles. Each with its own benefits and drawbacks. Some allowing for more fine grain control than others.</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1192px; left: 44px; top: 338px; height: auto;" data-block-id="b423e3c39eaa1ea17eed08334d1fea09" data-name="text-554965"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left; font-size: 150%;">
+<ul>
+	<li>Request/Transaction Level*</li>
+	<li>User Level</li>
+	<li>System Level</li>
+</ul>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1192px; left: 44px; top: 672px; height: auto;" data-block-id="5020327f255dcf5ec0c3971463731ce7" data-name="text-7bba3d"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 13; text-align: left;">
+<p><span style="font-size:0.7em">*Request Level parameters can be debated on if they are really a toggle or not. Either way, we can use them in the same way.</span></p>
+</div></div></section><section data-id="3b532e8f424afcc9682aaf85832d0ffb"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="766b00c14224e098d2201262f53f6332"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Request Level Toggles</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1162px; left: 38px; top: 160px; height: auto;" data-block-id="03b46e0784c3cf16d716c200f3f70730"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p>Request Level toggles are oftentimes not the standard true/false type of toggle you'd expect. Instead, these are parameters within a request that determine how applications should route and process the request.</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1162px; left: 38px; top: 350px; height: auto;" data-block-id="bb0e45c59e3a568abdf45519db42e98f" data-name="text-2b7586">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left;">
+<p><strong>Example:</strong> New functionality can be rolled out to Mobile users first using HTTP headers. When processing the request, use the header to identify the request is from a mobile client.<span> </span></p>
+</div>
+<p></p>
+</div>
+<div class="sl-block" data-block-type="text" style="width: 1162px; left: 38px; top: 576px; height: auto;" data-block-id="2a8728e2b0ab407f4749f8a43ed1166e" data-name="text-4ef5d9"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 13; text-align: left;">
+<p>Request Level toggles are great for controlling when functionality is turned on but often harder to control when needing to turn functionality off (unless you control both client &amp; server).</p>
+</div></div></section><section data-id="8ee701bb63e817dac0a111437fe3e5d6"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="0e6824f2b48f8478c4f4c88e8ab365be"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>User Level Toggles</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1162px; left: 38px; top: 160px; height: auto;" data-block-id="44f556c200254128b5be0ae1cd01f27c"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p>Most systems have some form of User, and often along with a User, is a "profile". A very powerful method of implementing toggles is to do so at a User Profile level. This allows for Engineering teams to enable functionality at a very fine grain. Either at a User or User Group level.</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1162px; left: 38px; top: 333px; height: auto;" data-block-id="2af01c0a1ad7ef173bf7946e0dcbbc95" data-name="text-f85a05"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 14; text-align: left;">
+<p><strong>Examples of using User Level Toggles:</strong></p>
+
+<ul>
+	<li>Enabling a new feature for internal users with an internal-users group</li>
+	<li>Allowing users to opt-in or opt-out of features via their own settings</li>
+	<li>Roll out a new feature to a single user, monitoring the user for issues</li>
+	<li>Enabling a new feature for groups with unique usage patterns (I.E., Premium vs General users)</li>
+</ul>
+</div></div></section><section data-id="bf1930c3c66aa0ad8dd39d98b3ae73d3"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="7979238dba140ebc1da226b459cb79d5"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>System Level Toggles</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1196px; left: 38px; top: 160px; height: auto;" data-block-id="ef666bfc0cf640f5922a46b9e80e742c"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left;">
+<p>Many talks/articles on Feature Flags talk about System Level Toggles. An on or off switch that controls features across the system as a whole. These toggles manifest in many ways, from dedicated services offering Feature Flags as a Service to specific Libraries or even Config parameters.</p>
+
+<p> </p>
+
+<p>System-level toggles can be very powerful when used correctly, but the level of control is much less compared to User level toggles.</p>
+</div></div>
+</section><section data-id="d8e7bf0d5c57f107606f55f5b7a6bc8d"><div class="sl-block" data-block-type="text" style="width: 762px; left: 38px; top: 86px; height: auto;" data-block-id="d953075fe159e5bd9eb21ce3c6309412"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Toggles by Example (MicroServices Edition)</h2>
+</div></div>
+
+<div class="sl-block" data-block-type="shape" data-name="shape-b09259" data-block-id="34a6261a50c69e3b05a9ea020dfb7657" style="width: 230px; height: 90px; left: 758px; top: 226.25px;"><div class="sl-block-style" style="z-index: 11; filter: drop-shadow(rgba(0, 0, 0, 0.5) 2px 2px 10px);"><div class="sl-block-content" data-shape-type="rect" data-shape-fill-color="rgb(238, 238, 238)" data-shape-stretch="true" style="z-index: 11;" data-shape-stroke-color="#000000" data-shape-stroke-width="2px" data-shape-corner-radius="10px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 230 90"><defs><clippath id="shape-mask-1-1614144434860"><rect width="230" height="90" rx="10" ry="10" fill="rgb(238, 238, 238)" stroke="#000000" stroke-width="4"></rect></clippath></defs><rect width="230" height="90" rx="10" ry="10" class="shape-element" fill="rgb(238, 238, 238)" stroke="#000000" stroke-width="4" clip-path="url(#shape-mask-1-1614144434860)"></rect></svg></div></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 135.444px; height: 52.9998px; left: 1102.56px; top: 270.25px;" data-block-id="696f68f2d9c163a189b597261832cfa6" data-name="shape-e00942"><div class="sl-block-style" style="z-index: 12; filter: drop-shadow(rgba(0, 0, 0, 0.5) 2px 2px 10px);"><div class="sl-block-content" data-shape-type="rect" data-shape-fill-color="rgb(238, 238, 238)" data-shape-stretch="true" style="z-index: 12;" data-shape-corner-radius="10px" data-shape-stroke-color="#000000" data-shape-stroke-width="2px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 135 53"><defs><clippath id="shape-mask-2-1614144434861"><rect width="135.444" height="52.9998" rx="10" ry="10" fill="rgb(238, 238, 238)" stroke="#000000" stroke-width="4"></rect></clippath></defs><rect width="135.444" height="52.9998" rx="10" ry="10" class="shape-element" fill="rgb(238, 238, 238)" stroke="#000000" stroke-width="4" clip-path="url(#shape-mask-2-1614144434861)"></rect></svg></div></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 135.444px; height: 53px; left: 1102.56px; top: 126.75px;" data-block-id="3185041190a9ae16a3081694c5dbcce4" data-name="shape-5bb7bb"><div class="sl-block-style" style="z-index: 13; filter: drop-shadow(rgba(0, 0, 0, 0.5) 2px 2px 10px);"><div class="sl-block-content" data-shape-type="rect" data-shape-fill-color="rgb(238, 238, 238)" data-shape-stretch="true" style="z-index: 13; transition-duration: 0.6s;" data-shape-corner-radius="10px" data-animation-type="fade-in" data-animation-trigger="click" data-animation-trigger-id="34a6261a50c69e3b05a9ea020dfb7657" data-shape-stroke-color="#000000" data-shape-stroke-width="2px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 135 53"><defs><clippath id="shape-mask-3-1614144434861"><rect width="135.444" height="53" rx="10" ry="10" fill="rgb(238, 238, 238)" stroke="#000000" stroke-width="4"></rect></clippath></defs><rect width="135.444" height="53" rx="10" ry="10" class="shape-element" fill="rgb(238, 238, 238)" stroke="#000000" stroke-width="4" clip-path="url(#shape-mask-3-1614144434861)"></rect></svg></div></div></div>
+<div class="sl-block" data-block-type="shape" data-name="shape-efb367" data-block-id="107c360ad4e1d992f9b682897eff9370" style="width: 108px; height: 65px; left: 988px; top: 264.25px;"><div class="sl-block-content" data-shape-type="symbol-thin-arrow-right" data-shape-fill-color="#000000" data-shape-stretch="true" style="z-index: 14;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="1.9999980926513672 4.00024938583374 27.999752044677734 23.999500274658203"><g class="shape-element" fill="#000000" data-viewbox="1.9999980926513672 4.00024938583374 27.999752044677734 23.999500274658203"><path d="M19.414 27.414l10-10c0.781-0.781 0.781-2.047 0-2.828l-10-10c-0.781-0.781-2.047-0.781-2.828 0s-0.781 2.047 0 2.828l6.586 6.586h-19.172c-1.105 0-2 0.895-2 2s0.895 2 2 2h19.172l-6.586 6.586c-0.39 0.39-0.586 0.902-0.586 1.414s0.195 1.024 0.586 1.414c0.781 0.781 2.047 0.781 2.828 0z"></path></g></svg></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 108px; height: 65px; left: 988px; top: 179.75px;" data-block-id="0154ba37a8450147b579d0b58aaeb7c5" data-name="shape-705b5f"><div class="sl-block-content" data-shape-type="symbol-thin-arrow-up-right" data-shape-fill-color="#000000" data-shape-stretch="true" style="z-index: 15; transition-duration: 0.6s;" data-animation-type="fade-in" data-animation-trigger-id="34a6261a50c69e3b05a9ea020dfb7657" data-animation-trigger="click"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="4.00124979019165 4 23.9997501373291 24.000001907348633"><g class="shape-element" fill="#000000" data-viewbox="4.00124979019165 4 23.9997501373291 24.000001907348633"><path d="M26.001 4c-0 0-0.001 0-0.001 0h-11.999c-1.105 0-2 0.895-2 2s0.895 2 2 2h7.172l-16.586 16.586c-0.781 0.781-0.781 2.047 0 2.828 0.391 0.391 0.902 0.586 1.414 0.586s1.024-0.195 1.414-0.586l16.586-16.586v7.172c0 1.105 0.895 2 2 2s2-0.895 2-2v-14h-1.999z"></path></g></svg></div></div>
+<div class="sl-block" data-block-type="text" data-name="text-879dec" data-block-id="609b64f9e0154e69897f899794bdc15d" style="height: auto; width: 150px; left: 796px; top: 203.25px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 16; font-size: 60%;">
+<p>Orchestrator</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 150px; left: 1094.28px; top: 102.75px;" data-block-id="c775f2e5c8cffbb4999a725b2d307ce5" data-name="text-75b20d"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 17; font-size: 60%; transition-duration: 0.6s;" data-animation-type="fade-in" data-animation-trigger="click" data-animation-trigger-id="34a6261a50c69e3b05a9ea020dfb7657">
+<p>New Service</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 150px; left: 1094.28px; top: 247.25px;" data-block-id="5dfc1301b40aefd6b508d3feb8cbca3b" data-name="text-13c5ca"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 18; font-size: 60%;">
+<p>Existing Service</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 659px; left: 38px; top: 182.5px; height: auto;" data-block-id="8f38178791418a3c684c01b8286aa56b" data-name="text-66931d"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 19; text-align: left;">
+<p><strong>Use Case:</strong> We have an existing backend flow between our Orchestrator and existing services. But we need to introduce a new service which will process the transaction before existing services.</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1217px; left: 40px; top: 557px; height: auto;" data-block-id="3bb9c1b53d101e3f2395ffcdb870cbee" data-name="text-7f67c3"><div class="sl-block-content fragment fade-in-then-semi-out" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 20; text-align: left;" data-fragment-index="1">
+<p><strong>User Level:</strong> We can roll out this new service to individual or groups of users by adding a User Toggle to the user's profile. Requests from these users will go through the new service, and other users will skip the new service.</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1217px; left: 40px; top: 396px; height: auto;" data-block-id="2c95e40b9cd557be5dbdd570cc9f1b6f" data-name="text-9f810c"><div class="sl-block-content fragment fade-in-then-semi-out" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 21; text-align: left;" data-fragment-index="0">
+<p><strong>System Level:</strong> With System Toggles, the code to call the new service can be added to the Orchestrator before the new service even exists. Once ready, we can turn the new service on or off with system toggles.</p>
+</div></div>
+<div class="sl-block" data-block-type="line" data-name="line-bf549b" data-block-id="0baa1b2b62be8ef93154cae6ca66b896" style="width: auto; height: auto; min-width: 0px; min-height: 0px; left: 40px; top: 537px;"><div class="sl-block-style" style="z-index: 22; opacity: 0.75; filter: blur(1px);"><div class="sl-block-content fragment" data-line-x1="0" data-line-y1="0" data-line-x2="1198.004" data-line-y2="0" data-line-color="#ffffff" data-line-start-type="none" data-line-end-type="none" style="z-index: 22;" data-line-style="solid" data-fragment-index="1"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="1198.004" height="1" viewbox="0 0 1198.004 1"><line stroke="rgba(0,0,0,0)" stroke-width="15" x1="0" y1="0" x2="1198.004" y2="0"></line><line class="line-element" stroke="#ffffff" stroke-width="2" x1="0" y1="0" x2="1198.004" y2="0"></line></svg></div></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 150px; left: 803px; top: 311.75px;" data-block-id="6a40c5671436ab4530c5b27857d9cbc3" data-name="text-bfb0e1"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 23; font-size: 60%;">
+<p><span style="font-size:0.5em"><span style="color:#000000">[Toggle On/Off]</span></span></p>
+</div></div></section><section data-id="3f85a179497d4e0524e97e07dcb5439d"><div class="sl-block" data-block-type="text" style="width: 762px; left: 38px; top: 86px; height: auto;" data-block-id="d588a1d20d59ff092e13968b26bda1cc"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Toggles by Example (Code Edition)</h2>
+</div></div>
+
+<div class="sl-block" data-block-type="text" style="width: 659px; left: 38px; top: 182.5px; height: auto;" data-name="text-66931d" data-block-id="5e1db510821567efb0563b7d00f6e99a"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p><strong>Use Case:</strong> We have an existing service that must process requests in a new way.</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 680px; left: 38px; top: 471px; height: auto;" data-name="text-7f67c3" data-block-id="e823470efe5d7f4a4d5dff7caf77d4b3"><div class="sl-block-content fragment fade-in-then-semi-out" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left;" data-fragment-index="1" dir="ui">
+<p><strong>User Level:</strong> With User Level toggles, only requests from specific users with the toggle enabled will execute the new logic.</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 682px; left: 38px; top: 288px; height: auto;" data-name="text-9f810c" data-block-id="05d86f07aafcdf981a6a1eb6a35ebbed"><div class="sl-block-content fragment fade-in-then-semi-out" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 13; text-align: left;" data-fragment-index="0">
+<p><strong>System Level:</strong> When the System Level toggle is enabled, every request will process using the new logic. </p>
+</div></div>
+<div class="sl-block" data-block-type="line" data-name="line-bf549b" style="width: auto; height: auto; left: 38px; top: 450px;" data-block-id="503451df5602246fd17517f723b5ebed"><div class="sl-block-style" style="z-index: 14; opacity: 0.75; filter: blur(1px);"><div class="sl-block-content fragment" data-line-x1="0" data-line-y1="0" data-line-x2="680" data-line-y2="0" data-line-color="#ffffff" data-line-start-type="none" data-line-end-type="none" style="z-index: 14;" data-line-style="solid" data-fragment-index="1"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="680" height="1" viewbox="0 0 680 1"><line stroke="rgba(0,0,0,0)" stroke-width="15" x1="0" y1="0" x2="680" y2="0"></line><line class="line-element" stroke="#ffffff" stroke-width="2" x1="0" y1="0" x2="680" y2="0"></line></svg></div></div></div>
+<div class="sl-block" data-block-type="code" data-name="code-162ade" data-block-id="3eb0687cb8c7c50d8eea170e8dd6cf3e" style="width: 483px; height: 246.5px; left: 783px; top: 360px;"><div class="sl-block-content notranslate fragment" data-highlight-theme="monokai" data-code-frame="osx-grey" style="z-index: 15;" data-fragment-index="1"><pre style="font-size: 16px; line-height: 19px;" class="go"><code>func SomeFunc(...) {
+	if user.Toggles("new-feature") {
+		// do new work and get 
+		// out of here
+		return
+	}
+
+// do old work
+
+}</code></pre></div></div>
+
+<div class="sl-block" data-block-type="code" style="width: 483px; height: 247px; left: 783px; top: 72px;" data-block-id="8602d404d72d3f7312be91ea2adb5d33" data-name="code-ddf2e8"><div class="sl-block-content notranslate fragment" data-highlight-theme="monokai" data-code-frame="osx-grey" style="z-index: 17;" data-fragment-index="0"><pre style="font-size: 16px; line-height: 19px;" class="go"><code>func SomeFunc(...) {
+	if cfg.Toggles("new-feature") {
+		// do new work and get 
+		// out of here
+		return
+	}
+
+// do old work
+
+}</code></pre></div></div></section><section data-id="ff0527638366d3313eada8e1dba298c7"><div class="sl-block" data-block-type="text" style="width: 670px; left: 38px; top: 86px; height: auto;" data-block-id="7f55f1c27168b413b7e8a00b8a9d0303"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Should I use USer or System Toggles?</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1196px; left: 38px; top: 160px; height: auto;" data-block-id="8445fa2b1257901e7ed979ac35c1641f">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;" dir="ui">
+<p>As a platform which type of toggle should I use? Which is best for my needs? The answer is all of them. As a platform, you will get the most value out of using each of these three toggle types.</p>
+</div>
+<p><grammarly-extension data-grammarly-shadow-root="true" style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 12;" class="cGcvT"></grammarly-extension></p>
+</div>
+<div class="sl-block" data-block-type="text" style="width: 1196px; left: 38px; top: 393px; height: auto;" data-block-id="e4034fbf7d9aad15460216498ddc262f" data-name="text-7ad9d9">
+<div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left;" dir="ui">
+<h3>When to use the various toggles:</h3>
+
+<ul>
+	<li>
+<p><strong>Request Level</strong> - Advantageous, but remember, rarely can you turn them off after they turned on (unless you own client &amp; server).</p>
+</li>
+	<li>
+<p><strong>User Level</strong> - Highly encouraged; use this whenever possible. This should be your default approach.</p>
+</li>
+	<li>
+<p><strong>System-Level</strong> - Sometimes necessary, Use this when User Level doesn't make sense.</p>
+</li>
+</ul>
+</div>
+<p><grammarly-extension data-grammarly-shadow-root="true" style="position: absolute; top: 0px; left: 0px; pointer-events: none; z-index: 12;" class="cGcvT"></grammarly-extension></p>
+</div></section><section data-id="7c6da1134222ffb2f8bd3b9cb3bb0cee" data-background-image="feature-toggles/816b38629c2d8ca5776771bbd49f5eff" data-background-opacity="0.79"><div class="sl-block" data-block-type="text" style="width: 1076px; left: 115px; top: 66px; height: auto;" data-block-id="f3d05f7e1353cec2eed2252bcdfea818"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;">
+<h1>Effectively Using Toggles</h1>
+</div></div></section><section data-id="abbac14005ba51cdaef980f43c1df64e"><div class="sl-block" data-block-type="text" style="width: 1031px; left: 38px; top: 86px; height: auto;" data-block-id="122baa506981ac47d290a5a52a39ea94"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Using Toggles for Development</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1162px; left: 38px; top: 160px; height: auto;" data-block-id="b0bf40f0c8515519ad44656f14fbc0bd"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p>In an earlier example, we discussed adding a new service to an existing flow. In this example, Team A (client) needs to call a service managed by Team B (server). Team B needs to add a new API endpoint for this new functionality that will take 4 sprints; Team A needs to add a call to the new API endpoint, which will take less than 1 sprint. </p>
+</div></div>
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 1162px; left: 38px; top: 360px; height: auto;" data-block-id="bacad02c4ebf8b3fd805e0a8c5b89888" data-name="text-335a65"><div class="sl-block-content fragment fade-in-then-semi-out" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left;" data-fragment-index="0">
+<p><strong>Without Toggles,</strong> Team A can either write the code now, leaving the code unmerged and getting stale (or worse, merged and undeployed), or they can wait until Team B is done. Both options taking much coordination between the teams and leaving Team A's workload dependant on Team B.</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1162px; left: 38px; top: 551.5px; height: auto;" data-block-id="f32c43a83682af902942223d44972cae" data-name="text-8d9361"><div class="sl-block-content fragment" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 13; text-align: left;" data-fragment-index="1">
+<p><strong>With Toggles,</strong> Team A can write the code now, deploy it turned off, and wait until Team B is ready to test and enable the call. Team A can work on and deploy other features while Team B completes its task.</p>
+</div></div></section><section data-id="29fe6f9667b437e9418d96d45c8d278c"><div class="sl-block" data-block-type="text" style="width: 1031px; left: 38px; top: 86px; height: auto;" data-block-id="86102b861bf159e253c1a2a21882b6b7"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Using Toggles to Iterate and IMprove features</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1162px; left: 38px; top: 160px; height: auto;" data-block-id="3d7defb944155b4ef999183bd910f7ac"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p>Beta Users have been a concept used in software engineering for a long time. GitHub is an example of a company that uses toggles to allow users to opt-in to Beta Features. With the understanding that these features may not be perfect, and feedback is welcomed.</p>
+</div></div>
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 1162px; left: 38px; top: 360px; height: auto;" data-name="text-335a65" data-block-id="ea5cc6665644981e141bbaba89bb548a"><div class="sl-block-content fragment fade-in-then-semi-out" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left;" data-fragment-index="0">
+<p><strong>Without Toggles,</strong> Any feature deployed to production is available to all users. Users expect these features to be final; any iterations can't change the fundamental user experience without creating issues for users.</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1162px; left: 38px; top: 510.5px; height: auto;" data-block-id="e4e6e5ab3c632b9de25d352beda62361" data-name="text-80b503"><div class="sl-block-content fragment" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 13; text-align: left;" data-fragment-index="1">
+<p><strong>With Toggles,</strong> Teams can deploy new features to users with the understanding of Beta testing. Users understand that functionality or user experience may change. Oftentimes, Beta Users are happy to provide valuable feedback, which can make the official feature roll out even more robust.</p>
+</div></div></section><section data-id="d8e40c21eaee6a2f138ccd02450ebd30"><div class="sl-block" data-block-type="text" style="width: 1031px; left: 38px; top: 86px; height: auto;" data-block-id="421fcb97539c11a72b7b66025fd60e44"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Testing With Toggles</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1162px; left: 38px; top: 160px; height: auto;" data-block-id="7c2bab5f5ddb4152164a469ea077be49"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p>As you incorporate toggles into your codebase, it is important to test code behavior with and without toggles turned on.</p>
+</div></div>
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="code" data-name="code-3be55d" data-block-id="914f1a9e69609aae7adfba55edab8799" style="width: 648px; height: 264px; left: 619px; top: 288px;"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="osx-grey" style="z-index: 12;"><pre class="go" style="font-size: 16px; line-height: 19px;"><code>func TestMyAPI(t *testing.T) {
+	t.Run("Test Default Behavior", func(t *testing.T) {
+		// test codes default behavior
+	})
+
+	user.SetToggle("sometoggle", true)
+
+	t.Run("Test New Behavior", func(t *testing.T) {
+		// test codes new behavior
+	})
+}</code></pre></div></div>
+<div class="sl-block" data-block-type="text" style="width: 556px; left: 38px; top: 282px; height: auto;" data-block-id="028ac299280bedca867fe2cc99b03acd" data-name="text-63938b"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 13; text-align: left;">
+<p><strong>When Developing with Toggles:</strong></p>
+
+<ul>
+	<li>Toggle default values are false; false behavior must always be acceptable.</li>
+	<li>Test code paths both with and without the toggles turned on.</li>
+	<li>Testing with toggles applies for both functional and unit style testing.</li>
+	<li>Follow TDD style patterns, add a toggle, run tests, then add logic.</li>
+</ul>
+</div></div></section><section data-id="34f54c9881acdd5d0167e1413de51fc7"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="19dd8a7d3a2eb7964034bf6955c21795"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Managing Toggles</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1162px; left: 38px; top: 160px; height: auto;" data-block-id="d7e3107d9b6d0b90bd4edd63e0800a68"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p>But what about managing toggles? We can't use toggles because we will eventually have hundreds of toggles to manage.</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 725px; left: 37.5px; top: 275px; height: auto;" data-block-id="917c6f6d21b5017ecaefaac89d8edaef" data-name="text-593f2a"><div class="sl-block-content fragment" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left;" data-fragment-index="0">
+<p>Yeah... Like anything else, Feature Toggles are Technical Debt, and Technical Debt needs to be managed. Eventually, you have to clean up and remove old toggles.</p>
+
+<p> </p>
+
+<p><span style="color:rgb(255, 255, 255)">But... You have controlled rollouts and a reduced likelihood of breaking production with each code deployment. These benefits far outweigh the inconvenience of cleaning up toggles every so often.</span></p>
+</div></div>
+<div class="sl-block" data-block-type="image" data-name="image-c72de1" data-block-id="f09e0a2cf73bb4874b1dc00b13e8532a" style="width: 486.667px; height: 365px; left: 773px; top: 276px; min-width: 1px; min-height: 1px;"><div class="sl-block-content fragment" style="z-index: 13;" data-fragment-index="0"><img style="" data-natural-width="1920" data-natural-height="1440" data-lazy-loaded="" data-src="feature-toggles/e9bc8ab1e56ebee21f56c1d7c008417e"></div></div></section><section data-id="bcd0feb2397d0b762c0200f6a0e1878e"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="1775cf728dac9fcd0597202d369b8d50"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Long Live Toggles</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 1162px; left: 38px; top: 160px; height: auto;" data-block-id="83d8c9c31232c368d70bb329c0e74340"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 11; text-align: left;">
+<p>Not all toggles need to be removed. Ops teams can use toggles to control system behavior during production issues.</p>
+
+<p> </p>
+
+<p>Our microservices example is a prime case for using toggles as controls for the platform. If our New Service fails for some reason and the Orchestrator takes a long time to timeout requests. We can use our original toggle to disable the new service until it is fixed.</p>
+</div></div>
+
+<div class="sl-block" data-block-type="shape" data-name="shape-b09259" style="width: 230px; height: 90px; left: 396.86px; top: 586.25px;" data-block-id="87441e28a0fda86395b02631233d3c9c"><div class="sl-block-style" style="z-index: 12; filter: drop-shadow(rgba(0, 0, 0, 0.5) 2px 2px 10px);"><div class="sl-block-content" data-shape-type="rect" data-shape-fill-color="rgb(238, 238, 238)" data-shape-stretch="true" style="z-index: 12;" data-shape-corner-radius="10px" data-shape-stroke-color="#000000" data-shape-stroke-width="2px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 230 90"><defs><clippath id="shape-mask-1-1614205036241"><rect width="230" height="90" rx="10" ry="10" fill="rgb(238, 238, 238)" stroke="#000000" stroke-width="4"></rect></clippath></defs><rect width="230" height="90" rx="10" ry="10" class="shape-element" fill="rgb(238, 238, 238)" stroke="#000000" stroke-width="4" clip-path="url(#shape-mask-1-1614205036241)"></rect></svg></div></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 135.444px; height: 52.9998px; left: 741.42px; top: 630.25px;" data-name="shape-e00942" data-block-id="9c6898d269d33a27c496efa974437da8"><div class="sl-block-style" style="z-index: 13; filter: drop-shadow(rgba(0, 0, 0, 0.5) 2px 2px 10px);"><div class="sl-block-content" data-shape-type="rect" data-shape-fill-color="rgb(238, 238, 238)" data-shape-stretch="true" style="z-index: 13;" data-shape-corner-radius="10px" data-shape-stroke-color="#000000" data-shape-stroke-width="2px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 135 53"><defs><clippath id="shape-mask-2-1614205036246"><rect width="135.444" height="52.9998" rx="10" ry="10" fill="rgb(238, 238, 238)" stroke="#000000" stroke-width="4"></rect></clippath></defs><rect width="135.444" height="52.9998" rx="10" ry="10" class="shape-element" fill="rgb(238, 238, 238)" stroke="#000000" stroke-width="4" clip-path="url(#shape-mask-2-1614205036246)"></rect></svg></div></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 135.444px; height: 53px; left: 741.42px; top: 486.75px;" data-name="shape-5bb7bb" data-block-id="061d073c2cd56e3bf95071e881a12136"><div class="sl-block-style" style="z-index: 14; filter: drop-shadow(rgba(0, 0, 0, 0.5) 2px 2px 10px);"><div class="sl-block-content" data-shape-type="rect" data-shape-fill-color="rgb(238, 238, 238)" data-shape-stretch="true" style="z-index: 14; transition-duration: 0.6s;" data-shape-corner-radius="10px" data-animation-type="fade-out" data-animation-trigger="click" data-animation-trigger-id="87441e28a0fda86395b02631233d3c9c" data-shape-stroke-color="#000000" data-shape-stroke-width="2px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 135 53"><defs><clippath id="shape-mask-3-1614205036249"><rect width="135.444" height="53" rx="10" ry="10" fill="rgb(238, 238, 238)" stroke="#000000" stroke-width="4"></rect></clippath></defs><rect width="135.444" height="53" rx="10" ry="10" class="shape-element" fill="rgb(238, 238, 238)" stroke="#000000" stroke-width="4" clip-path="url(#shape-mask-3-1614205036249)"></rect></svg></div></div></div>
+<div class="sl-block" data-block-type="shape" data-name="shape-efb367" style="width: 108px; height: 65px; left: 626.86px; top: 624.25px;" data-block-id="235a84c02a2b0708d0aecf705515686c"><div class="sl-block-content" data-shape-type="symbol-thin-arrow-right" data-shape-fill-color="#000000" data-shape-stretch="true" style="z-index: 15;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="1.9999980926513672 4.00024938583374 27.999752044677734 23.999500274658203"><g class="shape-element" fill="#000000" data-viewbox="1.9999980926513672 4.00024938583374 27.999752044677734 23.999500274658203"><path d="M19.414 27.414l10-10c0.781-0.781 0.781-2.047 0-2.828l-10-10c-0.781-0.781-2.047-0.781-2.828 0s-0.781 2.047 0 2.828l6.586 6.586h-19.172c-1.105 0-2 0.895-2 2s0.895 2 2 2h19.172l-6.586 6.586c-0.39 0.39-0.586 0.902-0.586 1.414s0.195 1.024 0.586 1.414c0.781 0.781 2.047 0.781 2.828 0z"></path></g></svg></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 108px; height: 65px; left: 626.86px; top: 539.75px;" data-name="shape-705b5f" data-block-id="d1bd6a8d82e96e1eaa9ed3a7a70c086a"><div class="sl-block-content" data-shape-type="symbol-thin-arrow-up-right" data-shape-fill-color="#000000" data-shape-stretch="true" style="z-index: 16; transition-duration: 0.6s;" data-animation-type="fade-out" data-animation-trigger-id="87441e28a0fda86395b02631233d3c9c" data-animation-trigger="click"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="4.00124979019165 4 23.9997501373291 24.000001907348633"><g class="shape-element" fill="#000000" data-viewbox="4.00124979019165 4 23.9997501373291 24.000001907348633"><path d="M26.001 4c-0 0-0.001 0-0.001 0h-11.999c-1.105 0-2 0.895-2 2s0.895 2 2 2h7.172l-16.586 16.586c-0.781 0.781-0.781 2.047 0 2.828 0.391 0.391 0.902 0.586 1.414 0.586s1.024-0.195 1.414-0.586l16.586-16.586v7.172c0 1.105 0.895 2 2 2s2-0.895 2-2v-14h-1.999z"></path></g></svg></div></div>
+<div class="sl-block" data-block-type="text" data-name="text-879dec" style="height: auto; width: 150px; left: 434.86px; top: 563.25px;" data-block-id="81a2ff3c3ab41e4e7245c2f4002bc1fe"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 17; font-size: 60%;">
+<p>Orchestrator</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 150px; left: 733.14px; top: 462.75px;" data-name="text-75b20d" data-block-id="f3e34232cb7958dc39cedcdfd5feb585"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 18; font-size: 60%; transition-duration: 0.6s;" data-animation-type="fade-out" data-animation-trigger="click" data-animation-trigger-id="87441e28a0fda86395b02631233d3c9c">
+<p>New Service</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 150px; left: 733.14px; top: 607.25px;" data-name="text-13c5ca" data-block-id="6109436667c46c572cda142cae3c406d"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 19; font-size: 60%;">
+<p>Existing Service</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 150px; left: 436.86px; top: 676.25px;" data-name="text-bfb0e1" data-block-id="91cab41db1926cc0be59a5a7e44598bd"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 20; font-size: 60%;">
+<p><span style="font-size:0.5em"><span style="color:#000000">[Toggle On/Off]</span></span></p>
+</div></div></section><section data-id="e187e5a90ccda554552b071995689167"><div class="sl-block" data-block-type="text" style="width: 551px; left: 38px; top: 86px; height: auto;" data-block-id="ad722c7cdad794d1e973290e5ed57394"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h2>Feature Toggle Best practices</h2>
+</div></div>
+
+<div class="sl-block" data-block-type="text" style="width: 1162.5px; left: 37.5px; top: 184px; height: auto;" data-name="text-593f2a" data-block-id="faa6aaa7be4ed9b670361195fb1cf611"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left; font-size: 91%;">
+<ul>
+	<li class="fragment" data-fragment-index="0">
+	<p>Keep Toggles True or False; it makes them easier to remove later.</p>
+	</li>
+	<li class="fragment" data-fragment-index="1">
+	<p>Build the concept of enabling user features into your user management system. UI's to manage user features and functions to check users' feature status makes this even easier to use.</p>
+	</li>
+	<li class="fragment" data-fragment-index="2">
+	<p>When possible, create user groups that allow you to turn functionality on groups at a time.</p>
+	</li>
+	<li class="fragment" data-fragment-index="3">
+	<p>The default value of toggles is False. When checking values of toggles, ensure that the default execution is always acceptable.</p>
+	</li>
+	<li class="fragment" data-fragment-index="4">
+	<p>Not everything requires a feature toggle. Don't add toggles just because, but core logic and breaking changes should always be in a toggle.</p>
+	</li>
+	<li class="fragment" data-fragment-index="5">
+	<p>Testing (especially functional testing) should happen with toggles on &amp; off.</p>
+	</li>
+	<li class="fragment" data-fragment-index="6">
+	<p>Make sure your unit tests cover toggles on and off as well; mocks are your friend.</p>
+	</li>
+	<li class="fragment" data-fragment-index="7">
+	<p>Sometimes, you may want to add a toggle purely for Ops purposes. It's fine, do it.</p>
+	</li>
+</ul>
+</div></div></section><section data-id="c5b46795d27e1b0228a0548c93cece53"><div class="sl-block" data-block-type="text" style="width: 551px; left: 15.274px; top: 4px; height: auto;" data-block-id="138dcb27df69e11e1293aeb5ee5db7ae"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+<h1><span style="font-size:1.4em">EOF</span></h1>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 502.087px; left: 15.274px; top: 109px; height: auto;" data-block-id="a122d9c1bf08165b94e86709292bc583"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left;" dir="ui">
+<h2><strong>Benjamin Cane</strong></h2>
+</div></div>
+<div class="sl-block" data-block-type="image" style="width: 551.156px; height: 699.619px; left: 720px; top: 10.1905px; min-width: 1px; min-height: 1px;" data-block-id="b48b41c48922e994883c90367e9edfd1"><div class="sl-block-content" style="z-index: 11;"><img style="left: -21px; top: 0px; width: 828px; height: 700px;" data-natural-width="1535" data-natural-height="1297" data-crop-x="0.02526" data-crop-y="0" data-crop-width="0.665647" data-crop-height="1" data-lazy-loaded="" data-src="feature-toggles/5b97de493e1e0757aa47dbb73b7b6ba2.jpg"></div></div>
+<div class="sl-block" data-block-type="text" data-name="text-17083d" style="height: auto; width: 455px; left: 15.274px; top: 175px;" data-block-id="674cdd079013106e8919354719cd2929"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13; font-size: 90%;">
+<p style="text-align:left"><span style="font-size:1.0em"><a href="https://twitter.com/madflojo" target="_blank">Twitter</a> | <a href="https://www.linkedin.com/in/bencane/" target="_blank">LinkedIn</a> | <a href="https://bencane.com" target="_blank">Blog</a></span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-name="text-676afa" style="height: auto; width: 661.726px; left: 15.274px; top: 244px;" data-block-id="1230a097b8ea32ac1533ae3bdaf9dbad"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14; text-align: left;">
+<p>Like this talk? Check out my some of my other talks:</p>
+
+<ul>
+	<li><p><a href="https://go-pkg-structure.dev/" target="_blank">Structuring Go Packages</a></p></li>
+	<li><p><a href="https://bencane.com/stories/2020/08/17/signal-traps/" target="_blank">Signal Traps</a></p></li>
+	<li><p><a href="https://bencane.com/stories/2020/11/24/logging-for-high-performance-apps/" target="_blank">Logging for High Performance Applications</a></p></li>
+</ul>
+</div></div>
+</section>
+			</div>
+		</div>
+
+		<script>
+			var SLConfig = {"deck": {"id":2052438,"slug":"feature-toggles","title":"Feature Toggles","description":"Feature Toggles are a powerful practice in our engineering tool belt. This talk covers observations from using Feature Toggles in the real world.","width":1280,"height":720,"margin":0.05,"visibility":"self","published_at":null,"sanitize_messages":null,"thumbnail_url":"https://s3.amazonaws.com/media-p.slid.es/thumbnails/e9b8c15f945f8ea591f3678da642be2a/thumb.jpg?1614200068","view_count":6,"user":{"id":980594,"username":"madflojo","name":"Benjamin Cane","description":"Benjamin Cane is Principal Engineer at American Express. He has more than 16 years of experience with roles in both systems and software engineering. He leverages both his systems and software skills to build end-to-end platforms.","thumbnail_url":"https://www.gravatar.com/avatar/0f43618f25d8806e99569fd56d513f0a?s=140\u0026d=https%3A%2F%2Fstatic.slid.es%2Fimages%2Fdefault-profile-picture.png","account_type":"pro","team_id":null,"settings":{"id":2432622,"present_controls":true,"present_upsizing":true,"present_pointer":false,"present_notes":true,"default_deck_tag_id":null}},"background_transition":"slide","transition":"slide","theme_id":null,"theme_font":"league","theme_color":"coral-blue","auto_slide_interval":0,"comments_enabled":true,"forking_enabled":false,"rolling_links":false,"center":false,"shuffle":false,"should_loop":false,"share_notes":false,"slide_number":false,"slide_count":19,"rtl":false,"version":2,"collaborative":null,"deck_user_editor_limit":3,"data_updated_at":1617673281557,"font_typekit":null,"font_google":null,"time_limit":null,"navigation_mode":"default","upsizing_enabled":true,"notes":{}}};
+
+
+			// Use local fonts
+			SLConfig.fonts_url = 'lib/fonts/';
+		</script>
+
+		<script src="lib/reveal.js"></script>
+		<script src="lib/reveal-plugins.js"></script>
+		<script src="lib/offline.js"></script>
+
+		<!-- Initialize the presentation -->
+		<script>
+			Reveal.initialize({
+				width: 1280,
+				height: 720,
+				margin: 0.05,
+				
+
+				hash: true,
+				controls: true,
+				progress: true,
+				mouseWheel: false,
+				showNotes: false,
+				slideNumber: false,
+				fragmentInURL: true,
+
+				autoSlide: 0,
+				autoSlideStoppable: true,
+
+				autoAnimateMatcher: SL.deck.AutoAnimate.matcher,
+
+				center: false,
+				shuffle: false,
+				loop: false,
+				rtl: false,
+				navigationMode: "default",
+
+				transition: "slide",
+				backgroundTransition: "slide",
+
+				highlight: {
+					escapeHTML: false
+				},
+
+				plugins: [ RevealZoom, RevealNotes, RevealMarkdown, RevealHighlight ]
+			});
+		</script>
+
+		
+
+	</body>
+</html>
