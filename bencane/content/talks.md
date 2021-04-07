@@ -4,6 +4,10 @@ date: 2020-10-31T12:01:34-07:00
 draft: false
 ---
 
+## [Feature Tobbles - Observations from the Real World](/stories/2021/04/07/feature-toggles/)
+
+This talk shares some of my observations from using Feature Toggles in production. It covers the various types of toggles and how they can be used to enable you to deliver products faster and more consistently.
+
 ## [Logging for High Performance Applications](/stories/2020/11/24/logging-for-high-performance-apps/)
 
 This talk explores balancing the right level of logging with the performance degradation taken by logging too much. It covers why logging impacts performance and what you can do to reduce the overhead from logging.
