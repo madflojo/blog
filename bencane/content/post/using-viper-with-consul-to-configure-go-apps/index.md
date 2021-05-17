@@ -1,6 +1,6 @@
 ---
 title: "Using Viper With Consul to Configure Go Applications"
-date: 2021-05-31T00:00:00-07:00
+date: 2021-05-18T00:00:00-07:00
 aliases: ["/post/using-viper-with-consul-to-configure-go-apps/"]
 draft: false
 subtitle: "Learn how to use Consul with the popular Go configuration package Viper"
