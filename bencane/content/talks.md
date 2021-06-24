@@ -4,6 +4,18 @@ date: 2020-10-31T12:01:34-07:00
 draft: false
 ---
 
+## [Distributed Systems are not Consistent Systems](https://slides.com/madflojo/distributed-systems-are-not-consistent-systems)
+
+Consistency is one of the most challenging aspects of building and designing Distributed Systems. This presentation discusses why that challenge exists and explores ways open-source systems have addressed it.
+
+## [Developing Oneself](https://slides.com/madflojo/developing-oneself)
+
+As Engineers we are always developing software and systems, but how do we develop ourselves? How do we improve and get better at what we do.
+
+## [Software Testing - We are all doing it wrong](https://slides.com/madflojo/software-testing-we-are-all-doing-it-wrong)
+
+Software Testing is critical to our ability to deliver fast, quality products. But many of us are doing a bad job at it. Either we have gaps in the name of speed, or we have a horrible testing experience. This presentation looks at how we can make it better.
+
 ## [Feature Toggles - Observations from the Real World](/stories/2021/04/07/feature-toggles/)
 
 This talk shares some of my observations from using Feature Toggles in production. It covers the various types of toggles and how they can be used to enable you to deliver products faster and more consistently.
