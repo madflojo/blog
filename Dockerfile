@@ -38,3 +38,4 @@ ADD ads.txt /usr/share/nginx/html/
 #RUN mkdir /usr/share/nginx/heavy && mv /usr/share/nginx/html/* /usr/share/nginx/heavy/ && \
 #/minify -rs -o /usr/share/nginx/html /usr/share/nginx/heavy
 ADD resume/resume.html /usr/share/nginx/html/resume/index.html
+ADD index.html /usr/share/nginx/html/index.html
