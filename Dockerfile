@@ -1,6 +1,6 @@
 ## Dockerfile that generates an instance of http://bencane.com
 
-FROM nginx:latest
+FROM nginx:stable
 MAINTAINER Benjamin Cane <ben@bencane.com>
 
 ## NGINX custom config
@@ -10,10 +10,10 @@ COPY nginx/htmlglobal.conf /etc/nginx/globals/
 COPY nginx/bencane.com.conf /etc/nginx/sites-enabled/
 
 ## Install python and pip
-RUN apt-get update && \
-    apt-get install -y curl && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+#RUN apt-get update && \
+#    apt-get install -y curl && \
+#    apt-get clean && \
+#    rm -rf /var/lib/apt/lists/*
 
 ## Create a directory for required files
 RUN mkdir -p /build/
@@ -38,4 +38,4 @@ ADD ads.txt /usr/share/nginx/html/
 #RUN mkdir /usr/share/nginx/heavy && mv /usr/share/nginx/html/* /usr/share/nginx/heavy/ && \
 #/minify -rs -o /usr/share/nginx/html /usr/share/nginx/heavy
 ADD resume/resume.html /usr/share/nginx/html/resume/index.html
-ADD index.html /usr/share/nginx/html/index.html
+ADD resume/resume.html /usr/share/nginx/html/index.html
